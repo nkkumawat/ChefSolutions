@@ -10,6 +10,8 @@ class Customers(models.Model):
     name = models.CharField(max_length=200)
     email = models.CharField(max_length=200 , unique=True)
     password = models.CharField(max_length=500)
+    temp_id = models.CharField(max_length=500 , default='0')
+    is_active = models.BooleanField(default=False)
 
     class Meta:
         db_table = "customer"

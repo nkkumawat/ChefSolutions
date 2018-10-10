@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<form method="post" action="/cart/add"> {% csrf_token %}
+    <input name="product_id" type="text" hidden value="1"/><br>
+    <input name="quantity" value="2" hidden type="text">
+    <input type="submit" value="Submit"/>
+</form>
+{% for res in result %}
+    <li>Id: {{ res.id }} C_Id: {{ res.customer_id  }} P_Id: {{ res.product_id  }}</li>
+{% endfor %}
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
 </head>
 <body>
 {{ title }}
@@ -12,6 +12,8 @@
     <input name="password" type="password" palceholder="password"/><br>
     <input type="submit" value="Submit"/>
 </form>
-{{ error }}
+{{ message }}
+<a href="/customer/signup" >Signup</a><br>
+<a href="/customer/forgotpassword" >Forgot Password</a><br>
 </body>
 </html>
