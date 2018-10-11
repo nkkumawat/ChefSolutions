@@ -7,7 +7,12 @@
 <body>
 {{ name }}
 {{ email }}
+{% for add in address %}
+    <li>{{ add.address }}</li>
+{% endfor %}
 <a href="/customer/logout" >Logout</a><br>
 <a href="/cart" >cart</a>
+<a href="/customer/updatepassword" >Password change</a>
+<a href="/customer/updateprofile" >Profile Update</a>
 </body>
 </html>

@@ -7,14 +7,14 @@ from django.utils.crypto import get_random_string
 from django.core.mail import EmailMessage
 
 from .forms import loginForm, signUpForm
-from .models import Customers
+from .models import Customers, Address
 
 data = {
         "title": "Chef Solutions",
         "message": ""
     }
 def login(request):
-
+    data['message'] = ""
     if request.method == 'POST':
         loginform = loginForm(request.POST)
         if loginform.is_valid():
@@ -46,12 +46,14 @@ def login(request):
 
 
 def signup(request):
+    data['message'] = ""
     if request.method == 'POST':
         signupform = signUpForm(request.POST)
         if signupform.is_valid():
             email = signupform.cleaned_data['email']
             password = signupform.cleaned_data['password']
             name = signupform.cleaned_data['name']
+            mobile = signupform.cleaned_data['mobile']
             if Customers.objects.filter(email=email):
                 data['message'] = "Email alreay Exists"
                 return render(request, "customer/signup.html", data)
@@ -60,6 +62,7 @@ def signup(request):
                 customer.name = name
                 customer.email = email
                 customer.password = make_password(password)
+                customer.mobile = mobile
                 customer.temp_id = get_random_string(length=200)
                 customer.save()
 
@@ -76,16 +79,20 @@ def signup(request):
 
 
 def dashboard(request):
+    data['message'] = ""
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id=request.session['customer_id'])
         data["name"] = customer[0].name
         data["email"] = customer[0].email
+        address = Address.objects.filter(customer_id=request.session['customer_id'])
+        data['address'] = address
         return render(request, "customer/dashboard.html", data)
     else:
         return HttpResponseRedirect('login')
 
 
 def logout(request):
+    data['message'] = ""
     if 'customer_id' in request.session:
         del request.session['customer_id']
         return HttpResponseRedirect('login')
@@ -93,6 +100,7 @@ def logout(request):
         return HttpResponseRedirect('login')
 
 def forgotPassword(request):
+    data['message'] = ""
     if request.method == "POST":
         email = request.POST["email"]
         customer = Customers.objects.filter(email=email)
@@ -125,7 +133,8 @@ def forgotPassword(request):
             return render(request, "customer/forgotpassword.html", data)
 
 
-def changePassword(request):
+def changePassword(request): # for forgot password
+    data['message'] = ""
     if request.method == "POST":
         temp_id = request.POST['temp_id']
         password = request.POST['password']
@@ -144,6 +153,7 @@ def changePassword(request):
 
 
 def accoutVarification(request):
+    data['message'] = ""
     if 'id' in request.GET:
         id = request.GET['id']
         if id != '0':
@@ -157,3 +167,38 @@ def accoutVarification(request):
             return HttpResponseRedirect('/error')
     else:
         return HttpResponseRedirect('/error')
+
+def updatePassword(request):
+    data['message'] = ""
+    if 'customer_id' in request.session:
+        if request.method == "POST":
+            oldPassword = request.POST['oldPassword']
+            newPassword = request.POST['newPassword']
+            customer = Customers.objects.filter(id=request.session['customer_id'])
+            if check_password(oldPassword , customer[0].password):
+                customer.update(password=make_password(newPassword))
+                data['message'] = "password changed succss"
+                return render(request, "customer/updatepassword.html", data)
+            else:
+                data['message'] = "Old password is not correct"
+                return render(request, "customer/updatepassword.html", data)
+        else:
+            return render(request, "customer/updatepassword.html", data)
+    else:
+        return HttpResponseRedirect("/error")
+
+def updateProfile(request):
+    data['message'] = ""
+    if 'customer_id' in request.session:
+        if request.method == "POST":
+            add = request.POST['address']
+            address = Address()
+            address.customer_id = request.session['customer_id']
+            address.address = add
+            address.save()
+            data['message'] = "Updated Success"
+            return render(request, "customer/updateprofile.html", data)
+        else:
+            return render(request, "customer/updateprofile.html", data)
+    else:
+        return HttpResponseRedirect("/error")
