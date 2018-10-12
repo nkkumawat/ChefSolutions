@@ -8,6 +8,7 @@ from django.core.mail import EmailMessage
 
 from .forms import loginForm, signUpForm
 from .models import Customers, Address
+from cart.models import Cart
 
 data = {
         "title": "Chef Solutions",
@@ -15,67 +16,77 @@ data = {
     }
 def login(request):
     data['message'] = ""
-    if request.method == 'POST':
-        loginform = loginForm(request.POST)
-        if loginform.is_valid():
-            email = loginform.cleaned_data['email']
-            password = loginform.cleaned_data['password']
-            customer = Customers.objects.filter(email=email)
-            if customer:
-                if check_password(password, customer[0].password):
-                    if  customer[0].is_active:
-                        request.session['customer_id'] = customer[0].id
-                        return HttpResponseRedirect('dashboard')
+    if 'customer_id' not in request.session:
+        if request.method == 'POST':
+            loginform = loginForm(request.POST)
+            if loginform.is_valid():
+                email = loginform.cleaned_data['email']
+                password = loginform.cleaned_data['password']
+                customer = Customers.objects.filter(email=email)
+                if customer:
+                    if check_password(password, customer[0].password):
+                        if  customer[0].is_active:
+                            request.session['customer_id'] = customer[0].id
+                            if 'temp_customer_id' in request.session:
+                                cart = Cart.objects.filter(temp_customer_id=request.session['temp_customer_id'])
+                                cart.update(temp_customer_id='0',customer_id=request.session['customer_id'])
+                                del request.session['temp_customer_id']
+                            return HttpResponseRedirect('dashboard')
+                        else:
+                            data['message'] = "Your account is not activated yet"
+                            return render(request, "customer/login.html", data)
                     else:
-                        data['message'] = "Your account is not activated yet"
+                        data['message'] = "Password Incorrect"
                         return render(request, "customer/login.html", data)
                 else:
-                    data['message'] = "Password Incorrect"
+                    data['message'] = "User not exists"
                     return render(request, "customer/login.html", data)
             else:
-                data['message'] = "User not exists"
+                data['message'] = "Invalid Form"
                 return render(request, "customer/login.html", data)
         else:
-            data['message'] = "Invalid Form"
-            return render(request, "customer/login.html", data)
+            if 'customer_id' in request.session:
+                return HttpResponseRedirect('dashboard')
+            else:
+                return render(request, "customer/login.html", data)
     else:
-        if 'customer_id' in request.session:
-            return HttpResponseRedirect('dashboard')
-        else:
-            return render(request, "customer/login.html", data)
-
+        return HttpResponseRedirect("/error")
 
 def signup(request):
     data['message'] = ""
-    if request.method == 'POST':
-        signupform = signUpForm(request.POST)
-        if signupform.is_valid():
-            email = signupform.cleaned_data['email']
-            password = signupform.cleaned_data['password']
-            name = signupform.cleaned_data['name']
-            mobile = signupform.cleaned_data['mobile']
-            if Customers.objects.filter(email=email):
-                data['message'] = "Email alreay Exists"
-                return render(request, "customer/signup.html", data)
-            else:
-                customer = Customers()
-                customer.name = name
-                customer.email = email
-                customer.password = make_password(password)
-                customer.mobile = mobile
-                customer.temp_id = get_random_string(length=200)
-                customer.save()
+    if 'customer_id' not in request.sessions:
 
-                body = "Please click on below link for Account varification\n "
-                body += "http://localhost:8000/customer/varify?id=" + customer.temp_id
-                email = EmailMessage('Chef Solutions', body, to=[email])
-                email.send()
-                data['message'] = "check your email for account varification"
-                return render(request, "customer/signup.html", data)
+        if request.method == 'POST':
+            signupform = signUpForm(request.POST)
+            if signupform.is_valid():
+                email = signupform.cleaned_data['email']
+                password = signupform.cleaned_data['password']
+                name = signupform.cleaned_data['name']
+                mobile = signupform.cleaned_data['mobile']
+                if Customers.objects.filter(email=email):
+                    data['message'] = "Email alreay Exists"
+                    return render(request, "customer/signup.html", data)
+                else:
+                    customer = Customers()
+                    customer.name = name
+                    customer.email = email
+                    customer.password = make_password(password)
+                    customer.mobile = mobile
+                    customer.temp_id = get_random_string(length=200)
+                    customer.save()
+
+                    body = "Please click on below link for Account varification\n "
+                    body += "http://localhost:8000/customer/varify?id=" + customer.temp_id
+                    email = EmailMessage('Chef Solutions', body, to=[email])
+                    email.send()
+                    data['message'] = "check your email for account varification"
+                    return render(request, "customer/signup.html", data)
+            else:
+                return render(request, "error.html")
         else:
-            return render(request, "error.html")
+            return render(request, "customer/signup.html", data)
     else:
-        return render(request, "customer/signup.html", data)
+        return HttpResponseRedirect("/error")
 
 
 def dashboard(request):

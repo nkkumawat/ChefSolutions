@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% for product in products %}
+    <li>{{ product.id }}</li>
+    <li>{{ product.name }}</li>
+    <li>{{ product.description }}</li>
+    <li>{{ product.price }}</li>
+    <li>{{ product.protein }}</li>
+    <li>{{ product.ingridients }}</li>
+    <li>{{ product.uses }}</li>
+    <li>{{ product.available_qty }}</li>
+    <li>{{ product.benefits }}</li>
+    <li>{{ product.directions }}</li>
+    <li>{{ product.added_date }}</li>
+    <img src="/{{  product.picture_1 }}" height="200" width="200" />
+    <img src="/{{  product.picture_2 }}" height="200" width="200" />
+    <img src="/{{  product.picture_3 }}" height="200" width="200" />
+    <form method="post" action="/cart/add">{% csrf_token %}
+        <input name="quantity" type="number" hidden value="1" >
+        <input name="product_id" hidden type="number" value="{{ product.id }}" >
+        <input name="submit" type="submit" value="Add to cart">
+    </form>
+{% endfor %}
+</body>
+</html>
