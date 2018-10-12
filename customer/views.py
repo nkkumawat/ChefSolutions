@@ -31,7 +31,7 @@ def login(request):
                                 cart = Cart.objects.filter(temp_customer_id=request.session['temp_customer_id'])
                                 cart.update(temp_customer_id='0',customer_id=request.session['customer_id'])
                                 del request.session['temp_customer_id']
-                            return HttpResponseRedirect('dashboard')
+                            return HttpResponseRedirect('profile')
                         else:
                             data['message'] = "Your account is not activated yet"
                             return render(request, "customer/login.html", data)
@@ -46,11 +46,11 @@ def login(request):
                 return render(request, "customer/login.html", data)
         else:
             if 'customer_id' in request.session:
-                return HttpResponseRedirect('dashboard')
+                return HttpResponseRedirect('profile')
             else:
                 return render(request, "customer/login.html", data)
     else:
-        return HttpResponseRedirect("/error")
+        return HttpResponseRedirect("/customer/profile")
 
 def signup(request):
     data['message'] = ""
@@ -89,7 +89,7 @@ def signup(request):
         return HttpResponseRedirect("/error")
 
 
-def dashboard(request):
+def profile(request):
     data['message'] = ""
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id=request.session['customer_id'])
@@ -97,7 +97,7 @@ def dashboard(request):
         data["email"] = customer[0].email
         address = Address.objects.filter(customer_id=request.session['customer_id'])
         data['address'] = address
-        return render(request, "customer/dashboard.html", data)
+        return render(request, "customer/profile.html", data)
     else:
         return HttpResponseRedirect('login')
 
@@ -203,10 +203,14 @@ def updateProfile(request):
     if 'customer_id' in request.session:
         if request.method == "POST":
             add = request.POST['address']
+            dob = request.POST['dob']
             address = Address()
             address.customer_id = request.session['customer_id']
             address.address = add
             address.save()
+
+            customer = Customers.objects.filter(id=request.session['customer_id'])
+            customer.update(dob=dob)
             data['message'] = "Updated Success"
             return render(request, "customer/updateprofile.html", data)
         else:

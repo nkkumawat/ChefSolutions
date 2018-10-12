@@ -10,5 +10,6 @@ class Cart(models.Model):
     date = models.DateTimeField(auto_now=True)
     temp_customer_id = models.CharField(max_length=300,default="0")
     is_purchased = models.BooleanField(default=False)
+
     class Meta:
         db_table = "cart"

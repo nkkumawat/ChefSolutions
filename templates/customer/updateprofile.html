@@ -9,6 +9,7 @@
 {{ title }}
 <form method="post" action="updateprofile"> {% csrf_token %}
     <input name="address" type="text" palceholder="Address"/><br>
+    <input name="dob" type="date" palceholder="DateofBirth"/><br>
     <input type="submit" value="Submit"/>
 </form>
 {{ message }}

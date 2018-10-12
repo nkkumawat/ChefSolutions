@@ -12,6 +12,7 @@ class Customers(models.Model):
     password = models.CharField(max_length=500)
     mobile = models.CharField(max_length=10)
     temp_id = models.CharField(max_length=500 , default='0')
+    dob = models.DateField(default=None, null=True)
     is_active = models.BooleanField(default=False)
 
     class Meta:
