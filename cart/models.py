@@ -1,5 +1,5 @@
 from django.db import models
-
+from customer.models import Customers
 # Create your models here.
 
 class Cart(models.Model):

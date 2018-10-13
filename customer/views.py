@@ -95,7 +95,8 @@ def profile(request):
         customer = Customers.objects.filter(id=request.session['customer_id'])
         data["name"] = customer[0].name
         data["email"] = customer[0].email
-        address = Address.objects.filter(customer_id=request.session['customer_id'])
+        data["image"] = customer[0].profile_pic
+        address = Address.objects.filter(customer_id=Customers.objects.filter(id=request.session['customer_id'])[0])
         data['address'] = address
         return render(request, "customer/profile.html", data)
     else:
@@ -205,7 +206,7 @@ def updateProfile(request):
             add = request.POST['address']
             dob = request.POST['dob']
             address = Address()
-            address.customer_id = request.session['customer_id']
+            address.customer_id = Customers.objects.filter(id=request.session['customer_id'])[0]
             address.address = add
             address.save()
 

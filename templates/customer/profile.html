@@ -7,12 +7,18 @@
 <body>
 {{ name }}
 {{ email }}
+<img height="100" width="100" src="/{{ image }}"/><br>
+{#{{ address }}#}
+Address : <br>
 {% for add in address %}
     <li>{{ add.address }}</li>
 {% endfor %}
 <a href="/customer/logout" >Logout</a><br>
-<a href="/cart" >cart</a>
-<a href="/customer/updatepassword" >Password change</a>
-<a href="/customer/updateprofile" >Profile Update</a>
+<a href="/cart" >cart</a><br>
+<a href="/customer/updatepassword" >Password change</a><br>
+<a href="/customer/updateprofile" >Profile Update</a><br>
+<a href="/blog/add" >Add Recipe to blog</a><br>
+<a href="/blog" >Blog</a><br>
+
 </body>
 </html>
