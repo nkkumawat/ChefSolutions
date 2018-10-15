@@ -1,0 +1,23 @@
+nav {
+    background-color: transparent;
+    padding-left: 50px;
+    transition: 0.5s;
+}
+
+.nav-links {
+    padding: 10px;
+}
+
+.change-color {
+    transition: 0.5s;
+}
+
+.navbar-fixed {
+    height: 0px;
+}
+
+@media screen and (max-width: 996px) {
+    nav {
+        padding: 0px;
+    }
+}

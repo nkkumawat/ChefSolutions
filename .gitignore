@@ -1,0 +1,12 @@
+#ignoring vs-code config file
+.vscode/
+
+#igonring idea config files
+.idea/
+
+#ignoring python bytecodes
+*.pyc
+*.pyo
+
+#django's unwanted files and folders
+__pycache__/

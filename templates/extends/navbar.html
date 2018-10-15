@@ -1,0 +1,27 @@
+<div class="navbar-fixed">
+    <nav class="z-depth-0">
+        <div class="nav-wrapper">
+            {% comment %} <a href="#!" class="brand-logo change-color">Chef's Solution</a> {% endcomment %}
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons change-color">menu</i></a>
+            <ul class="left hide-on-med-and-down nav-links">
+                <li><a class="change-color" href="sass.html">Home</a></li>
+                <li><a class="change-color" href="badges.html">About Us</a></li>
+                <li><a class="change-color" href="{% url 'products:all_products' %} ">Our Products</a></li>
+                <li><a class="change-color" href="mobile.html">Why Cs</a></li>
+                <li><a class="change-color" href="mobile.html">Shop</a></li>
+                <li><a class="change-color" href="mobile.html">Distributors</a></li>
+                <li><a class="change-color" href="mobile.html">Contact Us</a></li>
+                <li><a class="material-icons change-color" href="mobile.html"><i>add_shopping_cart</i></a></li>
+                <li><a class="change-color" href="{% url 'customer:login'%}">LogIn</a></li>
+                <li><a class="change-color" href="{% url 'customer:profile'%}">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="sass.html">HOME</a></li>
+    <li><a href="badges.html">MENU</a></li>
+    <li><a href="collapsible.html">BLOG</a></li>
+    <li><a href="mobile.html">SHOP</a></li>
+</ul>
