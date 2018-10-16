@@ -1,23 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Cart
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from products.models import Products
 from django.utils.crypto import get_random_string
 # Create your views here.
-
+from django.db.models import Sum
 
 
 def cart(request):
     data = {}
     data['title'] = "Cart | ChefSolutions"
     if 'customer_id' in request.session:
-        products = []
         cart = Cart.objects.filter(customer_id=request.session['customer_id'], is_purchased=False)
-        for id in cart:
-            product = Products.objects.filter(id=id.product_id)
-            if product[0]:
-                products.append({"product": product[0], "cart_id": id.id})
-        data['products'] = products
+        data['cart'] = cart
         return render(request, "cart/cart.html", data)
     elif 'temp_customer_id' in request.session:
             products = []
@@ -37,12 +32,19 @@ def addInCart(request):
             product_id = request.POST['product_id']
             customer_id = request.session['customer_id']
             quantity = request.POST['quantity']
-            cart = Cart()
-            cart.customer_id = customer_id
-            cart.product_id = product_id
-            cart.quantity = quantity
-            cart.save()
-            return HttpResponseRedirect("/cart")
+            is_present = Cart.objects.filter(customer_id= request.session['customer_id'],product_id= Products.objects.filter(id=product_id)[0],is_purchased=False)
+            if is_present:
+                is_present.update(quantity = is_present[0].quantity +int( quantity))
+            else:
+                cart = Cart()
+                cart.customer_id = customer_id
+                cart.product_id = Products.objects.filter(id=product_id)[0]
+                cart.quantity = quantity
+                cart.save()
+            data = {}
+            data['success'] = "true"
+            data['added_count'] = Cart.objects.filter(customer_id=request.session['customer_id'],is_purchased=False).aggregate(total=Sum('quantity'))['total']
+            return JsonResponse(data)
         else:
             return HttpResponseRedirect('/error')
     else:

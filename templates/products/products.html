@@ -20,8 +20,10 @@
     <img src="/{{  product.picture_1 }}" height="200" width="200" />
     <img src="/{{  product.picture_2 }}" height="200" width="200" />
     <img src="/{{  product.picture_3 }}" height="200" width="200" />
+{#    {{ already_in_cart }}#}
+
     <form method="post" action="/cart/add">{% csrf_token %}
-        <input name="quantity" type="number" hidden value="1" >
+        <input name="quantity" type="number"  >
         <input name="product_id" hidden type="number" value="{{ product.id }}" >
         <input name="submit" type="submit" value="Add to cart">
     </form>
