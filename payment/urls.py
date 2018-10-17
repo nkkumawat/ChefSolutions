@@ -15,17 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-from .views import homepage
+from .views import payment, payment_success, payment_failure
 
 
 urlpatterns = [
-    path('', homepage),
-    path('customer/', include('customer.urls')),
-    path('admin/', admin.site.urls),
-    path('error/' , include('Error.urls')),
-    path('cart/' , include('cart.urls')),
-    path('products/' , include('products.urls')),
-    path('placeorder/' , include('order.urls')),
-    path('blog/' , include('blog.urls')),
-    path('payment' , include('payment.urls')),
+    path('', payment , name="payment"),
+    path('paymentseccess', payment_success , name="payment"),
+    path('paymentfail', payment_failure , name="payment"),
+
 ]

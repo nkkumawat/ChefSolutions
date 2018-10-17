@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import Products
+import getResponses
+from cart.models import Cart
 # Create your views here.
 
 data = {
@@ -8,7 +10,11 @@ data = {
 }
 def allProducts(request):
     products = Products.objects.all()
+    data = getResponses.getResponse(request)
     data['products'] = products
+
+
+
     return render(request, "products/products.html", data)
 
 
@@ -19,4 +25,4 @@ def prductDetail(request,pid):
         data['product'] = product
         return render(request, "products/productdetails.html", data)
     else:
-        return render(request, "error.html" )
+        return render(request, "base/error.html")

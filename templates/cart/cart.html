@@ -6,23 +6,23 @@
 </head>
 <body>
 <br><br>
-{% for pro in products %}
-    <li>{{ pro.product.id }}</li>
-    <li>{{ pro.product.name }}</li>
-    <li>{{ pro.product.description }}</li>
-    <li>{{ pro.product.price }}</li>
-    <li>{{ pro.product.protein }}</li>
-    <li>{{ pro.product.ingridients }}</li>
-    <li>{{ pro.product.uses }}</li>
-    <li>{{ pro.product.available_qty }}</li>
-    <li>{{ pro.product.benefits }}</li>
-    <li>{{ pro.product.directions }}</li>
-    <li>{{ pro.product.added_date }}</li>
-    <img src="/{{  pro.product.picture_1 }}" height="200" width="200" />
-    <img src="/{{  pro.product.picture_2 }}" height="200" width="200" />
-    <img src="/{{  pro.product.picture_3 }}" height="200" width="200" />
+{% for c in cart %}
+    <li>{{ c.product_id.id }}</li>
+    <li>{{ c.product_id.name }}</li>
+    <li>{{ c.product_id.description }}</li>
+    <li>{{ c.product_id.price }}</li>
+    <li>{{ c.product_id.protein }}</li>
+    <li>{{ c.product_id.ingridients }}</li>
+    <li>{{ c.product_id.uses }}</li>
+    <li>{{ c.product_id.available_qty }}</li>
+    <li>{{ c.product_id.benefits }}</li>
+    <li>{{ c.product_id.directions }}</li>
+    <li>{{ c.product_id.added_date }}</li>
+    <img src="/{{  c.product_id.picture_1 }}" height="200" width="200" />
+    <img src="/{{  c.product_id.picture_2 }}" height="200" width="200" />
+    <img src="/{{  c.product_id.picture_3 }}" height="200" width="200" />
     <form method="post" action="/cart/delete">{% csrf_token %}
-        <input name="cart_id" type="number" hidden value="{{ pro.cart_id }}" >
+        <input name="cart_id" type="number" hidden value="{{ c.id }}" >
         <input name="submit" type="submit" value="Delete form cart">
     </form>
 

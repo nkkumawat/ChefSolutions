@@ -91,3 +91,10 @@ Chef's Solution
 {% block scripts %}
 <script src="{%static 'js/index.js'%}"></script>
 {% endblock scripts %}
+
+{% comment %} {% extends 'base/template.html' %}
+{% block content %}
+<a href="/customer/login">Login</a>
+<a href="/customer/profile">Dashboard</a>
+<a href="/products">Products</a>
+{% endblock %} {% endcomment %}

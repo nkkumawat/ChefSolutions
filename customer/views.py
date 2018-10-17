@@ -54,7 +54,7 @@ def login(request):
 
 def signup(request):
     data['message'] = ""
-    if 'customer_id' not in request.sessions:
+    if 'customer_id' not in request.session:
 
         if request.method == 'POST':
             signupform = signUpForm(request.POST)
@@ -82,7 +82,7 @@ def signup(request):
                     data['message'] = "check your email for account varification"
                     return render(request, "customer/signup.html", data)
             else:
-                return render(request, "error.html")
+                return render(request, "base/error.html")
         else:
             return render(request, "customer/signup.html", data)
     else:

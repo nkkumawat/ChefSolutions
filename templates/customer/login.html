@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-{{ title }}
-
-<form method="post"> {% csrf_token %}
-    <input name="email" type="email" palceholder="email"/><br>
-    <input name="password" type="password" palceholder="password"/><br>
-    <input type="submit" value="Submit"/>
-</form>
-{{ message }}
-<a href="/customer/signup" >Signup</a><br>
-<a href="/customer/forgotpassword" >Forgot Password</a><br>
-</body>
-</html>
+{% extends 'base/template.html' %}
+{% block content %}
+    <form method="post"> {% csrf_token %}
+        <input name="email" type="email" palceholder="email"/><br>
+        <input name="password" type="password" palceholder="password"/><br>
+        <input type="submit" value="Submit"/>
+    </form>
+    {{ message }}
+    <a href="/customer/signup" >Signup</a><br>
+    <a href="/customer/forgotpassword" >Forgot Password</a><br>
+{% endblock %}
