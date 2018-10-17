@@ -1,7 +1,8 @@
-
-from django.urls import path , re_path
+from django.urls import path, re_path
 from .views import error
-urlpatterns = [
-    path('',error , name="login"),
 
+app_name = 'error'
+
+urlpatterns = [
+    path('', error, name="error"),
 ]

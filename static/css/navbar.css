@@ -1,6 +1,5 @@
 nav {
-    background-color: transparent;
-    padding-left: 50px;
+    background-color: black;
     transition: 0.5s;
 }
 
@@ -10,10 +9,6 @@ nav {
 
 .change-color {
     transition: 0.5s;
-}
-
-.navbar-fixed {
-    height: 0px;
 }
 
 @media screen and (max-width: 996px) {

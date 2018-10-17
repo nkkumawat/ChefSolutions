@@ -12,7 +12,11 @@
                 <li><a class="change-color" href="mobile.html">Distributors</a></li>
                 <li><a class="change-color" href="mobile.html">Contact Us</a></li>
                 <li><a class="material-icons change-color" href="mobile.html"><i>add_shopping_cart</i></a></li>
+                {% if customer %}
+                <li><a class="change-color" href="{% url 'customer:logout'%}">LogOut</a></li>
+                {% else %}
                 <li><a class="change-color" href="{% url 'customer:login'%}">LogIn</a></li>
+                {% endif %}
                 <li><a class="change-color" href="{% url 'customer:profile'%}">Dashboard</a></li>
             </ul>
         </div>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.utils.crypto import get_random_string
@@ -11,9 +11,11 @@ from .models import Customers, Address
 from cart.models import Cart
 
 data = {
-        "title": "Chef Solutions",
-        "message": ""
-    }
+    "title": "Chef Solutions",
+    "message": ""
+}
+
+
 def login(request):
     data['message'] = ""
     if 'customer_id' not in request.session:
@@ -25,13 +27,15 @@ def login(request):
                 customer = Customers.objects.filter(email=email)
                 if customer:
                     if check_password(password, customer[0].password):
-                        if  customer[0].is_active:
+                        if customer[0].is_active:
                             request.session['customer_id'] = customer[0].id
                             if 'temp_customer_id' in request.session:
-                                cart = Cart.objects.filter(temp_customer_id=request.session['temp_customer_id'])
-                                cart.update(temp_customer_id='0',customer_id=request.session['customer_id'])
+                                cart = Cart.objects.filter(
+                                    temp_customer_id=request.session['temp_customer_id'])
+                                cart.update(
+                                    temp_customer_id='0', customer_id=request.session['customer_id'])
                                 del request.session['temp_customer_id']
-                            return HttpResponseRedirect('profile')
+                            return redirect('customer:profile')
                         else:
                             data['message'] = "Your account is not activated yet"
                             return render(request, "customer/login.html", data)
@@ -46,11 +50,12 @@ def login(request):
                 return render(request, "customer/login.html", data)
         else:
             if 'customer_id' in request.session:
-                return HttpResponseRedirect('profile')
+                return redirect('customer:profile')
             else:
                 return render(request, "customer/login.html", data)
     else:
-        return HttpResponseRedirect("/customer/profile")
+        return redirect("customer:profile")
+
 
 def signup(request):
     data['message'] = ""
@@ -75,18 +80,18 @@ def signup(request):
                     customer.temp_id = get_random_string(length=200)
                     customer.save()
 
-                    body = "Please click on below link for Account varification\n "
-                    body += "http://localhost:8000/customer/varify?id=" + customer.temp_id
+                    body = "Please click on below link for Account verification\n "
+                    body += "http://localhost:8000/customer/verify?id=" + customer.temp_id
                     email = EmailMessage('Chef Solutions', body, to=[email])
                     email.send()
                     data['message'] = "check your email for account varification"
                     return render(request, "customer/signup.html", data)
             else:
-                return render(request, "base/error.html")
+                return redirect('error:error')
         else:
             return render(request, "customer/signup.html", data)
     else:
-        return HttpResponseRedirect("/error")
+        return redirect("error:error")
 
 
 def profile(request):
@@ -96,20 +101,22 @@ def profile(request):
         data["name"] = customer[0].name
         data["email"] = customer[0].email
         data["image"] = customer[0].profile_pic
-        address = Address.objects.filter(customer_id=Customers.objects.filter(id=request.session['customer_id'])[0])
+        address = Address.objects.filter(
+            customer_id=Customers.objects.filter(id=request.session['customer_id'])[0])
         data['address'] = address
         return render(request, "customer/profile.html", data)
     else:
-        return HttpResponseRedirect('login')
+        return redirect('customer:login')
 
 
 def logout(request):
     data['message'] = ""
     if 'customer_id' in request.session:
         del request.session['customer_id']
-        return HttpResponseRedirect('login')
+        return redirect('index')
     else:
-        return HttpResponseRedirect('login')
+        return redirect('customer:login')
+
 
 def forgotPassword(request):
     data['message'] = ""
@@ -145,7 +152,7 @@ def forgotPassword(request):
             return render(request, "customer/forgotpassword.html", data)
 
 
-def changePassword(request): # for forgot password
+def changePassword(request):  # for forgot password
     data['message'] = ""
     if request.method == "POST":
         temp_id = request.POST['temp_id']
@@ -157,11 +164,11 @@ def changePassword(request): # for forgot password
                 customer.update(temp_id='0')
                 return HttpResponseRedirect('login')
             else:
-               return HttpResponseRedirect('/error')
+                return HttpResponseRedirect('/error')
         else:
             return HttpResponseRedirect('/error')
     else:
-       return HttpResponseRedirect('/error')
+        return HttpResponseRedirect('/error')
 
 
 def accoutVarification(request):
@@ -171,7 +178,7 @@ def accoutVarification(request):
         if id != '0':
             customer = Customers.objects.filter(temp_id=id)
             if customer:
-                customer.update(is_active=True , temp_id='0')
+                customer.update(is_active=True, temp_id='0')
                 return HttpResponseRedirect('login')
             else:
                 return HttpResponseRedirect('/error')
@@ -180,14 +187,16 @@ def accoutVarification(request):
     else:
         return HttpResponseRedirect('/error')
 
+
 def updatePassword(request):
     data['message'] = ""
     if 'customer_id' in request.session:
         if request.method == "POST":
             oldPassword = request.POST['oldPassword']
             newPassword = request.POST['newPassword']
-            customer = Customers.objects.filter(id=request.session['customer_id'])
-            if check_password(oldPassword , customer[0].password):
+            customer = Customers.objects.filter(
+                id=request.session['customer_id'])
+            if check_password(oldPassword, customer[0].password):
                 customer.update(password=make_password(newPassword))
                 data['message'] = "password changed succss"
                 return render(request, "customer/updatepassword.html", data)
@@ -199,6 +208,7 @@ def updatePassword(request):
     else:
         return HttpResponseRedirect("/error")
 
+
 def updateProfile(request):
     data['message'] = ""
     if 'customer_id' in request.session:
@@ -206,11 +216,13 @@ def updateProfile(request):
             add = request.POST['address']
             dob = request.POST['dob']
             address = Address()
-            address.customer_id = Customers.objects.filter(id=request.session['customer_id'])[0]
+            address.customer_id = Customers.objects.filter(
+                id=request.session['customer_id'])[0]
             address.address = add
             address.save()
 
-            customer = Customers.objects.filter(id=request.session['customer_id'])
+            customer = Customers.objects.filter(
+                id=request.session['customer_id'])
             customer.update(dob=dob)
             data['message'] = "Updated Success"
             return render(request, "customer/updateprofile.html", data)

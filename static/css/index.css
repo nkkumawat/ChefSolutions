@@ -1,3 +1,11 @@
+nav {
+    background-color: transparent;
+}
+
+.navbar-fixed {
+    height: 0px;
+}
+
 .first {
     position: relative;
     width: 100%;

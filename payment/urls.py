@@ -14,13 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path, include
 from .views import payment, payment_success, payment_failure
 
 
 urlpatterns = [
-    path('', payment , name="payment"),
-    path('paymentseccess', payment_success , name="payment"),
-    path('paymentfail', payment_failure , name="payment"),
+    path('', payment, name="payment"),
+    path('paymentseccess', payment_success, name="payment"),
+    path('paymentfail', payment_failure, name="payment"),
 
 ]

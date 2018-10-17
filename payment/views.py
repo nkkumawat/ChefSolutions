@@ -1,4 +1,4 @@
-from django.shortcuts import render , reverse
+from django.shortcuts import render, reverse
 
 # Create your views here.
 
@@ -6,13 +6,14 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-import logging, traceback
+import logging
+import traceback
 import hashlib
-import requests
 from random import randint
 from django.views.decorators.csrf import csrf_exempt
-from .constants import PAID_FEE_AMOUNT, PAYMENT_URL_LIVE,PAYMENT_URL_TEST, PAID_FEE_PRODUCT_INFO
+from .constants import PAID_FEE_AMOUNT, PAYMENT_URL_LIVE, PAYMENT_URL_TEST, PAID_FEE_PRODUCT_INFO
 from .constants import SERVICE_PROVIDER
+
 
 def payment(request):
     data = {}
@@ -44,7 +45,8 @@ def generate_hash(request, txnid):
         # get keys and SALT from dashboard once account is created.
         # hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10"
         hash_string = get_hash_string(request, txnid)
-        generated_hash = hashlib.sha512(hash_string.encode('utf-8')).hexdigest().lower()
+        generated_hash = hashlib.sha512(
+            hash_string.encode('utf-8')).hexdigest().lower()
         return generated_hash
     except Exception as e:
         # log the error here.

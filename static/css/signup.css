@@ -1,0 +1,14 @@
+.form-container {
+    background-color: grey;
+    padding: 50px;
+    padding-bottom: 30px;
+    margin-top: 50px;
+}
+
+input {
+    color: white;
+}
+
+.input-field label {
+    color: white;
+}

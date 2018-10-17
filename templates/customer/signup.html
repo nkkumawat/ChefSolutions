@@ -1,13 +1,41 @@
-{% extends 'base/template.html' %}
+{% extends '../extends/main.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock styles %}
+
 {% block content %}
+<div class="container">
+    <div class="row form-container">
+        <h3 class="white-text">SIGNUP FORM</h3>
 
-<form method="post"> {% csrf_token %}
-    <input name="name" type="text" palceholder="Full Name"/><br>
-    <input name="email" type="email" palceholder="Email"/><br>
-    <input name="mobile" type="number" palceholder="Mobile"/><br>
-    <input name="password" type="password" palceholder="Password"/><br>
-    <input type="submit" value="Submit"/>
-</form>
-{{ message }}
+        {% if message %}
+        <div class="col s12 red white-text section" style="margin: 10px;">
+            <p>
+                {{ message }}
+            </p>
+        </div>
+        {% endif %}
 
-{% endblock %}
+        <form method="post"> {% csrf_token %}
+            <div class="input-field col s12">
+                <input name="name" type="text" id="name" />
+                <label for="name">Enter Your Name</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="email" id="email" type="email" />
+                <label for="email">Enter Your Email</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="mobile" type="number" id="number" />
+                <label for="number">Enter Your Number</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="password" type="password" id="password" />
+                <label for="password">Enter Your Password</label>
+            </div>
+            <input class="btn" type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+{% endblock content %}
