@@ -130,7 +130,7 @@ def forgotPassword(request):
             body += "http://localhost:8000/customer/forgotpassword?id="+temp_id
             email = EmailMessage('Chef Solutions', body, to=[email])
             email.send()
-            data['message'] = "Email sent to this email"
+            data['message'] = "Email sent to Your email"
             return render(request, "customer/forgotpassword.html", data)
         else:
             data['message'] = "No Such Customer"
@@ -141,6 +141,7 @@ def forgotPassword(request):
             if id != '0':
                 customer = Customers.objects.filter(temp_id=id)
                 if customer:
+                    data['temp_id'] = id
                     return render(request, "customer/changepassword.html", data)
                 else:
                     data['message'] = "wrong request"
@@ -162,13 +163,13 @@ def changePassword(request):  # for forgot password
             if customer:
                 customer.update(password=make_password(password))
                 customer.update(temp_id='0')
-                return HttpResponseRedirect('login')
+                return redirect('customer:login')
             else:
-                return HttpResponseRedirect('/error')
+                return redirect('error:error')
         else:
-            return HttpResponseRedirect('/error')
+            return redirect('error:error')
     else:
-        return HttpResponseRedirect('/error')
+        return redirect('error:error')
 
 
 def accoutVarification(request):
@@ -179,13 +180,13 @@ def accoutVarification(request):
             customer = Customers.objects.filter(temp_id=id)
             if customer:
                 customer.update(is_active=True, temp_id='0')
-                return HttpResponseRedirect('login')
+                return redirect('customer:login')
             else:
-                return HttpResponseRedirect('/error')
+                return redirect('error:error')
         else:
-            return HttpResponseRedirect('/error')
+            return redirect('error:error')
     else:
-        return HttpResponseRedirect('/error')
+        return redirect('error:error')
 
 
 def updatePassword(request):
@@ -198,7 +199,7 @@ def updatePassword(request):
                 id=request.session['customer_id'])
             if check_password(oldPassword, customer[0].password):
                 customer.update(password=make_password(newPassword))
-                data['message'] = "password changed succss"
+                data['message'] = "password changed successfully"
                 return render(request, "customer/updatepassword.html", data)
             else:
                 data['message'] = "Old password is not correct"
@@ -206,7 +207,7 @@ def updatePassword(request):
         else:
             return render(request, "customer/updatepassword.html", data)
     else:
-        return HttpResponseRedirect("/error")
+        return redirect("error:error")
 
 
 def updateProfile(request):
@@ -224,9 +225,9 @@ def updateProfile(request):
             customer = Customers.objects.filter(
                 id=request.session['customer_id'])
             customer.update(dob=dob)
-            data['message'] = "Updated Success"
+            data['message'] = "Updated Successfully"
             return render(request, "customer/updateprofile.html", data)
         else:
             return render(request, "customer/updateprofile.html", data)
     else:
-        return HttpResponseRedirect("/error")
+        return redirect("error:error")

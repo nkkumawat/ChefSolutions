@@ -4,7 +4,7 @@
             {% comment %} <a href="#!" class="brand-logo change-color">Chef's Solution</a> {% endcomment %}
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons change-color">menu</i></a>
             <ul class="left hide-on-med-and-down nav-links">
-                <li><a class="change-color" href="sass.html">Home</a></li>
+                <li><a class="change-color" href="{% url 'index' %}">Home</a></li>
                 <li><a class="change-color" href="badges.html">About Us</a></li>
                 <li><a class="change-color" href="{% url 'products:all_products' %} ">Our Products</a></li>
                 <li><a class="change-color" href="mobile.html">Why Cs</a></li>
@@ -16,6 +16,7 @@
                 <li><a class="change-color" href="{% url 'customer:logout'%}">LogOut</a></li>
                 {% else %}
                 <li><a class="change-color" href="{% url 'customer:login'%}">LogIn</a></li>
+                <li><a class="change-color" href="{% url 'customer:signup'%}">SignUp</a></li>
                 {% endif %}
                 <li><a class="change-color" href="{% url 'customer:profile'%}">Dashboard</a></li>
             </ul>

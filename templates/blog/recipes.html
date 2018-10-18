@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "../extends/main.html" %}
+
+{% block content %}
 
 {% for recipe in recipes %}
-    <li><b>{{ recipe.name }}</b></li>
-    <li>{{ recipe.customer_id.name }}</li>
-    <li>{{ recipe.food_group }}</li>
-    <li>{{ recipe.ingredients }}</li>
-    <li>{{ recipe.use_of_goods }}</li>
-    <li>{{ recipe.cooking_process_name }}</li>
-    <li>{{ recipe.cooking_process_method }}</li>
-    <li>{{ recipe.tags }}</li>
-    <li>{{ recipe.no_of_portions }}</li>
-    <li>{{ recipe.add_date }}</li>
-    <img src="/{{recipe.picture_1  }}" height="100" width="100"/>
-    <img src="/{{recipe.picture_2  }}" height="100" width="100"/>
-    <img src="/{{recipe.picture_3  }}" height="100" width="100"/>
-{%  endfor %}
+<li><b>{{ recipe.name }}</b></li>
+<li>{{ recipe.customer_id.name }}</li>
+<li>{{ recipe.food_group }}</li>
+<li>{{ recipe.ingredients }}</li>
+<li>{{ recipe.use_of_goods }}</li>
+<li>{{ recipe.cooking_process_name }}</li>
+<li>{{ recipe.cooking_process_method }}</li>
+<li>{{ recipe.tags }}</li>
+<li>{{ recipe.no_of_portions }}</li>
+<li>{{ recipe.add_date }}</li>
+<img src="/{{recipe.picture_1  }}" height="100" width="100" />
+<img src="/{{recipe.picture_2  }}" height="100" width="100" />
+<img src="/{{recipe.picture_3  }}" height="100" width="100" />
+{% endfor %}
 
-
-</body>
-</html>
+{% endblock content %}

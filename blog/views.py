@@ -5,13 +5,16 @@ from customer.models import Customers
 import getResponses
 # Create your views here.
 
-data= {}
+data = {}
+
+
 def addRecipe(request):
     if 'customer_id' in request.session:
         data = getResponses.getResponse(request)
         if request.method == 'POST':
             recipe = Recipes()
-            recipe.customer_id = Customers.objects.filter(id=request.session['customer_id'])[0]
+            recipe.customer_id = Customers.objects.filter(
+                id=request.session['customer_id'])[0]
             recipe.name = request.POST['name']
             recipe.food_group = request.POST['food_group']
             recipe.no_of_portions = request.POST['no_of_portions']
@@ -24,11 +27,12 @@ def addRecipe(request):
             recipe.picture_2 = request.FILES['picture_2']
             recipe.picture_3 = request.FILES['picture_3']
             recipe.save()
-            return render(request , 'blog/sentforapporval.html' , data)
+            return render(request, 'blog/sentforapporval.html', data)
         else:
-            return render(request , 'blog/addrecipe.html', data)
+            return render(request, 'blog/addrecipe.html', data)
     else:
         return HttpResponseRedirect('/customer/login')
+
 
 def recipes(request):
     data = {}

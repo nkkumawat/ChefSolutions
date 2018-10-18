@@ -1,18 +1,21 @@
 {% extends '../extends/main.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock styles %}
+
 {% block content %}
-{{ name }}
-{{ email }}
-<img height="100" width="100" src="/{{ image }}" /><br>
-{#{{ address }}#}
-Address : <br>
-{% for add in address %}
-<li>{{ add.address }}</li>
-{% endfor %}
-<a href="/customer/logout">Logout</a><br>
-<a href="/cart">cart</a><br>
-<a href="/customer/updatepassword">Password change</a><br>
-<a href="/customer/updateprofile">Profile Update</a><br>
-<a href="/blog/add">Add Recipe to blog</a><br>
-<a href="/blog">Blog</a><br>
+
+{% include "../extends/sidenav.html" %}
+
+<div class="profile-content">
+    <h2 class="center-align">Your Profile Page</h2>
+</div>
+
 
 {% endblock content%}
+
+{% block scripts %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock scripts %}

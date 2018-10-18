@@ -1,12 +1,45 @@
-{% extends 'base/template.html' %}
+{% extends '../extends/main.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock styles %}
+
 {% block content %}
 
-{{ title }}
-<form method="post" action="updateprofile"> {% csrf_token %}
-    <input name="address" type="text" palceholder="Address"/><br>
-    <input name="dob" type="date" palceholder="DateofBirth"/><br>
-    <input type="submit" value="Submit"/>
-</form>
-{{ message }}
+{% include "../extends/sidenav.html" %}
 
-{% endblock %}
+<div class="container profile-content">
+    <div class="row form-container">
+        <h3 class="white-text center-align">LOGIN FORM</h3>
+
+        {% if message %}
+        <div class="col s12 red white-text section" style="margin: 10px;">
+            <p>
+                {{ message }}
+            </p>
+        </div>
+        {% endif %}
+
+        <form method="post">
+            <div class="input-field col s12">
+                <input id="address" name="address" type="text" />
+                <label for="address">Enter Your Address</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="dob" name="dob" type="date" placeholder="" />
+                <label for="dob">Enter Your Date Of Birth</label>
+            </div>
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Submit" />
+        </form>
+
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock scripts %}

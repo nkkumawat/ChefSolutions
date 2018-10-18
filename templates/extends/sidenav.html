@@ -1,0 +1,44 @@
+{% load static %}
+
+<ul id="slide-out" class="sidenav sidenav-fixed">
+    <li>
+        <div class="user-view">
+            <div class="background">
+                <img src="{% static 'images/office.jpg' %}">
+            </div>
+            <a href="#user"><img class="circle" src="/{{ image }}"></a>
+            <a href="#name"><span class="white-text name">{{name}}</span></a>
+            <a href="#email"><span class="white-text email">{{email}}</span></a>
+        </div>
+    </li>
+    <li class="grey white-text">
+
+        {% if address %}
+        Your Address:
+        <ul>
+            {% for add in address %}
+            <li>{{add.address}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <a href="">Add a Address</a>
+        {% endif %}
+
+    </li>
+    <li>
+        <a href="{% url 'cart:cart' %}">cart</a>
+    </li>
+    <li>
+        <a href="{% url 'customer:updatepassword' %}">Change Password</a>
+    </li>
+    <li>
+        <a href="{% url 'customer:updateprofile' %}">Profile Update</a>
+    </li>
+    <li>
+        <a href="{% url 'blog:addrecipe' %}">Add Recipe to blog</a>
+    </li>
+    <li>
+        <a href="{% url 'blog:recipe' %}">Blog</a>
+    </li>
+</ul>
+<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="medium material-icons">assignment_ind</i></a>

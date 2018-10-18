@@ -1,34 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-<br><br>
+{% extends "../extends/main.html" %}
+
+{% block content %}
+
 {% for c in cart %}
-    <li>{{ c.product_id.id }}</li>
-    <li>{{ c.product_id.name }}</li>
-    <li>{{ c.product_id.description }}</li>
-    <li>{{ c.product_id.price }}</li>
-    <li>{{ c.product_id.protein }}</li>
-    <li>{{ c.product_id.ingridients }}</li>
-    <li>{{ c.product_id.uses }}</li>
-    <li>{{ c.product_id.available_qty }}</li>
-    <li>{{ c.product_id.benefits }}</li>
-    <li>{{ c.product_id.directions }}</li>
-    <li>{{ c.product_id.added_date }}</li>
-    <img src="/{{  c.product_id.picture_1 }}" height="200" width="200" />
-    <img src="/{{  c.product_id.picture_2 }}" height="200" width="200" />
-    <img src="/{{  c.product_id.picture_3 }}" height="200" width="200" />
-    <form method="post" action="/cart/delete">{% csrf_token %}
-        <input name="cart_id" type="number" hidden value="{{ c.id }}" >
-        <input name="submit" type="submit" value="Delete form cart">
-    </form>
+<li>{{ c.product_id.id }}</li>
+<li>{{ c.product_id.name }}</li>
+<li>{{ c.product_id.description }}</li>
+<li>{{ c.product_id.price }}</li>
+<li>{{ c.product_id.protein }}</li>
+<li>{{ c.product_id.ingridients }}</li>
+<li>{{ c.product_id.uses }}</li>
+<li>{{ c.product_id.available_qty }}</li>
+<li>{{ c.product_id.benefits }}</li>
+<li>{{ c.product_id.directions }}</li>
+<li>{{ c.product_id.added_date }}</li>
+<img src="/{{  c.product_id.picture_1 }}" height="200" width="200" />
+<img src="/{{  c.product_id.picture_2 }}" height="200" width="200" />
+<img src="/{{  c.product_id.picture_3 }}" height="200" width="200" />
+<form method="post" action="/cart/delete">{% csrf_token %}
+    <input name="cart_id" type="number" hidden value="{{ c.id }}">
+    <input name="submit" type="submit" value="Delete form cart">
+</form>
 
 {% endfor %}
-<a href="/placeorder" >Place order</a>
 
+<a href="/placeorder">Place order</a>
 
-</body>
-</html>
+{% endblock content %}

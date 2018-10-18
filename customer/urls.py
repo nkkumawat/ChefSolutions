@@ -14,6 +14,6 @@ urlpatterns = [
     re_path(r'^verify', accoutVarification, name="varify"),
     path('changepassword', changePassword, name="changepassword"),
     path('updatepassword', updatePassword, name="updatepassword"),
-    path('updateprofile', updateProfile, name="updateprofile "),
+    path('updateprofile', updateProfile, name="updateprofile"),
     path('profile', profile, name="profile"),
 ]

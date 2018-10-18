@@ -5,20 +5,20 @@ from cart.models import Cart
 # Create your views here.
 
 data = {
-    "title" : "Products | Chef solutions",
+    "title": "Products | Chef solutions",
     "message": ""
 }
+
+
 def allProducts(request):
     products = Products.objects.all()
     data = getResponses.getResponse(request)
     data['products'] = products
 
-
-
     return render(request, "products/products.html", data)
 
 
-def prductDetail(request,pid):
+def prductDetail(request, pid):
     product = Products.objects.filter(id=pid)
     if product:
         print(product)
