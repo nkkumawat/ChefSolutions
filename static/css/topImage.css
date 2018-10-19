@@ -1,0 +1,30 @@
+.top-image {
+    position: relative;
+    width: 100%;
+    height: 40vh;
+    background-image: url("../images/black.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 10px white solid;
+}
+
+.top-image .first {
+    font-family: "Herr Von Muellerhoff", cursive;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    font-size: 100px;
+    color: #c59d5f;
+    transform: translate(-50%, -50%);
+}
+
+.top-image .second {
+    font-weight: 500;
+    font-size: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+}

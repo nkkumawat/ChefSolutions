@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Products(models.Model):
     id = models.IntegerField(primary_key=True)
     price = models.FloatField()
@@ -26,15 +27,15 @@ class Products(models.Model):
     ingridients = models.TextField(max_length=1000)
     directions = models.TextField(max_length=1000)
 
-
     added_date = models.DateTimeField(auto_now=True)
     #     Nutritional value
 
-
-    picture_1 = models.FileField(upload_to='static/products/images', blank=True)
-    picture_2 = models.FileField(upload_to='static/products/images', blank=True)
-    picture_3 = models.FileField(upload_to='static/products/images', blank=True)
-
+    picture_1 = models.FileField(
+        upload_to='static/products/images', blank=True)
+    picture_2 = models.FileField(
+        upload_to='static/products/images', blank=True)
+    picture_3 = models.FileField(
+        upload_to='static/products/images', blank=True)
 
     class Meta:
         db_table = "product"

@@ -18,11 +18,12 @@ def cart(request):
         products = []
         cart = Cart.objects.filter(
             temp_customer_id=request.session['temp_customer_id'], is_purchased=False)
-        for id in cart:
-            product = Products.objects.filter(id=id.product_id)
-            if product[0]:
-                products.append({"product": product[0], "cart_id": id.id})
-        data['products'] = products
+        # for c in cart:
+        #     product = Products.objects.filter(id=c.product_id.id)
+        #     if product[0]:
+        #         products.append({"product": product[0], "cart_id": c.id})
+        # data['products'] = products
+        data["cart"] = cart
         return render(request, "cart/cart.html", data)
     else:
         return render(request, "cart/cart.html")
@@ -51,21 +52,23 @@ def addInCart(request):
                 customer_id=request.session['customer_id'], is_purchased=False).aggregate(total=Sum('quantity'))['total']
             return JsonResponse(data)
         else:
-            return HttpResponseRedirect('/error')
+            return redirect('error:error')
     else:
-        request.session['temp_customer_id'] = get_random_string(length=200)
         if request.method == 'POST':
+            if 'temp_customer_id' not in request.session:
+                request.session['temp_customer_id'] = get_random_string(
+                    length=200)
             product_id = request.POST['product_id']
             temp_customer_id = request.session['temp_customer_id']
             quantity = request.POST['quantity']
             cart = Cart()
             cart.temp_customer_id = temp_customer_id
-            cart.product_id = product_id
+            cart.product_id = Products.objects.filter(id=product_id)[0]
             cart.quantity = quantity
             cart.save()
-            return HttpResponseRedirect("/cart")
+            return redirect("cart:cart")
         else:
-            return HttpResponseRedirect('/error')
+            return redirect('error:error')
 
 
 def deleteCart(request):
@@ -76,9 +79,9 @@ def deleteCart(request):
                 id=cart_id, customer_id=request.session['customer_id'])
             if cart:
                 cart.update(is_purchased=True)
-            return HttpResponseRedirect("/cart")
+            return redirect("cart:cart")
         else:
-            return HttpResponseRedirect('/error')
+            return redirect('error:error')
     else:
         request.session['temp_customer_id'] = get_random_string(length=200)
         if request.method == 'POST':
@@ -87,6 +90,6 @@ def deleteCart(request):
                 id=cart_id, temp_customer_id=request.session['temp_customer_id'])
             if cart:
                 cart.delete()
-            return HttpResponseRedirect("/cart")
+            return redirect("cart:cart")
         else:
-            return HttpResponseRedirect('/error')
+            return redirect('error:error')

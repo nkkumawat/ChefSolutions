@@ -11,7 +11,7 @@
                 <li><a class="change-color" href="mobile.html">Shop</a></li>
                 <li><a class="change-color" href="mobile.html">Distributors</a></li>
                 <li><a class="change-color" href="mobile.html">Contact Us</a></li>
-                <li><a class="material-icons change-color" href="mobile.html"><i>add_shopping_cart</i></a></li>
+                <li><a class="material-icons change-color" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
                 {% if customer %}
                 <li><a class="change-color" href="{% url 'customer:logout'%}">LogOut</a></li>
                 {% else %}

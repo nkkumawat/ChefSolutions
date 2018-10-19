@@ -1,29 +1,61 @@
 {% extends "../extends/main.html" %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock styles %}
 
 {% block content %}
 
-{% for c in cart %}
-<li>{{ c.product_id.id }}</li>
-<li>{{ c.product_id.name }}</li>
-<li>{{ c.product_id.description }}</li>
-<li>{{ c.product_id.price }}</li>
-<li>{{ c.product_id.protein }}</li>
-<li>{{ c.product_id.ingridients }}</li>
-<li>{{ c.product_id.uses }}</li>
-<li>{{ c.product_id.available_qty }}</li>
-<li>{{ c.product_id.benefits }}</li>
-<li>{{ c.product_id.directions }}</li>
-<li>{{ c.product_id.added_date }}</li>
-<img src="/{{  c.product_id.picture_1 }}" height="200" width="200" />
-<img src="/{{  c.product_id.picture_2 }}" height="200" width="200" />
-<img src="/{{  c.product_id.picture_3 }}" height="200" width="200" />
-<form method="post" action="/cart/delete">{% csrf_token %}
-    <input name="cart_id" type="number" hidden value="{{ c.id }}">
-    <input name="submit" type="submit" value="Delete form cart">
-</form>
+<div class="top-image">
+    <div class="first center-align">Your</div>
+    <div class="second center-align">Cart</div>
+</div>
 
-{% endfor %}
+<div class="container">
+    {% if cart %}
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quality</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
 
-<a href="/placeorder">Place order</a>
+        <tbody>
+            {% for c in cart %}
+            <tr>
+                <td><img src="/{{  c.product_id.picture_1 }}" alt="product image" width="50px" height="50px"></td>
+                <td>{{ c.product_id.name }}</td>
+                <td>{{ c.product_id.price }}</td>
+                <td>{{ c.quantity }}</td>
+                <td>{{ c.quantity }} * {{ c.product_id.price }}</td>
+                <td>
+                    <form method="post" action="/cart/delete">{% csrf_token %}
+                        <input name="cart_id" type="number" hidden value="{{ c.id }}">
+                        <input name="submit" type="submit" class="cross" value="X">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col s12 center-align" style="margin-top: 50px;">
+            <a class="btn  grey" href="/placeorder">Place order</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col s12 center-align">
+            <h3>Grab Some Stuff</h3>
+        </div>
+    </div>
+    {% endif %}
+</div>
 
 {% endblock content %}

@@ -1,0 +1,45 @@
+{% for product in products %}
+        <li>{{ product.id }}</li>
+        <li>{{ product.name }}</li>
+        <li>{{ product.description }}</li>
+        <li>{{ product.price }}</li>
+        <li>{{ product.protein }}</li>
+        <li>{{ product.ingridients }}</li>
+        <li>{{ product.uses }}</li>
+        <li>{{ product.available_qty }}</li>
+        <li>{{ product.benefits }}</li>
+        <li>{{ product.directions }}</li>
+        <li>{{ product.added_date }}</li>
+        <img src="/{{  product.picture_1 }}" height="200" width="200" />
+        <img src="/{{  product.picture_2 }}" height="200" width="200" />
+        <img src="/{{  product.picture_3 }}" height="200" width="200" />
+        {# {{ already_in_cart }}#}
+
+        <form method="post" action="/cart/add">{% csrf_token %}
+            <input name="quantity" type="number">
+            <input name="product_id" hidden type="number" value="{{ product.id }}">
+            <input name="submit" type="submit" value="Add to cart">
+        </form>
+        {% endfor %}
+
+        {% for pro in product %}
+    <li>{{ pro.id }}</li>
+    <li>{{ pro.name }}</li>
+    <li>{{ pro.description }}</li>
+    <li>{{ pro.price }}</li>
+    <li>{{ pro.protein }}</li>
+    <li>{{ pro.ingridients }}</li>
+    <li>{{ pro.uses }}</li>
+    <li>{{ pro.available_qty }}</li>
+    <li>{{ pro.benefits }}</li>
+    <li>{{ pro.directions }}</li>
+    <li>{{ pro.added_date }}</li>
+    <img src="/{{  pro.picture_1 }}" height="200" width="200" />
+    <img src="/{{  pro.picture_2 }}" height="200" width="200" />
+    <img src="/{{  pro.picture_3 }}" height="200" width="200" />
+    <form method="post" action="/cart/add">{% csrf_token %}
+        <input name="quantity" type="number" >
+        <input name="product_id" hidden type="number" value="{{ pro.id }}" >
+        <input name="submit" type="submit" value="Add to cart">
+    </form>
+{% endfor %}

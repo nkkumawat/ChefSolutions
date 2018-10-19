@@ -1,0 +1,11 @@
+.cross {
+    border: none;
+    background: none;
+    color: red;
+}
+
+.cross:hover {
+    cursor: pointer;
+    color: white;
+    background: red;
+}

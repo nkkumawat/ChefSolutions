@@ -1,32 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-{% for product in products %}
-    <li>{{ product.id }}</li>
-    <li>{{ product.name }}</li>
-    <li>{{ product.description }}</li>
-    <li>{{ product.price }}</li>
-    <li>{{ product.protein }}</li>
-    <li>{{ product.ingridients }}</li>
-    <li>{{ product.uses }}</li>
-    <li>{{ product.available_qty }}</li>
-    <li>{{ product.benefits }}</li>
-    <li>{{ product.directions }}</li>
-    <li>{{ product.added_date }}</li>
-    <img src="/{{  product.picture_1 }}" height="200" width="200" />
-    <img src="/{{  product.picture_2 }}" height="200" width="200" />
-    <img src="/{{  product.picture_3 }}" height="200" width="200" />
-{#    {{ already_in_cart }}#}
+{% extends "../extends/main.html" %}
+{% load static %}
 
-    <form method="post" action="/cart/add">{% csrf_token %}
-        <input name="quantity" type="number"  >
-        <input name="product_id" hidden type="number" value="{{ product.id }}" >
-        <input name="submit" type="submit" value="Add to cart">
-    </form>
-{% endfor %}
-</body>
-</html>
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+{% endblock styles %}
+
+{% block content %}
+
+<div class="top-image">
+    <div class="first">Our</div>
+    <div class="second">Products</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+        <div class="col s12 m4">
+
+            <div class="card">
+                <div class="card-image">
+                    <a href="{% url 'products:product_details' product.id%}">
+                        <img src="/{{  product.picture_1 }}">
+                    </a>
+                    <span class="card-title">{{ product.name }}</span>
+                </div>
+                <div class="card-content black-text">
+                    <p class="flow-text">price:{{ product.price }}</p>
+                    <hr>
+                    <p>
+                        {{ product.description }}
+                    </p>
+                    <form class="addToCart" method="POST" action="/cart/add">{% csrf_token %}
+                        <div class="input-field">
+                            <p class="range-field red-text">
+                                Select quantity:
+                                <input type="range" value="1" name="quantity" id="quantity" min="1" max="{{ product.available_qty }}" />
+                            </p>
+                            <input name="product_id" hidden type="number" value="{{ product.id }}">
+                        </div>
+                        <input class="btn green" type="submit" value="Add to cart">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/allProducts.js' %}"></script>
+{% endblock scripts %}
