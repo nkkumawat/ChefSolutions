@@ -18,22 +18,31 @@
             <p class="flow-text">
                 {{product.description}}
             </p>
-            <form method="post" action="/cart/add">{% csrf_token %}
-                <div class="input-field">
-                    <p class="range-field red-text">
-                        Select quantity:
-                        <input type="range" value="1" name="quantity" id="quantity" min="1" max="{{ product.available_qty }}" />
-                    </p>
-                    <input name="product_id" hidden type="number" value="{{ product.id }}">
-                </div>
-                <input class="btn green" type="submit" value="Add to cart">
-            </form>
+            <div class="input-field">
+                <p class="range-field red-text">
+                    Select quantity:
+                    <input type="range" value="1" name="quantity" id="quantity{{product.id}}" min="1" max="{{ product.available_qty }}" />
+                    {% csrf_token %}
+                </p>
+            </div>
+            <button id="{{ product.id }}" class="btn green addToCart">Add To Cart</button>
         </div>
     </div>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+
 </div>
 
 {% endblock content %}
 
 {% block scripts %}
-<script src="{% static 'js/product.js' %}"></script>
+<script src="{% static 'js/allProducts.js' %}"></script>
 {% endblock scripts %}

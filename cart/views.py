@@ -51,8 +51,7 @@ def addInCart(request):
             data['added_count'] = Cart.objects.filter(
                 customer_id=request.session['customer_id'], is_purchased=False).aggregate(total=Sum('quantity'))['total']
             return JsonResponse(data)
-        else:
-            return redirect('error:error')
+
     else:
         if request.method == 'POST':
             if 'temp_customer_id' not in request.session:
@@ -61,14 +60,38 @@ def addInCart(request):
             product_id = request.POST['product_id']
             temp_customer_id = request.session['temp_customer_id']
             quantity = request.POST['quantity']
-            cart = Cart()
-            cart.temp_customer_id = temp_customer_id
-            cart.product_id = Products.objects.filter(id=product_id)[0]
-            cart.quantity = quantity
-            cart.save()
-            return redirect("cart:cart")
-        else:
-            return redirect('error:error')
+
+            existing_product_cart = Cart.objects.filter(
+                temp_customer_id=temp_customer_id,
+                product_id=Products.objects.filter(id=product_id)[0],
+                is_purchased=False
+            )
+
+            if existing_product_cart:
+                total = existing_product_cart[0].quantity + int(quantity)
+                existing_product_cart.update(
+                    quantity=total
+                )
+            else:
+                cart = Cart()
+                cart.temp_customer_id = temp_customer_id
+                cart.product_id = Products.objects.filter(id=product_id)[0]
+                cart.quantity = quantity
+                cart.save()
+
+            data = {}
+            data['success'] = "true"
+            data['added_count'] = Cart.objects.filter(
+                temp_customer_id=request.session['temp_customer_id'],
+                is_purchased=False
+            ).aggregate(total=Sum('quantity'))['total']
+
+            return JsonResponse(data)
+
+    data = {}
+    data['success'] = "false"
+    data['added_count'] = 0
+    return JsonResponse(data)
 
 
 def deleteCart(request):
@@ -76,18 +99,23 @@ def deleteCart(request):
         if request.method == 'POST':
             cart_id = request.POST['cart_id']
             cart = Cart.objects.filter(
-                id=cart_id, customer_id=request.session['customer_id'])
+                id=cart_id, customer_id=request.session['customer_id'], is_purchased=False)
             if cart:
-                cart.update(is_purchased=True)
+                cart.delete()
             return redirect("cart:cart")
         else:
             return redirect('error:error')
     else:
-        request.session['temp_customer_id'] = get_random_string(length=200)
+
+        if 'temp_customer_id' not in request.session:
+            return redirect('error:error')
+
         if request.method == 'POST':
             cart_id = request.POST['cart_id']
             cart = Cart.objects.filter(
-                id=cart_id, temp_customer_id=request.session['temp_customer_id'])
+                id=cart_id,
+                temp_customer_id=request.session['temp_customer_id']
+            )
             if cart:
                 cart.delete()
             return redirect("cart:cart")
