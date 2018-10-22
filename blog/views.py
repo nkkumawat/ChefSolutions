@@ -31,7 +31,7 @@ def addRecipe(request):
         else:
             return render(request, 'blog/addrecipe.html', data)
     else:
-        return HttpResponseRedirect('/customer/login')
+        return redirect('customer:login')
 
 
 def recipes(request):

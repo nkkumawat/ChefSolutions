@@ -17,7 +17,9 @@
         Your Address:
         <ul>
             {% for add in address %}
-            <li>{{add.address}}</li>
+            <li>{{add.street}}</li>
+            <li>{{add.city}}</li>
+            <li>{{add.state}}</li>
             {% endfor %}
         </ul>
         {% else %}

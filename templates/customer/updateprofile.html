@@ -23,11 +23,27 @@
 
         <form method="post">
             <div class="input-field col s12">
-                <input id="address" name="address" type="text" />
-                <label for="address">Enter Your Address</label>
+                <input id="street" name="street" type="text" required />
+                <label for="street">Enter Your Street Address</label>
             </div>
             <div class="input-field col s12">
-                <input id="dob" name="dob" type="date" placeholder="" />
+                <input id="city" name="city" type="text" required />
+                <label for="city">Enter Your City</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="state" name="state" type="text" required />
+                <label for="state">Enter Your State</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="country" name="country" type="text" required />
+                <label for="country">Enter Your Country</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="pincode" name="pincode" type="number" required />
+                <label for="pincode">Enter Your Pincode</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="dob" name="dob" type="date" required />
                 <label for="dob">Enter Your Date Of Birth</label>
             </div>
             {% csrf_token %}

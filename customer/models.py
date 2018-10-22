@@ -25,7 +25,11 @@ class Customers(models.Model):
 class Address(models.Model):
     id = models.IntegerField(primary_key=True)
     customer_id = models.ForeignKey(Customers, on_delete=models.CASCADE)
-    address = models.CharField(max_length=500)
+    street = models.CharField(max_length=500)
+    city = models.CharField(max_length=500)
+    state = models.CharField(max_length=500)
+    country = models.CharField(max_length=500)
+    pincode = models.IntegerField()
 
     class Meta:
         db_table = "address"

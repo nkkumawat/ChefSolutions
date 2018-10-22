@@ -20,6 +20,7 @@ from .views import homepage
 
 urlpatterns = [
     path('', homepage, name="index"),
+    path('auth/', include('social_django.urls', namespace='social')),
     path('customer/', include('customer.urls')),
     path('admin/', admin.site.urls),
     path('error/', include('Error.urls')),

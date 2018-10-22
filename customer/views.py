@@ -214,12 +214,21 @@ def updateProfile(request):
     data['message'] = ""
     if 'customer_id' in request.session:
         if request.method == "POST":
-            add = request.POST['address']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            country = request.POST['country']
+            pincode = request.POST['pincode']
             dob = request.POST['dob']
+
             address = Address()
             address.customer_id = Customers.objects.filter(
                 id=request.session['customer_id'])[0]
-            address.address = add
+            address.street = street
+            address.city = city
+            address.state = state
+            address.country = country
+            address.pincode = pincode
             address.save()
 
             customer = Customers.objects.filter(

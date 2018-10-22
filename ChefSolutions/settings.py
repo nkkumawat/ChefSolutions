@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '3y#)ms%-_28wu8u@m7atqoj_99ccg$v_8*37c_0-&tb1!gi+dt'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '824198469010-uce6pok9i8s95km8ev7jhcjbe102a3no.apps.googleusercontent.com'  # Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qzu2RfP6ZWednIKKbM2m7hCd'  # Paste Secret Key
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -37,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#     our apps
+    'social_django',
     'customer',
     'cart',
     'products',
@@ -69,6 +72,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -106,6 +111,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'social_core.backends.facebook.FacebookOAuth2',  # for Facebook authentication
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -134,3 +148,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'delispices987@gmail.com'
 EMAIL_HOST_PASSWORD = 'spicesDeli123'
 EMAIL_PORT = 587
+
+LOGIN_URL = 'customer/login'
+LOGOUT_URL = 'customer/logout'
+LOGIN_REDIRECT_URL = 'customer/profile'
