@@ -11,10 +11,20 @@ data = {
 
 
 def allProducts(request):
-    products = Products.objects.all()
+    if request.GET['category'] != 'none':
+        products = Products.objects.filter(category=request.GET['category'])
+    else:
+        products = Products.objects.all()
     data = getResponses.getResponse(request)
     data['products'] = products
 
+    allCategories = Products.objects.only('category')
+    uniqueCategories = []
+    for category in allCategories:
+        if category.category not in uniqueCategories:
+            uniqueCategories.append(category.category)
+
+    data['categories'] = uniqueCategories
     return render(request, "products/products.html", data)
 
 

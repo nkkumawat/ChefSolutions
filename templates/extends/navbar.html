@@ -6,7 +6,8 @@
             <ul class="left hide-on-med-and-down nav-links">
                 <li><a class="change-color" href="{% url 'index' %}">Home</a></li>
                 <li><a class="change-color" href="badges.html">About Us</a></li>
-                <li><a class="change-color" href="{% url 'products:all_products' %} ">Our Products</a></li>
+                <li><a class="change-color" href="{% url 'products:all_products' %}?category={{ 'none' | urlencode }} ">Our
+                        Products</a></li>
                 <li><a class="change-color" href="mobile.html">Why Cs</a></li>
                 <li><a class="change-color" href="mobile.html">Shop</a></li>
                 <li><a class="change-color" href="mobile.html">Distributors</a></li>
