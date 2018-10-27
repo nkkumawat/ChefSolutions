@@ -12,9 +12,15 @@ data = {
 
 def allProducts(request):
     if request.GET['category'] != 'none':
-        products = Products.objects.filter(category=request.GET['category'])
+        if  request.GET['category'] == 'vegetarian':
+            products = Products.objects.filter(is_vegetarian=True)
+        elif request.GET['category'] == 'low_fat':
+            products = Products.objects.filter(fat__lte = 5)
+        else: # last for low sugar
+            products = Products.objects.filter(sugar__lte=5)
     else:
         products = Products.objects.all()
+
     data = getResponses.getResponse(request)
     data['products'] = products
 

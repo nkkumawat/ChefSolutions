@@ -11,7 +11,7 @@ class Products(models.Model):
     energy = models.FloatField()  # Kcal
     protein = models.FloatField()  # gram
     carbohydrates = models.FloatField()  # gram
-    suger = models.FloatField()  # gram
+    sugar = models.FloatField()  # gram
     fat = models.FloatField()  # gram
     available_qty = models.IntegerField()  # how many packets are available
     # for

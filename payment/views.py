@@ -11,59 +11,63 @@ import traceback
 import hashlib
 from random import randint
 from django.views.decorators.csrf import csrf_exempt
-from .constants import PAID_FEE_AMOUNT, PAYMENT_URL_LIVE, PAYMENT_URL_TEST, PAID_FEE_PRODUCT_INFO
-from .constants import SERVICE_PROVIDER
-
+from .constants import PAYMENT_URL_TEST, PAID_FEE_PRODUCT_INFO
+from .constants import SERVICE_PROVIDER , TEST_MERCHANT_KEY ,TEST_MERCHANT_SALT
+from cart.models import Cart
+from customer.models import Customers
 
 def payment(request):
-    data = {}
-    txnid = get_transaction_id()
-    hash_ = generate_hash(request, txnid)
-    hash_string = get_hash_string(request, txnid)
-    # use constants file to store constant values.
-    # use test URL for testing
-    data["action"] = PAYMENT_URL_TEST
-    data["amount"] = float(PAID_FEE_AMOUNT)
-    data["productinfo"] = PAID_FEE_PRODUCT_INFO
-    data["key"] = "UeAZKpo8"
-    data["txnid"] = txnid
-    data["hash"] = hash_
-    data["hash_string"] = hash_string
-    data["firstname"] = "nk"
-    data["email"] = "nk@nk.com"
-    data["phone"] = "9660729583"
-    data["service_provider"] = SERVICE_PROVIDER
-    data["furl"] = "http://localhost:8000/paymentfail"
-    data["surl"] = "http://localhost:8000/paymentsuccess"
+    if 'customer_id' in request.session:
+        cart_details = Cart.objects.filter(customer_id=request.session['customer_id'], is_purchased=False)
+        total_price = 0.0
+        for cart in cart_details:
+            total_price += cart.quantity * cart.product_id.price
 
-    return render(request, "payment/payment.html", data)
+        customer = Customers.objects.filter(id=request.session['customer_id'])[0]
+        # print(customer.name)
+        data = {}
+        txnid = get_transaction_id()
+        hash = generate_hash(request, txnid,total_price, customer.name.split(" ")[0], customer.email)
+        # hash_string = get_hash_string(request, txnid, total_price, customer.name, customer.email)
+
+        # use test URL for testing
+        data["action"] = PAYMENT_URL_TEST
+        data["amount"] = float(total_price)
+        data["productinfo"] = "info"
+        data["key"] = TEST_MERCHANT_KEY
+        data["txnid"] = txnid
+        data["hash"] = hash
+        data["firstname"] = customer.name.split(" ")[0]
+        data["email"] = customer.email
+        data["phone"] = customer.mobile
+        data["service_provider"] = SERVICE_PROVIDER
+        data["furl"] = request.build_absolute_uri(reverse("payment:payment_failure"))
+        data["surl"] = request.build_absolute_uri(reverse("payment:payment_success"))
+        return render(request, "payment/payment.html", data)
+    else:
+         return redirect('error:error')
+
 
 
 # generate the hash
-def generate_hash(request, txnid):
+def generate_hash(request, txnid , total_price, name, email):
     try:
-        # get keys and SALT from dashboard once account is created.
-        # hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10"
-        hash_string = get_hash_string(request, txnid)
+        hash_string = get_hash_string(request, txnid, total_price, name, email)
         generated_hash = hashlib.sha512(
             hash_string.encode('utf-8')).hexdigest().lower()
         return generated_hash
     except Exception as e:
-        # log the error here.
-        logging.getLogger("error_logger").error(traceback.format_exc())
+        print(e)
         return None
 
-
-# create hash string using all the fields
-def get_hash_string(request, txnid):
-    hash_string = "UeAZKpo8" + "|" + txnid + "|" + str(
-        float(PAID_FEE_AMOUNT)) + "|" + PAID_FEE_PRODUCT_INFO + "|"
-    hash_string += "nk" + "|" + "nk@nk.com" + "|"
-    hash_string += "||||||||||" + "OpMuojF2Xs"
+def get_hash_string(request, txnid , total_price, name, email):
+    hash_string = TEST_MERCHANT_KEY + "|" + txnid + "|" + str(
+        float(total_price)) + "|" + "info" + "|"
+    hash_string += name + "|" + email + "|"
+    hash_string += "||||||||||" + TEST_MERCHANT_SALT
     return hash_string
 
 
-# generate a random transaction Id.
 def get_transaction_id():
     hash_object = hashlib.sha256(str(randint(0, 9999)).encode("utf-8"))
     # take approprite length
@@ -76,6 +80,7 @@ def get_transaction_id():
 @csrf_exempt
 def payment_success(request):
     data = {}
+    print(str(data))
     return render(request, "payment/paymentsuccess.html", data)
 
 
@@ -83,4 +88,5 @@ def payment_success(request):
 @csrf_exempt
 def payment_failure(request):
     data = {}
+    print(str(data))
     return render(request, "payment/paymentfail.html", data)
