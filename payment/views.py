@@ -6,8 +6,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-import logging
-import traceback
+
 import hashlib
 from random import randint
 from django.views.decorators.csrf import csrf_exempt
@@ -15,8 +14,10 @@ from .constants import PAYMENT_URL_TEST, PAID_FEE_PRODUCT_INFO
 from .constants import SERVICE_PROVIDER , TEST_MERCHANT_KEY ,TEST_MERCHANT_SALT
 from cart.models import Cart
 from customer.models import Customers
+from .models import Payment
 
 def payment(request):
+    print(request.session['customer_id'])
     if 'customer_id' in request.session:
         cart_details = Cart.objects.filter(customer_id=request.session['customer_id'], is_purchased=False)
         total_price = 0.0
@@ -27,9 +28,9 @@ def payment(request):
         # print(customer.name)
         data = {}
         txnid = get_transaction_id()
-        hash = generate_hash(request, txnid,total_price, customer.name.split(" ")[0], customer.email)
+        hash = generate_hash(request, txnid,total_price, customer.name.split(" ")[0], customer.email , customer.id)
         # hash_string = get_hash_string(request, txnid, total_price, customer.name, customer.email)
-
+        # print(hash)
         # use test URL for testing
         data["action"] = PAYMENT_URL_TEST
         data["amount"] = float(total_price)
@@ -43,6 +44,7 @@ def payment(request):
         data["service_provider"] = SERVICE_PROVIDER
         data["furl"] = request.build_absolute_uri(reverse("payment:payment_failure"))
         data["surl"] = request.build_absolute_uri(reverse("payment:payment_success"))
+        data["udf1"] = request.session["customer_id"]
         return render(request, "payment/payment.html", data)
     else:
          return redirect('error:error')
@@ -50,9 +52,9 @@ def payment(request):
 
 
 # generate the hash
-def generate_hash(request, txnid , total_price, name, email):
+def generate_hash(request, txnid , total_price, name, email , customer_id):
     try:
-        hash_string = get_hash_string(request, txnid, total_price, name, email)
+        hash_string = get_hash_string(request, txnid, total_price, name, email, customer_id)
         generated_hash = hashlib.sha512(
             hash_string.encode('utf-8')).hexdigest().lower()
         return generated_hash
@@ -60,11 +62,11 @@ def generate_hash(request, txnid , total_price, name, email):
         print(e)
         return None
 
-def get_hash_string(request, txnid , total_price, name, email):
+def get_hash_string(request, txnid , total_price, name, email, customer_id):
     hash_string = TEST_MERCHANT_KEY + "|" + txnid + "|" + str(
         float(total_price)) + "|" + "info" + "|"
-    hash_string += name + "|" + email + "|"
-    hash_string += "||||||||||" + TEST_MERCHANT_SALT
+    hash_string += name + "|" + email + "|" + str(customer_id) + "|"
+    hash_string += "|||||||||" + TEST_MERCHANT_SALT
     return hash_string
 
 
@@ -75,18 +77,78 @@ def get_transaction_id():
     return txnid
 
 
-# no csrf token require to go to Success page.
-# This page displays the success/confirmation message to user indicating the completion of transaction.
 @csrf_exempt
 def payment_success(request):
     data = {}
     print(str(data))
-    return render(request, "payment/paymentsuccess.html", data)
+    if request.method == "POST":
+        payment = Payment()
+
+        payment.mode = request.POST['mode']
+        payment.hash = request.POST['hash']
+        payment.status = request.POST['status']
+        payment.txnid = request.POST['txnid']
+        payment.amount = request.POST['amount']
+        payment.bank_ref_num = request.POST['bank_ref_num']
+        payment.mihpayid = request.POST['mihpayid']
+        payment.pg_type = request.POST['PG_TYPE']
+        payment.productinfo = request.POST['productinfo']
+        payment.error = request.POST['error']
+
+        payment.card_category = request.POST['cardCategory']
+        payment.discount = request.POST['discount']
+        payment.net_amount_debit = request.POST['net_amount_debit']
+        payment.payment_source = request.POST['payment_source']
+        payment.bank_code = request.POST['bankcode']
+        payment.error_message = request.POST['error_Message']
+        payment.card_num = request.POST['cardnum']
+        payment.name_on_card = request.POST['name_on_card']
+        payment.cardhash = request.POST['cardhash']
+        payment.issuing_bank = request.POST['issuing_bank']
+        payment.card_type = request.POST['card_type']
+        payment.customer_id = Customers.objects.filter(id=request.POST['udf1'])[0]
+
+        payment.save()
+        return render(request, "payment/paymentsuccess.html", data)
+
+    return redirect('error:error')
 
 
-# no csrf token require to go to Failure page. This page displays the message and reason of failure.
 @csrf_exempt
 def payment_failure(request):
     data = {}
     print(str(data))
-    return render(request, "payment/paymentfail.html", data)
+    if request.method == "POST":
+        payment = Payment()
+
+        payment.mode = request.POST['mode']
+        payment.hash = request.POST['hash']
+        payment.status = request.POST['status']
+        payment.txnid = request.POST['txnid']
+        payment.amount = request.POST['amount']
+        payment.bank_ref_num = request.POST['bank_ref_num']
+        payment.mihpayid= request.POST['mihpayid']
+        payment.pg_type = request.POST['PG_TYPE']
+        payment.productinfo = request.POST['productinfo']
+        payment.error = request.POST['error']
+
+        payment.card_category = request.POST['cardCategory']
+        payment.discount = request.POST['discount']
+        payment.net_amount_debit = request.POST['net_amount_debit']
+        payment.payment_source = request.POST['payment_source']
+        payment.bank_code = request.POST['bankcode']
+        payment.error_message = request.POST['error_Message']
+        payment.card_num = request.POST['cardnum']
+        payment.name_on_card = request.POST['name_on_card']
+        payment.cardhash = request.POST['cardhash']
+        payment.issuing_bank = request.POST['issuing_bank']
+        payment.card_type = request.POST['card_type']
+        payment.customer_id = Customers.objects.filter(id = request.POST['udf1'])[0]
+
+
+
+
+        payment.save()
+        return render(request, "payment/paymentfail.html", data)
+
+    return redirect('error:error')

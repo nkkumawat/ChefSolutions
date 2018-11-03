@@ -20,7 +20,7 @@ from .views import payment, payment_success, payment_failure
 app_name = 'payment'
 urlpatterns = [
     path('', payment, name="payment"),
-    path('payment_seccess', payment_success, name="payment_success"),
+    path('payment_success', payment_success, name="payment_success"),
     path('payment_failure', payment_failure, name="payment_failure"),
 
 ]
