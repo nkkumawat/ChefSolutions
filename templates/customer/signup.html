@@ -1,40 +1,62 @@
 {% extends '../extends/main.html' %}
 {% load static %}
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
 {% endblock styles %}
 
 {% block content %}
-<div class="container">
-    <div class="row form-container">
-        <h3 class="white-text">SIGNUP FORM</h3>
+<div class="top-image">
+    <div class="first center-align">
+        <span>
+            Your
+        </span>
+    </div>
+    <div class="second center-align">
+        <span>
+            Cart
+        </span>
+    </div>
+</div>
 
+<div class="row form-container card-panel">
+    <div class="col s12 m5">
+        <h6 class="heading">Already a Customer</h6>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore molestiae ullam placeat nobis nesciunt quos delectus illo, sequi voluptatibus ut, iste earum excepturi veniam, quis non. Ipsa impedit quam error.
+        </p>
+        <a class="btn z-depth-0 login-btn" href="{% url 'customer:login' %}">Login</a>
+    </div>
+    <div class="col s0 m1"></div>
+
+    <div class="col s12 m5">
+        <h6 class="heading">SIGNUP FORM</h6>
+
+        <p>Sign Up to create a new account and enjoy our service</p>
+    
         {% if message %}
-        <div class="col s12 red white-text section" style="margin: 10px;">
+        <div class="red center-align white-text" style="margin: 10px;border-radius: 4px;">
             <p>
                 {{ message }}
             </p>
         </div>
         {% endif %}
-
+    
         <form method="post"> {% csrf_token %}
-            <div class="input-field col s12">
-                <input name="name" type="text" id="name" />
-                <label for="name">Enter Your Name</label>
-            </div>
-            <div class="input-field col s12">
-                <input name="email" id="email" type="email" />
-                <label for="email">Enter Your Email</label>
-            </div>
-            <div class="input-field col s12">
-                <input name="mobile" type="number" id="number" />
-                <label for="number">Enter Your Number</label>
-            </div>
-            <div class="input-field col s12">
-                <input name="password" type="password" id="password" />
-                <label for="password">Enter Your Password</label>
-            </div>
-            <input class="btn" type="submit" value="Submit" />
+            <label for="name">Enter Your Name</label>
+            <input class="my-form" name="name" type="text" id="name" />
+                
+            <label for="email">Enter Your Email</label>
+            <input class="my-form" name="email" id="email" type="email" />
+    
+            <label for="number">Enter Your Number</label>
+            <input class="my-form" name="mobile" type="number" id="number" />
+    
+            
+            <label for="password">Enter Your Password</label>
+            <input class="my-form" name="password" type="password" id="password" />
+            
+            <input class="btn z-depth-0 login-btn" type="submit" value="Submit" />
         </form>
     </div>
 </div>

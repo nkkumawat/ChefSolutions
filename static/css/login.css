@@ -1,14 +1,29 @@
-.form-container {
-    background-color: grey;
-    padding: 50px;
-    padding-bottom: 30px;
+.form-container{
+    margin: 10px;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
-input {
-    color: white;
+.heading{
+    border-bottom: 2px solid grey;
 }
 
-.input-field label {
+.login-btn{
+    background: white;
+    color: black;
+    border: 1px solid #222222;
+    transition: 0.5s;
+}
+
+.login-btn:hover{
+    background: rgba(237, 101, 99, 0.80);
     color: white;
+    border: 1px solid #ed6663;
+}
+
+.my-form{
+    border: 1px solid grey !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    height: 30px !important;
 }

@@ -2,42 +2,61 @@
 {% load static %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
 {% endblock styles %}
 
 {% block content %}
-<div class="container">
-    <div class="row form-container">
-        <h3 class="white-text center-align">LOGIN FORM</h3>
-
-        {% if message %}
-        <div class="col s12 red white-text section" style="margin: 10px;">
-            <p>
-                {{ message }}
-            </p>
-        </div>
-        {% endif %}
-
-        <form method="post">
-            <div class="input-field col s12">
-                <input name="email" type="email" id="email" />
-                <label for="email">Enter Your Email</label>
-            </div>
-            <div class="input-field col s12">
-                <input name="password" type="password" id="password" />
-                <label for="password">Enter Your Password</label>
-            </div>
-            {% csrf_token %}
-            <input class="btn" type="submit" value="Submit" />
-        </form>
-
-        <div class="col s12 m6 center-align">
-            <h4><a class="white-text" href="{% url 'customer:signup' %}">Signup</a></h4>
-            <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
-        </div>
-        <div class="col s12 m6 center-align">
-            <h4><a class="white-text" href="{% url 'customer:forgot' %}">Forgot Password</a></h4>
-        </div>
+<div class="top-image">
+    <div class="first center-align">
+        <span>
+            Your
+        </span>
     </div>
+    <div class="second center-align">
+        <span>
+            Cart
+        </span>
+    </div>
+</div>
+
+<div class="row form-container card-panel">
+    <div class="col s12 m5">
+        <h6 class="heading">New Customer</h6>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore molestiae ullam placeat nobis nesciunt quos delectus illo, sequi voluptatibus ut, iste earum excepturi veniam, quis non. Ipsa impedit quam error.
+        </p>
+        <a class="btn z-depth-0 login-btn" href="{% url 'customer:signup' %}">Signup</a>
+            {% comment %} <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a> {% endcomment %}
+    </div>
+
+    <div class="col s0 m1"></div>
+
+    <div class="col s12 m5">
+            <h6 class="heading">LOGIN FORM</h6>
+
+            <p>If you have an account with us, please login.</p>
+            {% if message %}
+            <div class="red center-align white-text" style="margin: 10px;border-radius: 4px;">
+                <p>
+                    {{ message }}
+                </p>
+            </div>
+            {% endif %}
+    
+            <form method="post">
+                <label for="email">Enter Your Email</label>
+                <input class="my-form" name="email" type="email" id="email" />
+
+
+                <label for="password">Enter Your Password</label>
+                <input class="my-form" name="password" type="password" id="password" />
+                {% csrf_token %}
+                <input class="btn z-depth-0 login-btn" type="submit" value="Submit" />
+                <a class="btn z-depth-0 login-btn" href="{% url 'customer:forgot' %}">Forgot Password</a>
+            </form>
+    </div>
+
+    <div class="col s0 m1"></div>
 </div>
 
 
