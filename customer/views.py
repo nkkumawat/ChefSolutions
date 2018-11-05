@@ -29,6 +29,7 @@ def login(request):
                     if check_password(password, customer[0].password):
                         if customer[0].is_active:
                             request.session['customer_id'] = customer[0].id
+                            print(customer[0].id)
                             if 'temp_customer_id' in request.session:
                                 cart = Cart.objects.filter(
                                     temp_customer_id=request.session['temp_customer_id'])
@@ -60,7 +61,6 @@ def login(request):
 def signup(request):
     data['message'] = ""
     if 'customer_id' not in request.session:
-
         if request.method == 'POST':
             signupform = signUpForm(request.POST)
             if signupform.is_valid():

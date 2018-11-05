@@ -3,56 +3,49 @@ from django.shortcuts import render, reverse
 # Create your views here.
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-
 import hashlib
 from random import randint
 from django.views.decorators.csrf import csrf_exempt
 from .constants import PAYMENT_URL_TEST, PAID_FEE_PRODUCT_INFO
-from .constants import SERVICE_PROVIDER , TEST_MERCHANT_KEY ,TEST_MERCHANT_SALT
+from .constants import SERVICE_PROVIDER, TEST_MERCHANT_KEY, TEST_MERCHANT_SALT
 from cart.models import Cart
 from customer.models import Customers
 from .models import Payment
+from order.models import Orders
+
 
 def payment(request):
-    print(request.session['customer_id'])
     if 'customer_id' in request.session:
         cart_details = Cart.objects.filter(customer_id=request.session['customer_id'], is_purchased=False)
-        total_price = 0.0
-        for cart in cart_details:
-            total_price += cart.quantity * cart.product_id.price
-
-        customer = Customers.objects.filter(id=request.session['customer_id'])[0]
-        # print(customer.name)
-        data = {}
-        txnid = get_transaction_id()
-        hash = generate_hash(request, txnid,total_price, customer.name.split(" ")[0], customer.email , customer.id)
-        # hash_string = get_hash_string(request, txnid, total_price, customer.name, customer.email)
-        # print(hash)
-        # use test URL for testing
-        data["action"] = PAYMENT_URL_TEST
-        data["amount"] = float(total_price)
-        data["productinfo"] = "info"
-        data["key"] = TEST_MERCHANT_KEY
-        data["txnid"] = txnid
-        data["hash"] = hash
-        data["firstname"] = customer.name.split(" ")[0]
-        data["email"] = customer.email
-        data["phone"] = customer.mobile
-        data["service_provider"] = SERVICE_PROVIDER
-        data["furl"] = request.build_absolute_uri(reverse("payment:payment_failure"))
-        data["surl"] = request.build_absolute_uri(reverse("payment:payment_success"))
-        data["udf1"] = request.session["customer_id"]
-        return render(request, "payment/payment.html", data)
+        if cart_details.__len__() == 0:
+            return render(request, "payment/noitemsincart.html")
+        else:
+            total_price = 0.0
+            for cart in cart_details:
+                total_price += cart.quantity * cart.product_id.price
+            customer = Customers.objects.filter(id=request.session['customer_id'])[0]
+            data = {}
+            txnid = get_transaction_id()
+            hash = generate_hash(request, txnid, total_price, customer.name.split(" ")[0], customer.email, customer.id)
+            data["action"] = PAYMENT_URL_TEST
+            data["amount"] = float(total_price)
+            data["productinfo"] = "info"
+            data["key"] = TEST_MERCHANT_KEY
+            data["txnid"] = txnid
+            data["hash"] = hash
+            data["firstname"] = customer.name.split(" ")[0]
+            data["email"] = customer.email
+            data["phone"] = customer.mobile
+            data["service_provider"] = SERVICE_PROVIDER
+            data["furl"] = request.build_absolute_uri(reverse("payment:payment_failure"))
+            data["surl"] = request.build_absolute_uri(reverse("payment:payment_success"))
+            data["udf1"] = request.session["customer_id"]
+            return render(request, "payment/payment.html", data)
     else:
-         return redirect('error:error')
+        return redirect('error:error')
 
 
-
-# generate the hash
-def generate_hash(request, txnid , total_price, name, email , customer_id):
+def generate_hash(request, txnid, total_price, name, email, customer_id):
     try:
         hash_string = get_hash_string(request, txnid, total_price, name, email, customer_id)
         generated_hash = hashlib.sha512(
@@ -62,7 +55,8 @@ def generate_hash(request, txnid , total_price, name, email , customer_id):
         print(e)
         return None
 
-def get_hash_string(request, txnid , total_price, name, email, customer_id):
+
+def get_hash_string(request, txnid, total_price, name, email, customer_id):
     hash_string = TEST_MERCHANT_KEY + "|" + txnid + "|" + str(
         float(total_price)) + "|" + "info" + "|"
     hash_string += name + "|" + email + "|" + str(customer_id) + "|"
@@ -72,7 +66,6 @@ def get_hash_string(request, txnid , total_price, name, email, customer_id):
 
 def get_transaction_id():
     hash_object = hashlib.sha256(str(randint(0, 9999)).encode("utf-8"))
-    # take approprite length
     txnid = hash_object.hexdigest().lower()[0:32]
     return txnid
 
@@ -83,7 +76,6 @@ def payment_success(request):
     print(str(data))
     if request.method == "POST":
         payment = Payment()
-
         payment.mode = request.POST['mode']
         payment.hash = request.POST['hash']
         payment.status = request.POST['status']
@@ -94,7 +86,6 @@ def payment_success(request):
         payment.pg_type = request.POST['PG_TYPE']
         payment.productinfo = request.POST['productinfo']
         payment.error = request.POST['error']
-
         payment.card_category = request.POST['cardCategory']
         payment.discount = request.POST['discount']
         payment.net_amount_debit = request.POST['net_amount_debit']
@@ -107,10 +98,23 @@ def payment_success(request):
         payment.issuing_bank = request.POST['issuing_bank']
         payment.card_type = request.POST['card_type']
         payment.customer_id = Customers.objects.filter(id=request.POST['udf1'])[0]
-
         payment.save()
-        return render(request, "payment/paymentsuccess.html", data)
 
+        orders = Orders()
+        cart_details = Cart.objects.filter(customer_id=request.POST['udf1'], is_purchased=False)
+        cart_ids = ""
+        for cart in cart_details:
+            cart_ids += str(cart.id) + "$"
+        orders.cart_id = cart_ids
+        orders.customer_id = Customers.objects.filter(id=request.POST['udf1'])[0]
+        orders.total_price = request.POST['amount']
+        orders.payment_mode = request.POST['mode']
+        orders.is_payment_done = True
+        orders.payment_id = Payment.objects.filter(txnid=request.POST['txnid'],
+                                                   customer_id=Customers.objects.filter(id=request.POST['udf1'])[0])[0]
+        orders.save()
+        cart_details.update(is_purchased=True)
+        return render(request, "payment/paymentsuccess.html", data)
     return redirect('error:error')
 
 
@@ -120,18 +124,16 @@ def payment_failure(request):
     print(str(data))
     if request.method == "POST":
         payment = Payment()
-
         payment.mode = request.POST['mode']
         payment.hash = request.POST['hash']
         payment.status = request.POST['status']
         payment.txnid = request.POST['txnid']
         payment.amount = request.POST['amount']
         payment.bank_ref_num = request.POST['bank_ref_num']
-        payment.mihpayid= request.POST['mihpayid']
+        payment.mihpayid = request.POST['mihpayid']
         payment.pg_type = request.POST['PG_TYPE']
         payment.productinfo = request.POST['productinfo']
         payment.error = request.POST['error']
-
         payment.card_category = request.POST['cardCategory']
         payment.discount = request.POST['discount']
         payment.net_amount_debit = request.POST['net_amount_debit']
@@ -143,11 +145,7 @@ def payment_failure(request):
         payment.cardhash = request.POST['cardhash']
         payment.issuing_bank = request.POST['issuing_bank']
         payment.card_type = request.POST['card_type']
-        payment.customer_id = Customers.objects.filter(id = request.POST['udf1'])[0]
-
-
-
-
+        payment.customer_id = Customers.objects.filter(id=request.POST['udf1'])[0]
         payment.save()
         return render(request, "payment/paymentfail.html", data)
 
