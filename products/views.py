@@ -42,3 +42,5 @@ def prductDetail(request, pid):
         return render(request, "products/productdetails.html", data)
     else:
         return redirect('error:error')
+
+
