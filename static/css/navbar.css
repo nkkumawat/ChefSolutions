@@ -1,10 +1,10 @@
 nav {
-    background-color: black;
+    background-color: #88be4c;
     transition: 0.5s;
 }
 
-.nav-links {
-    padding: 10px;
+.nav-links{
+    padding-top: 0px;
 }
 
 .change-color {

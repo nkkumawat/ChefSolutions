@@ -12,8 +12,12 @@ Chef's Solution
 
 {% block content %}
 <div class="first">
-    <div class="welcome center-align">Welcome</div>
-    <div class="solution center-align">THE CHEF'S SOLUTION</div>
+    <div class="welcome center-align">
+        <span>Welcome</span>
+    </div>
+    <div class="solution center-align">
+        <span>THE CHEF'S SOLUTION</span>
+    </div>
 </div>
 <div class="down-arrow">
     <div class="arrow"></div>
@@ -21,46 +25,51 @@ Chef's Solution
 
 <div class="second section">
     <div class="row container">
-        <div class="col s6 center-align">
-            <h1>Discover</h1>
-            <p class="flow-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil porro voluptatem blanditiis
-                et consequatur modi delectus debitis soluta perferendis est sapiente, veniam alias
-                necessitatibus explicabo repudiandae numquam cumque voluptate!
-            </p>
-        </div>
-        <div class="col s6 center align">
-            <img src="{% static 'images/black.jpg' %}" alt="">
-        </div>
-    </div>
-</div>
-
-<div class="parallax-container">
-    <div class="parallax"><img src="{% static 'images/black.jpg' %}"></div>
-</div>
-
-<div class="section white third">
-    <div class="row container center-align">
-        <div class="col s12 m6">
-            <img src="{% static 'images/black.jpg' %}" alt="">
-        </div>
-        <div class="col s12 m6 center-align">
-            <h1>Discover</h1>
-            <h2>Menu</h2>
-            <p class="flow-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis eos aliquid unde fuga, amet
-                laudantium odio necessitatibus atque, vero maxime dolorem in hic. Repellendus quasi dignissimos
-                sint accusantium, repudiandae vero.
-            </p>
+        <div class="col s12 card-panel">
+            <div class="row">
+                <div class="col s12 m6">
+                    <span>Discover</span>
+                    <p class="flow-text center-align">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil porro voluptatem blanditiis
+                        et consequatur modi delectus debitis soluta perferendis est sapiente, veniam alias
+                        necessitatibus explicabo repudiandae numquam cumque voluptate!
+                    </p>
+                </div>
+                <div class="col s12 m6 bgimage">
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="parallax-container">
-    <div class="parallax"><img src="{% static 'images/black.jpg' %}"></div>
+    <div class="parallax"><img src="{% static 'images/4.jpg' %}"></div>
 </div>
 
-<footer class="page-footer">
+<div class="second section">
+        <div class="row container">
+            <div class="col s12 card-panel">
+                <div class="row">
+                    <div class="col s12 m6">
+                        <span>Discover</span>
+                        <p class="flow-text center-align">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil porro voluptatem blanditiis
+                            et consequatur modi delectus debitis soluta perferendis est sapiente, veniam alias
+                            necessitatibus explicabo repudiandae numquam cumque voluptate!
+                        </p>
+                    </div>
+                    <div class="col s12 m6 bgimage">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="parallax-container">
+    <div class="parallax"><img src="{% static 'images/5.jpg' %}"></div>
+</div>
+
+<footer class="page-footer grey darken-3">
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
