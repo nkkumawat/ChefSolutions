@@ -12,89 +12,56 @@ Chef's Solution
 
 {% block content %}
 <div class="first">
-    <div class="welcome center-align">Welcome</div>
-    <div class="solution center-align">THE CHEF'S SOLUTION</div>
+    <div class="welcome center-align">
+        <span>Welcome</span>
+    </div>
+    <div class="solution center-align">
+        <span>THE CHEF'S SOLUTION</span>
+    </div>
 </div>
 <div class="down-arrow">
     <div class="arrow"></div>
 </div>
 
-<div class="second section">
+<div class="my-card section">
     <div class="row container">
-        <div class="col s6 center-align">
-            <h1>Discover</h1>
-            <p class="flow-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil porro voluptatem blanditiis
-                et consequatur modi delectus debitis soluta perferendis est sapiente, veniam alias
-                necessitatibus explicabo repudiandae numquam cumque voluptate!
-            </p>
-        </div>
-        <div class="col s6 center align">
-            <img src="{% static 'images/black.jpg' %}" alt="">
-        </div>
-    </div>
-</div>
-
-<div class="parallax-container">
-    <div class="parallax"><img src="{% static 'images/black.jpg' %}"></div>
-</div>
-
-<div class="section white third">
-    <div class="row container center-align">
-        <div class="col s12 m6">
-            <img src="{% static 'images/black.jpg' %}" alt="">
-        </div>
-        <div class="col s12 m6 center-align">
-            <h1>Discover</h1>
-            <h2>Menu</h2>
-            <p class="flow-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis eos aliquid unde fuga, amet
-                laudantium odio necessitatibus atque, vero maxime dolorem in hic. Repellendus quasi dignissimos
-                sint accusantium, repudiandae vero.
-            </p>
-        </div>
-    </div>
-</div>
-
-<div class="parallax-container">
-    <div class="parallax"><img src="{% static 'images/black.jpg' %}"></div>
-</div>
-
-<footer class="page-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer
-                    content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                </ul>
+        <div class="col s12 card-panel">
+            <div class="row">
+                <div class="col s12 m6">
+                    <span>Discover</span>
+                    <p class="flow-text center-align">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil porro voluptatem blanditiis
+                        et consequatur modi delectus debitis soluta perferendis est sapiente, veniam alias
+                        necessitatibus explicabo repudiandae numquam cumque voluptate!
+                    </p>
+                </div>
+                <div class="col s12 m6 bgimage">
+                </div>
             </div>
         </div>
     </div>
-    <div class="footer-copyright">
-        <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+</div>
+
+<div class="my-card section">
+    <div class="row container">
+        <div class="col s12 card-panel">
+            <div class="row">
+                <div class="col s12 m6">
+                    <span>Discover</span>
+                    <p class="flow-text center-align">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil porro voluptatem blanditiis
+                        et consequatur modi delectus debitis soluta perferendis est sapiente, veniam alias
+                        necessitatibus explicabo repudiandae numquam cumque voluptate!
+                    </p>
+                </div>
+                <div class="col s12 m6 bgimage">
+                </div>
+            </div>
         </div>
     </div>
-</footer>
+</div>
 {% endblock content %}
 
 {% block scripts %}
 <script src="{%static 'js/index.js'%}"></script>
 {% endblock scripts %}
-
-{% comment %} {% extends 'base/template.html' %}
-{% block content %}
-<a href="/customer/login">Login</a>
-<a href="/customer/profile">Dashboard</a>
-<a href="/products">Products</a>
-{% endblock %} {% endcomment %}

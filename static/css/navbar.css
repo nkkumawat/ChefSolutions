@@ -1,18 +1,11 @@
 nav {
-    background-color: black;
-    transition: 0.5s;
+    background-color: #88be4c;
 }
 
-.nav-links {
-    padding: 10px;
+.shopping-cart{
+    background: #ed6663;
 }
 
-.change-color {
-    transition: 0.5s;
-}
-
-@media screen and (max-width: 996px) {
-    nav {
-        padding: 0px;
-    }
+.shopping-cart:hover{
+    background: #333333;
 }

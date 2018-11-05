@@ -1,26 +1,35 @@
 <div class="navbar-fixed">
     <nav class="z-depth-0">
         <div class="nav-wrapper">
-            {% comment %} <a href="#!" class="brand-logo change-color">Chef's Solution</a> {% endcomment %}
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons change-color">menu</i></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="left hide-on-med-and-down nav-links">
-                <li><a class="change-color" href="{% url 'index' %}">Home</a></li>
-                <li><a class="change-color" href="badges.html">About Us</a></li>
-                <li><a class="change-color" href="{% url 'products:all_products' %}?category={{ 'none' | urlencode }} ">Our
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="badges.html">About Us</a></li>
+                <li><a href="{% url 'products:all_products' %}?category={{ 'none' | urlencode }} ">Our
                         Products</a></li>
-                <li><a class="change-color" href="mobile.html">Why Cs</a></li>
-                <li><a class="change-color" href="mobile.html">Shop</a></li>
-                <li><a class="change-color" href="mobile.html">Distributors</a></li>
-                <li><a class="change-color" href="mobile.html">Contact Us</a></li>
-                <li><a class="material-icons change-color" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
-                {% if customer %}
-                <li><a class="change-color" href="{% url 'customer:logout'%}">LogOut</a></li>
-                {% else %}
-                <li><a class="change-color" href="{% url 'customer:login'%}">LogIn</a></li>
-                <li><a class="change-color" href="{% url 'customer:signup'%}">SignUp</a></li>
-                {% endif %}
-                <li><a class="change-color" href="{% url 'customer:profile'%}">Dashboard</a></li>
+                <li><a href="mobile.html">Why Cs</a></li>
+                <li><a href="mobile.html">Shop</a></li>
+                <li><a href="mobile.html">Distributors</a></li>
+                <li><a href="mobile.html">Contact Us</a></li>
             </ul>
+            <ul class="right hide-on-med-and-down nav-links">
+                <li><a class="material-icons shopping-cart" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
+                {% if customer %}
+                <li><a href="{% url 'customer:logout'%}">LogOut</a></li>
+                {% else %}
+                <li><a href="{% url 'customer:login'%}">LogIn</a></li>
+                <li><a href="{% url 'customer:signup'%}">SignUp</a></li>
+                {% endif %}
+                <li><a href="{% url 'customer:profile'%}">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="navbar" id="secondNav">
+    <nav class="z-depth-1">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">The Chef's Solution</a>
         </div>
     </nav>
 </div>

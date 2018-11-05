@@ -2,20 +2,101 @@
 {% load static %}
 
 {% block styles %}
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock styles %}
 
 {% block content %}
+<div class="top-image">
+    <div class="first center-align">
+        <span>
+            Your
+        </span>
+    </div>
+    <div class="second center-align">
+        <span>
+            DashBoard
+        </span>
+    </div>
+</div>
 
-{% include "../extends/sidenav.html" %}
+<div class="profile-container">
+    <div class="row">
+        <div class="col s12 m9">
+            <div class="card-panel">
+                <h6 class="name">HELLO, {{name}}!</h6>
+                <p>This is the place where you can change account info and see what you have bought recently.</p>
 
-<div class="profile-content">
-    <h2 class="center-align">Your Profile Page</h2>
+                <h6 style="font-weight: 700; border-bottom: 1px solid #dddddd;">RECENT ORDER</h6>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ORDER #</th>
+                        <th>DATE</th>
+                        <th>ORDER TOTAL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    
+                        <div class="col s12 m6">
+                            <h6 class="name" style="margin-top: 50px;">ACCOUNT INFO</h6>
+                            <p class="sub-heading">CONTACT INFO</p>
+                            <p>{{email}}</p>
+    
+                            <p class="sub-heading">ADDRESS BOOK</p>
+                            {% if address %}
+                            {% for add in address %}
+                            <hr>
+                            <p class="address-field">{{add.street}}</p>
+                            <p class="address-field">{{add.city}}</p>
+                            <p class="address-field">{{add.state}}</p>
+                            <br>
+                            {% endfor %}
+                            {% else %}
+                            <a class="btn my-btn z-depth-0" href="#">Add a Address</a>
+                            {% endif %}
+                            
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m3">
+
+            <div class="my-card">
+                <div class="card-panel contains">
+
+                    <span>Account</span>
+                    <p>
+                      <ul class="my-link">
+                        <li><a href="{% url 'cart:cart' %}">cart</a></li>
+
+                        <li><a href="{% url 'customer:updatepassword' %}">Change Password</a></li>
+
+                        <li><a href="{% url 'customer:updateprofile' %}">Profile Update</a></li>
+
+                        <li><a href="{% url 'blog:addrecipe' %}">Add Recipe to blog</a></li>
+
+                        <li><a href="{% url 'blog:recipe' %}">Blog</a></li>
+                      </ul>  
+                    </p>
+                
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 
 {% endblock content%}
-
-{% block scripts %}
-<script src="{% static 'js/profile.js' %}"></script>
-{% endblock scripts %}
