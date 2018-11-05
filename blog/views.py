@@ -64,9 +64,8 @@ def render_to_pdf(path , params ={}):
         return HttpResponse("Error Rendering PDF", status=400)
 
 def printRecipe(request, rid):
-    recipe = Recipes.objects.filter(id= rid,is_apporved=True)[0]
-    print("gddddddddddddddddddddddddddd")
-    if recipe:
+    recipe = Recipes.objects.filter(id= rid,is_apporved=True)
+    if recipe.__len__():
         pdf = render_to_pdf('blog/printtemplate.html', {'data' : recipe})
         return HttpResponse(pdf, content_type='application/pdf')
     else:

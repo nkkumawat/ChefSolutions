@@ -9,7 +9,7 @@ class Recipes(models.Model):
     name = models.CharField(max_length=100)
     food_group = models.CharField(max_length=200) # dessert  ,baking
 
-    use_of_products = models.CharField(max_length=1000)
+    use_of_products = models.CharField(max_length=1000) #saprated by $
     ingredients = models.TextField(max_length=2000)
 #     cooking process
     cooking_process_name = models.CharField(max_length=100)

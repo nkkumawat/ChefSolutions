@@ -1,0 +1,65 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="top-image">
+    <div class="first center-align">Your</div>
+    <div class="second center-align">Cart</div>
+</div>
+
+<div class="container">
+
+    {% if order %}
+        Order Id :  {{ order.id }}<br>
+        Customer Name : {{ order.customer_id.name }}<br>
+        Customer Email : {{ order.customer_id.email }}<br>
+        Customer mobile : {{ order.customer_id.mobile }}<br>
+        Customer B2B : {{ order.customer_id.is_b2b }}<br>
+        Customer B2B : {{ order.customer_id.is_b2b }}<br>
+        <h4>Products</h4>
+        <table>
+            <thead>
+                <th>Id</th>
+                <th>Product Id</th>
+                <th>Product Name</th>
+                <th></th>
+                <th>d</th>
+                <th>d</th>
+            </thead>
+            <tbody>
+                {% for c in cart %}
+                    <tr>
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.product_id.id }}</td>
+                    <td>{{ c.product_id.name }}</td>
+                    <td>{{ c.id }}</td>
+                    {{ c.id }}
+                    {{ c.product_id.name }}
+                    </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
+    {% else %}
+    <div class="row">
+        <div class="col s12 center-align">
+            <h3>Grab Some Stuff</h3>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

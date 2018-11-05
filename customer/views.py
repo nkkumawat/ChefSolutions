@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.utils.crypto import get_random_string
 from django.core.mail import EmailMessage
@@ -14,7 +14,6 @@ data = {
     "title": "Chef Solutions",
     "message": ""
 }
-
 
 def login(request):
     data['message'] = ""
@@ -230,7 +229,6 @@ def updateProfile(request):
             address.country = country
             address.pincode = pincode
             address.save()
-
             customer = Customers.objects.filter(
                 id=request.session['customer_id'])
             customer.update(dob=dob)
@@ -240,3 +238,14 @@ def updateProfile(request):
             return render(request, "customer/updateprofile.html", data)
     else:
         return redirect("error:error")
+
+def requestForB2B(request):
+    if 'customer_id' in request.session:
+        if request.method == "POST":
+            customer_id = request.session['customer_id']
+
+            return render(request, "customer/updateprofile.html", data)
+        else:
+            return render(request, "customer/updateprofile.html", data)
+    else:
+        return Json

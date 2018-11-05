@@ -12,5 +12,5 @@ class AddressDetails(admin.ModelAdmin):
     list_display = ('id' , 'customer_id', 'street', 'city', 'state', 'country' , 'pincode')
 
 
-admin.site.register(Customers , CustomerDetails)
-admin.site.register(Address , AddressDetails)
+admin.site.register(Customers)
+admin.site.register(Address )

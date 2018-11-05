@@ -12,7 +12,8 @@ from cart.models import Cart
 from customer.models import Customers
 from .models import Payment
 from order.models import Orders
-
+from django.core.mail import EmailMessage
+import utils
 
 def payment(request):
     if 'customer_id' in request.session:
@@ -37,7 +38,7 @@ def payment(request):
             data["email"] = customer.email
             data["phone"] = customer.mobile
             data["service_provider"] = SERVICE_PROVIDER
-            data["furl"] = request.build_absolute_uri(reverse("payment:payment_failure"))
+            data["furl"] = request.build_absolute_uri(reverse("payment:payment_success"))
             data["surl"] = request.build_absolute_uri(reverse("payment:payment_success"))
             data["udf1"] = request.session["customer_id"]
             return render(request, "payment/payment.html", data)
@@ -73,7 +74,6 @@ def get_transaction_id():
 @csrf_exempt
 def payment_success(request):
     data = {}
-    print(str(data))
     if request.method == "POST":
         payment = Payment()
         payment.mode = request.POST['mode']
@@ -114,6 +114,22 @@ def payment_success(request):
                                                    customer_id=Customers.objects.filter(id=request.POST['udf1'])[0])[0]
         orders.save()
         cart_details.update(is_purchased=True)
+        customer = Customers.objects.filter(id=request.POST['udf1'])[0]
+        body = "New Order Received from user: " + customer.name + "\n "
+        body += "Email : " + str(customer.email) + "\n"
+        body += "Mobile: " + str(customer.mobile)
+
+        email = EmailMessage('Chef Solutions', body, to=utils.our_emails)
+        email.send()
+
+        body = ""
+        body += "Thanks for Choosing ChefSolutions"
+        body += "orderId: " +str(Orders.objects.filter(cart_id=cart_ids , customer_id=customer)[0].id)
+        print(body)
+
+        email = EmailMessage('Chef Solutions', body, to=[customer.email])
+        email.send()
+
         return render(request, "payment/paymentsuccess.html", data)
     return redirect('error:error')
 
