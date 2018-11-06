@@ -10,3 +10,5 @@
 
 #django's unwanted files and folders
 __pycache__/
+
+db.sqlite3
