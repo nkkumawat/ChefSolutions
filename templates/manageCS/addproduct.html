@@ -1,0 +1,62 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block content %}
+
+<br><br>
+
+<div class="container">
+    {{ massage }}
+        <form method="post" enctype="multipart/form-data" > {% csrf_token %}
+
+{#            <input type="text" hidden value="{{ product.id }}">#}
+            Name :  <input type="text" name="name"  >
+            Size : <input type="number" name="size" >
+            Price : <input type="number" name="price" >
+            B2B Price : <input type="number" name="b2b_price" >
+            Energy :  <input type="number" name="energy"  >
+            Protein : <input type="number" name="protein" >
+            Carbohydrates : <input type="number" name="carbohydrates">
+            Sugar : <input type="number" name="sugar" value="{{ product.sugar }}">
+            Fat : <input type="number" name="fat" value="{{ product.fat }}">
+            Vegetrain :
+                   <div class="switch">
+                        <label>
+                          True
+                          <input type="checkbox" name="is_vegetarian" />
+                          <span class="lever"></span>
+                          False
+                        </label>
+                    </div>
+
+            Added Msg :
+                   <div class="switch">
+                        <label>
+                          True
+                          <input type="checkbox" name="added_msg" >
+                          <span class="lever"></span>
+                          False
+                        </label>
+                    </div>
+            <br>
+            Available Qty : <input type="number" name="available_qty" >
+            Shelf Life : <input type="number" name="shelf_life"  >
+            Description : <textarea name="description" ></textarea>
+            Storage : <textarea name="storage" ></textarea>
+            Uses : <textarea name="uses"></textarea>
+            Benifits : <textarea name="benefits"></textarea>
+            Ingridients :  <textarea name="ingridients" ></textarea>
+            Directions : <textarea name="directions"></textarea>
+            Category : <input type="text"  name="category">
+            Picture1 : <input type="file"  name="picture_1"><br>
+            Picture2 : <input type="file"  name="picture_2"><br>
+            Picture3 : <input type="file"  name="picture_3"><br>
+{#            Added Date : <input type="date"  value="{{ product.added_date }}">#}
+            <input type="submit"  value="Save">
+
+
+        </form>
+
+</div><br><br><br>
+
+{% endblock content %}

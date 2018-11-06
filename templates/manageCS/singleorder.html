@@ -14,7 +14,7 @@
         Customer mobile : {{ order.customer_id.mobile }}<br>
         Customer B2B : {{ order.customer_id.is_b2b }}<br>
         {% for add in address %}
-        Customer Address : {{ add.street }} , {{ add.city }}
+        Customer Address : {{ add.street }} , {{ add.city }}, {{ add.state }}, {{ add.country }} , {{ add.pincode }}
         {% endfor %}<br>
         Total Price : {{ order.total_price }}<br>
         Send : <br>
@@ -42,24 +42,7 @@
 
             </tbody>
         </table>
-
-
-
-
-
-
-
-
-
-
-
-    {% else %}
-    <div class="row">
-        <div class="col s12 center-align">
-            <h3>Grab Some Stuff</h3>
-        </div>
-    </div>
     {% endif %}
-</div>
+</div><br><br><br>
 
 {% endblock content %}

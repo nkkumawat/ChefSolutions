@@ -3,16 +3,13 @@
 
 {% block content %}
 
-<div class="top-image">
-    <div class="first center-align">Your</div>
-    <div class="second center-align">Cart</div>
-</div>
 
 <div class="container">
     {% if orders %}
     <table>
         <thead>
             <tr>
+                <th></th>
                 <th>Customer Name</th>
                 <th>Email</th>
                 <th>Date</th>
@@ -25,8 +22,7 @@
         <tbody>
             {% for order in orders %}
             <tr>
-{#                <td><img src="/{{  c.product_id.picture_1 }}" alt="product image" width="50px" height="50px"></td>#}
-
+                <td><img src="/{{  order.customer_id.profile_pic }}" alt="image" width="50px" height="50px"></td>
                 <td>{{ order.customer_id.name }}</td>
                 <td>{{ order.customer_id.email }}</td>
                 <td>{{ order.order_date  }}</td>
@@ -35,7 +31,7 @@
                 <td>
                     <form method="post" action="/managecs/orders/single">{% csrf_token %}
                         <input name="order_id" type="number" hidden value="{{ order.id }}">
-                        <input name="submit" type="submit" class="cross" value="X">
+                        <input name="submit" type="submit" class="cross" value=">">
                     </form>
                 </td>
             </tr>
@@ -44,5 +40,6 @@
     </table>
     {% endif %}
 </div>
+    <br><br>
 
 {% endblock content %}
