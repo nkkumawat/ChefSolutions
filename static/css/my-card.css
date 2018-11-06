@@ -1,0 +1,30 @@
+.my-card .contains{
+    position: relative;
+}
+
+.my-card span{
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    height: 100px;
+    font-size: 50px;
+    color: white;
+    background: #685c88;
+    padding: 10px;
+}
+
+.my-card span::after{
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100px;
+    width: 10px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #d95451 #d95451 transparent transparent;
+}
+
+.my-card p{
+    margin-top: 100px;
+    color: #333333;
+}

@@ -3,16 +3,13 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-card.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-link.css' %}">
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
 {% endblock styles %}
 
 {% block content %}
-
-
-
-
-
-
 
 <div class="top-image">
     <div class="first center-align">
@@ -22,54 +19,53 @@
         <span>Products</span>
     </div>
 </div>
-      <div>
-        <a href="?category=vegetarian">All Vegetarian </a>
-        <a href="?category=low_fat"> Low Fat</a>
-        <a href="?category=low_sugar">Low Sugar</a>
-        <a href=""></a>
-        <a href=""></a>
-
-    </div>
 
 <div class="product-container">
     <div class="row">
         <div class="col s12 m3">
-            <h5>Categories</h5>
-            <ul>
-                {% for category in categories %}
-                <li><a href="{% url 'products:all_products' %}?category={{ category | urlencode }}">{{category}}</a></li>
-                {% endfor %}
-            </ul>
+            <div class="my-card">
+                <div class="card-panel contains">
+
+                    <span>Categories</span>
+                    <p>
+                        <ul class="my-link">
+                            <li><a href="?category=vegetarian">All Vegetarian </a></li>
+                            <li><a href="?category=low_fat"> Low Fat</a></li>
+                            <li><a href="?category=low_sugar">Low Sugar</a></li>
+                        </ul> 
+                    </p>
+                
+                </div>
+            </div>
+
         </div>
         <div class="col s12 m9">
             <div class="card-panel">
                     <div class="row">
-                
+                        <h4 class="center-align">Our Products</h4>
                         {% for product in products %}
                         <div class="col s4 m6 l4">
                             
-                            <div class="card">
+                            <div class="card z-depth-0">
                                 <div class="card-image">
                                     <a href="{% url 'products:product_details' product.id%}">
-                                        <img src="/{{  product.picture_1 }}">
+                                        <img style="border: 1px solid grey;padding: 10px;" src="/{{  product.picture_1 }}">
                                     </a>
-                                    <span class="card-title">{{ product.name }}</span>
+                                    <span class="card-title"></span>
                                 </div>
                                 <div class="card-content black-text">
-                                    <p class="flow-text">price:{{ product.price }}</p>
-                                    <hr>
-                                    <p>
-                                        {{ product.description }}
-                                    </p>
-                
+                                    <p class="center-align grey-text">{{ product.name }}</p>
+                                    <p class="flow-text center-align">${{ product.price }}</p>                
                                     <div class="input-field">
-                                        <p class="range-field red-text">
+                                        <p class="range-field grey-text">
                                             Select quantity:
                                             <input type="range" value="1" name="quantity" id="quantity{{product.id}}" min="1" max="{{ product.available_qty }}" />
                                             {% csrf_token %}
                                         </p>
                                     </div>
-                                    <button id="{{ product.id }}" class="btn green addToCart">Add To Cart</button>
+                                    <div class="center-align">
+                                        <button id="{{ product.id }}" class="btn z-depth-0 my-btn addToCart">Add To Cart</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
