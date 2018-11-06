@@ -1,0 +1,16 @@
+.product-container{
+    margin: 10px;
+}
+
+.my-card span{
+    height: 50px;
+    font-size: 30px;
+}
+
+.my-card span::after{
+    top: 50px;
+} 
+
+.my-card p {
+    margin-top: 50px;
+}

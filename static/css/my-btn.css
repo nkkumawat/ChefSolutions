@@ -1,0 +1,12 @@
+.my-btn{
+    background: white;
+    color: black;
+    border: 1px solid #222222;
+    transition: 0.5s;
+}
+
+.my-btn:hover{
+    background: rgba(237, 101, 99, 0.80);
+    color: white;
+    border: 1px solid #ed6663;
+}

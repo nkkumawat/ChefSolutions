@@ -1,0 +1,12 @@
+.my-link>li{
+    list-style-type: circle !important;
+    margin-top: 20px;
+}
+
+.my-link li a{
+    color: grey;
+}
+
+.my-link li a:hover{
+    color: #d95451;
+}
