@@ -9,6 +9,7 @@ from django.core.mail import EmailMessage
 from .forms import loginForm, signUpForm
 from .models import Customers, Address
 from cart.models import Cart
+from order.models import Orders
 
 data = {
     "title": "Chef Solutions",
@@ -102,7 +103,12 @@ def profile(request):
         data["image"] = customer[0].profile_pic
         address = Address.objects.filter(
             customer_id=Customers.objects.filter(id=request.session['customer_id'])[0])
-        data['address'] = address
+        data["address"] = address
+        my_orders = Orders.objects.filter(customer_id=customer[0])
+        print(my_orders)
+        # my_orders = Orders.objects.all()
+        # print(my_orders)
+        data["orders"] = my_orders
         return render(request, "customer/profile.html", data)
     else:
         return redirect('customer:login')
@@ -239,13 +245,13 @@ def updateProfile(request):
     else:
         return redirect("error:error")
 
-def requestForB2B(request):
-    if 'customer_id' in request.session:
-        if request.method == "POST":
-            customer_id = request.session['customer_id']
-
-            return render(request, "customer/updateprofile.html", data)
-        else:
-            return render(request, "customer/updateprofile.html", data)
-    else:
-        return Json
+# def requestForB2B(request):
+#     if 'customer_id' in request.session:
+#         if request.method == "POST":
+#             customer_id = request.session['customer_id']
+#
+#             return render(request, "customer/updateprofile.html", data)
+#         else:
+#             return render(request, "customer/updateprofile.html", data)
+#     else:
+#         return Json

@@ -1,0 +1,55 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+    <a href="products/add" > Add Product +</a>
+    {% if products %}
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>B2B price</th>
+                <th>Vegetarian</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><img src="/{{  product.picture_1 }}" alt="image" width="50px" height="50px"></td>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.size }}</td>
+                <td>{{ product.price  }}</td>
+                <td>{{ product.b2b_price }}</td>
+                <td>{{ product.is_vegetarian }}</td>
+                <td>
+                    <form method="post" action="/managecs/products/single">{% csrf_token %}
+                        <input name="product_id" type="number" hidden value="{{ product.id }}">
+                        <input name="submit" type="submit" class="cross" value=">">
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/managecs/products/delete">{% csrf_token %}
+                        <input name="product_id" type="number" hidden value="{{ product.id }}">
+                        <input name="submit" type="submit" class="cross" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+    <br><br>
+
+{% endblock content %}

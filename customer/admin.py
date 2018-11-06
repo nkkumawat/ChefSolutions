@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Customers , Address
+from .models import Customers , Address, RequestForB2B
 # Register your models here.
 
 class CustomerDetails(admin.ModelAdmin):
@@ -14,3 +14,4 @@ class AddressDetails(admin.ModelAdmin):
 
 admin.site.register(Customers)
 admin.site.register(Address )
+admin.site.register(RequestForB2B )

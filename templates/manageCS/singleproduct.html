@@ -1,0 +1,42 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block content %}
+
+<br><br>
+
+<div class="container">
+
+    {% if product %}
+        <form> {% csrf_token %}
+            <input type="text" hidden value="{{ product.id }}">
+            Name :  <input type="text" name="name"  value="{{ product.name }}">
+            Size : <input type="number" name="size" value="{{ product.size }}">
+            Price : <input type="number" name="price" value="{{ product.price }}">
+            B2B Price : <input type="number" name="b2b_price" value="{{ product.b2b_price }}">
+            Energy :  <input type="number" name="energy"  value="{{ product.energy }}">
+            Protein : <input type="number" name="protein" value="{{ product.protein }}">
+            Carbohydrates : <input type="number" name="carbohydrates" value="{{ product.carbohydrates }}">
+            Sugar : <input type="number" name="sugar" value="{{ product.sugar }}">
+            Fat : <input type="number" name="fat" value="{{ product.fat }}">
+            Vegetrain : <input type="checkbox" name="is_vegetarian" {% if is_vegetarian %} checked="true" {% endif %}>
+            Available Qty : <input type="number" name="available_qty" value="{{ product.available_qty }}">
+            Added Msg : <input type="radio" name="added_msg" value="{{ product.added_msg }}">
+            Shelf Life : <input type="number"  value="{{ product.shelf_life }}">
+            Description : <textarea >{{ product.description }}</textarea>
+            Storage : <textarea >{{ product.storage }}</textarea>
+            Uses : <textarea >{{ product.uses }}</textarea>
+            Benifits : <textarea >{{ product.benefits }}</textarea>
+            Ingridients :  <textarea name="ingridients" >{{ product.ingridients }}</textarea>
+            Directions : <textarea >{{ product.directions }}</textarea>
+            Category : <input type="text"  value="{{ product.category }}">
+{#            Added Date : <input type="date"  value="{{ product.added_date }}">#}
+{#            <input type="submit"  value="Update">#}
+        </form>
+        <img src="/{{product.picture_1  }}" style="height: 100px; width: 100;">
+        <img src="/{{product.picture_2  }}" style="height: 100px; width: 100;">
+        <img src="/{{product.picture_3  }}" style="height: 100px; width: 100;">
+    {% endif %}
+</div><br><br><br>
+
+{% endblock content %}
