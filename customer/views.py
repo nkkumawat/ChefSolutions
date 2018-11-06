@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.utils.crypto import get_random_string
 from django.core.mail import EmailMessage
@@ -14,7 +14,6 @@ data = {
     "title": "Chef Solutions",
     "message": ""
 }
-
 
 def login(request):
     data['message'] = ""
@@ -29,6 +28,7 @@ def login(request):
                     if check_password(password, customer[0].password):
                         if customer[0].is_active:
                             request.session['customer_id'] = customer[0].id
+                            print(customer[0].id)
                             if 'temp_customer_id' in request.session:
                                 cart = Cart.objects.filter(
                                     temp_customer_id=request.session['temp_customer_id'])
@@ -60,7 +60,6 @@ def login(request):
 def signup(request):
     data['message'] = ""
     if 'customer_id' not in request.session:
-
         if request.method == 'POST':
             signupform = signUpForm(request.POST)
             if signupform.is_valid():
@@ -230,7 +229,6 @@ def updateProfile(request):
             address.country = country
             address.pincode = pincode
             address.save()
-
             customer = Customers.objects.filter(
                 id=request.session['customer_id'])
             customer.update(dob=dob)
@@ -240,3 +238,14 @@ def updateProfile(request):
             return render(request, "customer/updateprofile.html", data)
     else:
         return redirect("error:error")
+
+def requestForB2B(request):
+    if 'customer_id' in request.session:
+        if request.method == "POST":
+            customer_id = request.session['customer_id']
+
+            return render(request, "customer/updateprofile.html", data)
+        else:
+            return render(request, "customer/updateprofile.html", data)
+    else:
+        return Json

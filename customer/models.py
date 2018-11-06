@@ -15,6 +15,8 @@ class Customers(models.Model):
     temp_id = models.CharField(max_length=500, default='0')
     dob = models.DateField(default=None, null=True)
     is_active = models.BooleanField(default=False)
+    is_b2b = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     profile_pic = models.FileField(
         upload_to='static/customer/profile', default="static/customer/profile/default.png")
 
@@ -33,3 +35,13 @@ class Address(models.Model):
 
     class Meta:
         db_table = "address"
+
+
+
+class RequestForB2B(models.Model):
+    id = models.IntegerField(primary_key=True)
+    customer_id = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    is_responsed = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = "request_for_b2b"

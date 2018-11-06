@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'customer',
-    'cart',
+
     'products',
+    'cart',
     'order',
     'blog',
     'payment',
@@ -152,3 +153,5 @@ EMAIL_PORT = 587
 LOGIN_URL = 'customer/login'
 LOGOUT_URL = 'customer/logout'
 LOGIN_REDIRECT_URL = 'customer/profile'
+
+

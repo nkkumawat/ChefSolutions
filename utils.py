@@ -1,0 +1,1 @@
+our_emails = ['narendra11510145@gmail.com' , 'nk0kumawat@gmail.com']
