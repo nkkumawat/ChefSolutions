@@ -1,10 +1,84 @@
 {% extends "../extends/main.html" %}
 {% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+<style>
+    #productShow{
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .productImages > div {
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        margin-left: 5px;
+        margin-right: 5px;
+        background-size: cover; 
+        background-position: center;
+        border: 1px solid #dddddd;
+        padding: 10px;
+        background-origin: content-box;
+        background-repeat: no-repeat;
+    }
+</style>
+{% endblock styles %}
+
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="carousel carousel-slider col s12">
+    <div class="row" style="margin: 10px; margin-top: 50px;">
+
+        <div class="col s12 m5 center-align">
+            <p id="product1" class="hide">{{ product.picture_1 }}</p>
+            <p id="product2" class="hide">{{ product.picture_2 }}</p>
+            <p id="product3" class="hide">{{ product.picture_3 }}</p>
+
+            <img src="/{{ product.picture_1 }}" alt="" id="productShow">
+
+            <div class="center-align productImages">
+                <div id="productImage1" class="productImage"></div>
+                <div id="productImage2" class="productImage"></div>
+                <div id="productImage3" class="productImage"></div>
+            </div>
+        </div>
+
+        <div class="col s0 m1"></div>
+
+        <div class="col s12 m6">
+            <h3>{{product.name}}</h3>
+            <p class="flow-text">{{product.price}}</p>
+            <hr>
+            <p class="flow-text">{{product.description}}</p>
+            <button id="{{ product.id }}"  class="btn z-depth-0 my-btn addToCart" name="{{ product.name }}">Add To Cart</button>
+        </div>
+
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h5>Modal Header</h5>
+                <p>Select Quantity</p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col s3 align-right">
+                        <input type="number" value="1" name="quantity" id="quantity" style="border: 1px solid black; padding-left: 10px;" />
+                    </div>
+                    <div class="col s3">
+                        {% csrf_token %}
+                        <a href="#"  class="modal-close addtoCart-modal btn my-btn z-depth-0">Add to Cart</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        {% comment %} <div class="carousel carousel-slider col s12">
             <a class="carousel-item"><img src="/{{  product.picture_1 }}"></a>
             <a class="carousel-item"><img src="/{{  product.picture_2 }}"></a>
             <a class="carousel-item"><img src="/{{  product.picture_3 }}"></a>
@@ -26,10 +100,10 @@
                 </p>
             </div>
             <button id="{{ product.id }}" class="btn green addToCart">Add To Cart</button>
-        </div>
+        </div> {% endcomment %}
     </div>
 
-    <div id="modal1" class="modal">
+    {% comment %} <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Modal Header</h4>
             <p>A bunch of text</p>
@@ -37,12 +111,11 @@
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
         </div>
-    </div>
-
-</div>
+    </div> {% endcomment %}
 
 {% endblock content %}
 
 {% block scripts %}
+<script src="{% static 'js/product.js' %}"></script>
 <script src="{% static 'js/allProducts.js' %}"></script>
 {% endblock scripts %}
