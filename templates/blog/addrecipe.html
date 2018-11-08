@@ -1,28 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "../extends/main.html" %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="top-image">
+    <div class="first center-align">
+        <span>
+            Write
+        </span>
+    </div>
+    <div class="second center-align">
+        <span>
+            Blog
+        </span>
+    </div>
+</div>
+
+<div class="row form-container card-panel">
+    <div class="col s12 m5">
+        <h6 class="heading">New Customer</h6>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore molestiae ullam placeat nobis nesciunt quos delectus illo, sequi voluptatibus ut, iste earum excepturi veniam, quis non. Ipsa impedit quam error.
+        </p>
+        <a class="btn z-depth-0 my-btn" href="{% url 'customer:signup' %}">Signup</a>
+    </div>
+
+    <div class="col s0 m1"></div>
+
+    <div class="col s12 m5">
+            <h6 class="heading">Write A Blog</h6>
+
+            <p>Hey {{ Customer.name }}, here You can write a blog for our product</p>
+
+            {% if message %}
+            <div class="red center-align white-text" style="margin: 10px;border-radius: 4px;">
+                <p>
+                    {{ message }}
+                </p>
+            </div>
+            {% endif %}
+    
+            <form method="post" enctype="multipart/form-data" >{% csrf_token %}
+                <label>Name</label>
+                <input class="my-form" name="name" type="text" />
+
+                <label>Name</label>
+                <input class="my-form" name="food_group" type="text" />
+
+                <label>Name</label>
+                <input class="my-form" name="no_of_portions" type="number" />
+
+                <label>Name</label>
+                <input class="my-form" name="use_of_goods" type="text" />
+
+                <label>Name</label>
+                <input class="my-form" name="ingredients" type="text" />
+
+                <label>Name</label>
+                <input class="my-form" name="cooking_process_name" type="text" />
+
+                <label>Name</label>
+                <input class="my-form" name="cooking_process_method" type="text" />
+
+                <label>Name</label>
+                <input class="my-form" name="tags" type="text" />
+
+                <div>
+                    <label>Name</label>
+                    <input name="picture_1" type="file" style="display: block;margin-bottom: 20px;"/>
+                </div>
+
+                <label>Name</label>
+                <input name="picture_2" type="file" style="display: block;margin-bottom: 20px;"/>
+
+                <label>Name</label>
+                <input name="picture_3" type="file" style="display: block;margin-bottom: 20px;"/>
+                <br>
+                <input class="btn my-btn z-depth-0" name="submit" type="submit" value="Submit" />
+            </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% comment %} 
 {{ customer.name }}
 {{ customer.email }}
 <img height="100" width="100" src="/{{ customer.profile_pic }}">
-
-    <form method="post" enctype="multipart/form-data" >{% csrf_token %}
-        <input name="name" placeholder="name" type="text" />
-        <input name="food_group" placeholder="food_group" type="text" />
-        <input name="no_of_portions" placeholder="no_of_portions" type="number" />
-        <input name="use_of_goods" placeholder="use_of_goods" type="text" />
-        <input name="ingredients" placeholder="ingredients" type="text" />
-        <input name="cooking_process_name" placeholder="cooking_process_name" type="text" />
-        <input name="cooking_process_method" placeholder="cooking_process_method" type="text" />
-        <input name="tags" placeholder="tags" type="text" />
-        <input name="picture_1" placeholder="" type="file" />
-        <input name="picture_2" placeholder="" type="file" />
-        <input name="picture_3" placeholder="" type="file" />
-        <input name="submit" placeholder="" type="submit" value="Submit" />
-    </form>
-
-</body>
-</html>
+ {% endcomment %}
