@@ -8,6 +8,10 @@
 <div class="container">
 
     {% if order %}
+         <form method="post" action="/managecs/orders/recipt/print">{% csrf_token %}
+             <input name="order_id" type="number" hidden value="{{ order.id }}">
+             <input name="submit" type="submit" class="cross" value="Print">
+        </form>
         Order Id :  {{ order.id }}<br>
         Customer Name : {{ order.customer_id.name }}<br>
         Customer Email : {{ order.customer_id.email }}<br>
@@ -36,6 +40,7 @@
                     <td>{{ c.product_id.id }}</td>
                     <td>{{ c.product_id.name }}</td>
                     <td>{{ c.quantity }}</td>
+
                     </tr>
                 {% endfor %}
 

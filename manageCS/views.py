@@ -1,8 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from customer.models import Customers , Address, RequestForB2B
 from order.models import Orders
 from cart.models import Cart
 from products.models import Products
+from blog.views import render_to_pdf
+
 # Create your views here.
 
 
@@ -147,6 +150,39 @@ def manageB2BRequest(request):
 
             data['requests'] = RequestForB2B.objects.all()
             return render(request , "manageCS/requestb2b.html" , data)
+        else:
+            return redirect("error:error")
+    else:
+        return redirect("error:error")
+
+
+def printRecipt(request):
+    if 'customer_id' in request.session:
+        customer = Customers.objects.filter(id=request.session['customer_id'])[0]
+        data = {}
+        if customer.is_admin:
+            if request.method == 'POST':
+                data = {}
+                order = Orders.objects.filter(id=request.POST['order_id'])[0]
+                address = Address.objects.filter(customer_id=customer)
+                data['order'] = order
+                data['address'] = address
+                cart_ids = order.cart_id
+                cart_ids = cart_ids.split("$")
+                carts = []
+                for id in cart_ids:
+                    if id != '':
+                        cart = Cart.objects.filter(id=id)[0]
+                        carts.insert(0, cart)
+
+                data['cart'] = carts
+                pdf = render_to_pdf('manageCS/recipt.html', data)
+                return HttpResponse(pdf, content_type='application/pdf')
+
+                # return render(request , "manageCS/recipt.html" , data)
+
+            else:
+                return redirect("error:error")
         else:
             return redirect("error:error")
     else:

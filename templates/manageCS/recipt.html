@@ -1,8 +1,8 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Sales Report</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
     <style type="text/css">
         @page {
             size: A4;
@@ -14,12 +14,15 @@
             margin-bottom: 5px;
             background-color: #fff;
         }
+        .table>tbody>tr>td {
+            border: 1px solid black;
+        }
         .table th,
         .table td {
             padding: 5px;
             vertical-align: top;
 
-            text-align: center;
+            {#text-align: center;#}
         }
         .footer-tab td {
             text-align: center;
@@ -52,53 +55,65 @@
 </head>
 <body>
 
-<div class="container">
-
-
-
-        <div class="card-header">
-
-        </div>
+    {% if order %}
         <table class="top-table">
             <tbody>
                 <tr>
-                    <td colspan="2"><h3>Recipe No : CAS100</h3><h2>Teriyaki Glazed Tofu with Stir Fried Asian Greens</h2></td>
+                    <td colspan="2"><h3>Recipt No : CAS{{ order.id }}</h3></td>
                     <td align="right"><img src="static/images/logocf.png" width="70" height="70"></td>
-                    <td align="right"><img src="static/images/office.jpg" width="150" height="100"></td>
+{#                    <td align="right"><img src="static/images/office.jpg" width="150" height="100"></td>#}
                 </tr>
 
             </tbody>
         </table>
-    <br>
-
         <table class="table">
-            <tbody>
-                <tr>
-                    <td>Chef Solutions Ingredients used</td>
-                    <td>Steps Involved in Cooking:</td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>Extras</h3>
-         <table class="table" >
-            <tbody>
-                <tr>
-                    <td>Chef Solutions Ingredients used</td>
+        <tbody>
+            <tr>
+                <td>Order Id :  {{ order.id }}</td>
+            </tr>
+            <tr>
+                <td>Name : {{ order.customer_id.name }}<br>Email : {{ order.customer_id.email }}<br>mobile : {{ order.customer_id.mobile }}
 
-                </tr>
-            </tbody>
+                    <br>
+                   {% for add in address %}
+                    Address : {{ add.street }} , {{ add.city }}, {{ add.state }}, {{ add.country }} , {{ add.pincode }}
+                    {% endfor %}
+                </td>
+            </tr>
+        <tr>
+            <td>Total Price : <b>{{ order.total_price }}</b></td>
+        </tr>
+        </tbody>
         </table>
-         <h3>Similar</h3>
-         <table class="table" >
-            <tbody>
-                <tr>
-                    <td>More similar recipes which can be made by using CS ingredients</td>
 
-                </tr>
+
+
+
+{#        Customer B2B : {{ order.customer_id.is_b2b }}<br>#}
+
+
+
+        <h5>Products</h5>
+        <table class="table">
+            <thead>
+                <th>Product Name</th>
+                <th>Quantity</th>
+
+            </thead>
+            <tbody>
+                {% for c in cart %}
+                    <tr>
+                    <td>{{ c.product_id.name }}</td>
+                    <td>{{ c.quantity }}</td>
+                    </tr>
+                {% endfor %}
+
+
             </tbody>
         </table>
-        <br>
-        <table class="footer-tab" >
+
+    {% endif %}<br><br>
+    <table class="footer-tab" >
             <tbody>
                 <tr>
                     <td >For any feedback Contact our customer care executive at<br>
@@ -111,7 +126,6 @@
                 </tr>
             </tbody>
         </table>
-</div>
 
 </body>
 </html>
