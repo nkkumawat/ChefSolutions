@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
 <link rel="stylesheet" href="{% static 'css/my-link.css' %}">
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
 {% endblock styles %}
 
 {% block content %}
@@ -55,16 +58,16 @@
                                 </div>
                                 <div class="card-content black-text">
                                     <p class="center-align grey-text">{{ product.name }}</p>
-                                    <p class="flow-text center-align">${{ product.price }}</p>                
-                                    <div class="input-field">
-                                        <p class="range-field grey-text">
-                                            Select quantity:
-                                            <input type="range" value="1" name="quantity" id="quantity{{product.id}}" min="1" max="{{ product.available_qty }}" />
+                                    <p class="flow-text center-align"><i class="fa fa-inr"></i> {{ product.price }}</p>
+{#                                    <div class="input-field">#}
+{#                                        <p class="range-field grey-text">#}
+{#                                            Select quantity:#}
+{#                                            <input type="number" value="1" name="quantity" id="quantity{{product.id}}" min="1" max="{{ product.available_qty }}" value="1" />#}
                                             {% csrf_token %}
-                                        </p>
-                                    </div>
+{#                                        </p>#}
+{#                                    </div>#}
                                     <div class="center-align">
-                                        <button id="{{ product.id }}" class="btn z-depth-0 my-btn addToCart">Add To Cart</button>
+                                        <button id="{{ product.id }}"  class="btn z-depth-0 my-btn addToCart" name="{{ product.name }}">Add To Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -80,11 +83,23 @@
 
     <div id="modal1" class="modal">
         <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
+            <h5>Modal Header</h5>
+            <p>Select Quantity</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+            <div class="row">
+                <div class="col s6 align-right">
+{#                    Quantity#}
+                </div>
+                <div class="col s3 align-right">
+                   <input type="number" value="1" name="quantity" id="quantity" style="border: 1px solid black; padding-left: 10px;" />
+                </div>
+                <div class="col s3">
+                    <a href="#"  class="modal-close waves-effect waves-green btn-flat addtoCart-modal">Add to Cart</a>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
