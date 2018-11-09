@@ -2,60 +2,70 @@
 {% load static %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
 {% endblock styles %}
 
 {% block content %}
-
-{% include "../extends/sidenav.html" %}
-
-<div class="container profile-content">
-    <div class="row form-container">
-        <h3 class="white-text center-align">LOGIN FORM</h3>
-
-        {% if message %}
-        <div class="col s12 red white-text section" style="margin: 10px;">
-            <p>
-                {{ message }}
-            </p>
-        </div>
-        {% endif %}
-
-        <form method="post">
-            <div class="input-field col s12">
-                <input id="street" name="street" type="text" required />
-                <label for="street">Enter Your Street Address</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="city" name="city" type="text" required />
-                <label for="city">Enter Your City</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="state" name="state" type="text" required />
-                <label for="state">Enter Your State</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="country" name="country" type="text" required />
-                <label for="country">Enter Your Country</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="pincode" name="pincode" type="number" required />
-                <label for="pincode">Enter Your Pincode</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="dob" name="dob" type="date" required />
-                <label for="dob">Enter Your Date Of Birth</label>
-            </div>
-            {% csrf_token %}
-            <input class="btn" type="submit" value="Submit" />
-        </form>
-
+<div class="top-image">
+    <div class="first center-align">
+        <span>
+            Update
+        </span>
+    </div>
+    <div class="second center-align">
+        <span>
+            Profile
+        </span>
     </div>
 </div>
 
+<div class="row form-container card-panel">
+    <div class="col s12 m5">
+        <h6 class="heading">New Customer</h6>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore molestiae ullam placeat nobis nesciunt quos delectus illo, sequi voluptatibus ut, iste earum excepturi veniam, quis non. Ipsa impedit quam error.
+        </p>
+        <a class="btn z-depth-0 my-btn" href="{% url 'customer:signup' %}">Signup</a>
+            {% comment %} <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a> {% endcomment %}
+    </div>
+
+    <div class="col s0 m1"></div>
+
+    <div class="col s12 m5">
+            <h6 class="heading">LOGIN FORM</h6>
+
+            <p>If you have an account with us, please login.</p>
+            {% if message %}
+            <div class="red center-align white-text" style="margin: 10px;border-radius: 4px;">
+                <p>
+                    {{ message }}
+                </p>
+            </div>
+            {% endif %}
+    
+            <form method="post">
+                <label for="street">Enter Your Street Address</label>
+                <input class="my-form" id="street" name="street" type="text" required />
+                
+                <label for="city">Enter Your City</label>
+                <input class="my-form" id="city" name="city" type="text" required />
+                
+                <label for="state">Enter Your State</label>
+                <input class="my-form" id="state" name="state" type="text" required />
+                
+                <label for="country">Enter Your Country</label>
+                <input class="my-form" id="country" name="country" type="text" required />
+                
+                <label for="pincode">Enter Your Pincode</label>
+                <input class="my-form" id="pincode" name="pincode" type="number" required />
+                
+                <label for="dob">Enter Your Date Of Birth</label>
+                <input class="my-form" id="dob" name="dob" type="date" required />
+                {% csrf_token %}
+                <input class="btn z-depth-0 my-btn" type="submit" value="Update" />
+            </form>
+    </div>
+</div>
 
 {% endblock content %}
-
-{% block scripts %}
-<script src="{% static 'js/profile.js' %}"></script>
-{% endblock scripts %}
