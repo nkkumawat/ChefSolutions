@@ -54,21 +54,43 @@
             <h5>{{product.name  }}&nbsp;  <img src="{% if product.is_vegetarian == True %} /static/images/veg.png {% else %}/static/images/nonveg.png  {% endif %}" style="height: 20px; width: 20px;"></h5>
             <p class="flow-text"><small><i class="fa fa-inr"> </i>&nbsp; {{product.price}}</small>   </p>
             <hr>
-             <b>About: </b> {{product.description}}<br>
-             <b>Size: </b>{{product.size}}Kg<br>
-            <b>Shelf Life: </b>{{product.shelf_life}}Hrs<br>
-            <b>Storage: </b>{{product.storage}}<br>
-            <b>Uses: </b>{{product.uses}}<br>
-            <b>Benefits: </b>{{product.benefits}}<br>
-            <b>Ingridients </b>{{product.ingridients}}<br>
-            <b>Directions: </b>{{product.directions}}<br>
-            <b>Category: </b>{{product.category}}<br>
+            <b>Size: </b>{{product.size}}Kg<br><br>
+            <b>Shelf Life: </b>{{product.shelf_life}}Hrs<br><br>
+            <b>About: </b> {{product.description}}<br><br>
+
+            <b>Storage: </b>{{product.storage}}<br><br>
+            <b>Uses: </b>{{product.uses}}<br><br>
+            <b>Benefits: </b>{{product.benefits}}<br><br>
+            <b>Ingridients </b>{{product.ingridients}}<br><br>
+            <b>Directions: </b>{{product.directions}}<br><br>
+            <b>Category: </b>{{product.category}}<br><br>
             <b>Nutritional Facts: </b><br>
-            Fat: {{product.fat  }}<br>
-            Sugar: {{product.sugar  }}<br>
-            Energy: {{product.energy  }}<br>
-            Protein: {{product.protein  }}<br>
-            Carbohydrates: {{product.carbohydrates  }}<br>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Fat</td>
+                        <td>{{product.fat  }}gm</td>
+{#                        <th></th>#}
+                    </tr>
+                    <tr>
+                        <td>Sugar</td>
+                        <td>{{product.sugar  }}gm</td>
+                    </tr>
+                    <tr>
+                        <td>Energy</td>
+                        <td>{{product.energy  }}kcal</td>
+                    </tr>
+                    <tr>
+                        <td>Protein</td>
+                        <td>{{product.protein  }}gm</td>
+                    </tr>
+                    <tr>
+                        <td>Carbohydrates</td>
+                        <td>{{product.carbohydrates  }}gm</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
             <button id="{{ product.id }}"  class="btn z-depth-0 my-btn addToCart" name="{{ product.name }}">Add To Cart</button>
         </div>
 

@@ -104,6 +104,7 @@ def profile(request):
         customer = Customers.objects.filter(id=request.session['customer_id'])
         data["name"] = customer[0].name
         data["email"] = customer[0].email
+        data["mobile"] = customer[0].mobile
         data["image"] = customer[0].profile_pic
         address = Address.objects.filter(
             customer_id=Customers.objects.filter(id=request.session['customer_id'])[0])

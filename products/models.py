@@ -2,6 +2,13 @@ from django.db import models
 
 # Create your models here.
 
+CATEGORY_CHOICES = (
+    ('Bakery','Bakery'),
+    ('Coating and Breading', 'Coating and Breading'),
+    ('Staple Foods','Staple Foods'),
+    ('Sauces, Pastes, Stock','Sauces, Pastes, Stock'),
+    ('Seasonings and Marinades','Seasonings and Marinades'),
+)
 
 class Products(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -32,7 +39,7 @@ class Products(models.Model):
     benefits = models.TextField(max_length=1000)
     ingridients = models.TextField(max_length=1000)
     directions = models.TextField(max_length=1000)
-    category = models.CharField(max_length=100)  # Filtering cateogry
+    category = models.CharField(max_length=100 , choices=CATEGORY_CHOICES , default="Bakery")  # Filtering cateogry
     added_date = models.DateTimeField(auto_now=True)
 
     #     Nutritional value

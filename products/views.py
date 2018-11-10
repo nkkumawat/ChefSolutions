@@ -28,6 +28,10 @@ def allProducts(request):
             products = Products.objects.filter(easy_to_use=True)
         elif request.GET['category'] == 'egg_free':
             products = Products.objects.filter(egg_free=True)
+        else:
+            filter = request.GET['category']
+            products = Products.objects.filter(category=filter)
+            print(products)
     else:
         products = Products.objects.all()
 

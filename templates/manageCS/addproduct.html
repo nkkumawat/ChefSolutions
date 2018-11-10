@@ -19,6 +19,28 @@
             Carbohydrates : <input type="number" name="carbohydrates">
             Sugar : <input type="number" name="sugar" value="{{ product.sugar }}">
             Fat : <input type="number" name="fat" value="{{ product.fat }}">
+
+            Available Qty : <input type="number" name="available_qty" >
+            Shelf Life : <input type="number" name="shelf_life"  >
+            Description : <textarea name="description" ></textarea>
+            Storage : <textarea name="storage" ></textarea>
+            Uses : <textarea name="uses"></textarea>
+            Benifits : <textarea name="benefits"></textarea>
+            Ingridients :  <textarea name="ingridients" ></textarea>
+            Directions : <textarea name="directions"></textarea>
+            Category :
+{#            <input type="text"  name="category">#}
+                <select name="category">
+                    <option value="Bakery" selected>Bakery</option>
+                    <option value="Coating and Breading">Coating & Breading</option>
+                    <option value="Staple Foods">Staple Foods</option>
+                    <option value="Sauces, Pastes, Stock">Sauces, Pastes, Stock</option>
+                    <option value="Seasonings and Marinades">Seasonings & Marinades</option>
+                </select>
+
+            Picture1 : <input type="file"  name="picture_1"><br>
+            Picture2 : <input type="file"  name="picture_2"><br>
+            Picture3 : <input type="file"  name="picture_3"><br>
             Vegetrain :
                    <div class="switch">
                         <label>
@@ -97,18 +119,6 @@
                         </label>
                     </div>
             <br>
-            Available Qty : <input type="number" name="available_qty" >
-            Shelf Life : <input type="number" name="shelf_life"  >
-            Description : <textarea name="description" ></textarea>
-            Storage : <textarea name="storage" ></textarea>
-            Uses : <textarea name="uses"></textarea>
-            Benifits : <textarea name="benefits"></textarea>
-            Ingridients :  <textarea name="ingridients" ></textarea>
-            Directions : <textarea name="directions"></textarea>
-            Category : <input type="text"  name="category">
-            Picture1 : <input type="file"  name="picture_1"><br>
-            Picture2 : <input type="file"  name="picture_2"><br>
-            Picture3 : <input type="file"  name="picture_3"><br>
 {#            Added Date : <input type="date"  value="{{ product.added_date }}">#}
             <input type="submit"  value="Save">
 
@@ -118,3 +128,11 @@
 </div><br><br><br>
 
 {% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select').formSelect();
+    });
+</script>
+{% endblock scripts %}

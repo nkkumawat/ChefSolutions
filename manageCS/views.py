@@ -126,6 +126,7 @@ def addProduct(request):
                 product.picture_1 = request.FILES['picture_1']
                 product.picture_2 = request.FILES['picture_2']
                 product.picture_3 = request.FILES['picture_3']
+                print(request.POST['category'])
                 product.save()
                 data['massage'] = "Added"
                 return render(request, "manageCS/addproduct.html" ,data)
