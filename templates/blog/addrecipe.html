@@ -48,44 +48,59 @@
                 <label>Name</label>
                 <input class="my-form" name="name" type="text" />
 
-                <label>Name</label>
+                <label>Food Group</label>
                 <input class="my-form" name="food_group" type="text" />
 
-                <label>Name</label>
-                <input class="my-form" name="no_of_portions" type="number" />
+{#                <label>Name</label>#}
+{#                <input class="my-form" name="no_of_portions" type="number" />#}
 
-                <label>Name</label>
-                <input class="my-form" name="use_of_goods" type="text" />
+                    <label>Our Product Used</label>
+                    <select class="my-form" name="use_of_products">
+                        {%  for product in products %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                        {% endfor %}
+                    </select>
 
-                <label>Name</label>
+{#                <input class="my-form" name="use_of_products" type="text" />#}
+
+                <label>Ingredients</label>
                 <input class="my-form" name="ingredients" type="text" />
 
-                <label>Name</label>
+                <label>Cooking Process Name</label>
                 <input class="my-form" name="cooking_process_name" type="text" />
 
-                <label>Name</label>
-                <input class="my-form" name="cooking_process_method" type="text" />
+                <label>Cooking Process Method</label>
+                <textarea class="my-form" name="cooking_process_method"  ></textarea>
 
-                <label>Name</label>
+                <label>Tags</label>
                 <input class="my-form" name="tags" type="text" />
 
-                <div>
-                    <label>Name</label>
-                    <input name="picture_1" type="file" style="display: block;margin-bottom: 20px;"/>
-                </div>
+                <label>Youtube Video Url</label>
+                <input class="my-form" name="video_url" type="text" />
 
-                <label>Name</label>
-                <input name="picture_2" type="file" style="display: block;margin-bottom: 20px;"/>
-
-                <label>Name</label>
-                <input name="picture_3" type="file" style="display: block;margin-bottom: 20px;"/>
+{#                <div>#}
+{#                    <label>Name</label>#}
+{#                    <input name="picture_1" type="file" style="display: block;margin-bottom: 20px;"/>#}
+{#                </div>#}
+{##}
+{#                <label>Name</label>#}
+{#                <input name="picture_2" type="file" style="display: block;margin-bottom: 20px;"/>#}
+{##}
+{#                <label>Name</label>#}
+{#                <input name="picture_3" type="file" style="display: block;margin-bottom: 20px;"/>#}
                 <br>
                 <input class="btn my-btn z-depth-0" name="submit" type="submit" value="Submit" />
             </form>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select').formSelect();
+    });
+</script>
 
 {% endblock content %}
+
 
 
 {% comment %} 

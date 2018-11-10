@@ -3,12 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Recipes
 from customer.models import Customers
 import getResponses
-import reportlab
-import io
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
-from io import BytesIO
-from django.core.files import File
+from products.models import Products
 from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -40,6 +35,8 @@ def addRecipe(request):
             recipe.save()
             return render(request, 'blog/sentforapporval.html', data)
         else:
+            products = Products.objects.all()
+            data['products'] = products
             return render(request, 'blog/addrecipe.html', data)
     else:
         return redirect('customer:login')
