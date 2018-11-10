@@ -7,6 +7,7 @@ from payment.models import Payment
 class Orders(models.Model):
     id = models.IntegerField(primary_key=True)
     cart_id = models.TextField() # ids of cart saprated with $
+    # cart_id1 = models.TextField() # ids of cart saprated with $
     customer_id = models.ForeignKey(Customers, on_delete=models.CASCADE)
     total_price = models.FloatField()
     order_date = models.DateField(auto_now=True)

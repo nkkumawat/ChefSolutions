@@ -22,6 +22,7 @@ class Products(models.Model):
     fat = models.FloatField()  # gram
     available_qty = models.IntegerField()  # how many packets are available
     #
+    # dummy =
     is_vegetarian = models.BooleanField(default=False)
     added_msg = models.BooleanField(default=False)
     built_in_tenderizer = models.BooleanField(default=False)
