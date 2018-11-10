@@ -33,7 +33,9 @@ def addRecipe(request):
             recipe.cooking_process_method = request.POST['cooking_process_method']
             recipe.tags = request.POST['tags']
             recipe.video_url = request.POST['video_url']
-
+            recipe.picture_1 = request.FILES['picture_1']
+            recipe.picture_2 = request.FILES['picture_2']
+            recipe.picture_3 = request.FILES['picture_3']
 
             recipe.save()
             return render(request, 'blog/sentforapporval.html', data)

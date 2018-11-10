@@ -13,6 +13,11 @@ def cart(request):
     if 'customer_id' in request.session:
         cart = Cart.objects.filter(
             customer_id=request.session['customer_id'], is_purchased=False)
+        total_price = 0.0
+        for ca in cart:
+            total_price += ca.quantity * ca.product_id.price
+        data['total'] = total_price
+        data['subtotal'] = total_price
         data['cart'] = cart
         return render(request, "cart/cart.html", data)
     elif 'temp_customer_id' in request.session:
@@ -90,7 +95,6 @@ def addInCart(request):
 
             return JsonResponse(data)
 
-    data = {}
     data = getResponses.getResponse(request)
     data['success'] = "false"
     data['added_count'] = 0

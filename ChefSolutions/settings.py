@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'customer',
-
+    'coupon',
     'products',
     'cart',
     'order',

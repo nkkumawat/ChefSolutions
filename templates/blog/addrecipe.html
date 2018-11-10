@@ -55,7 +55,7 @@
 {#                <input class="my-form" name="no_of_portions" type="number" />#}
 
                     <label>Our Product Used</label>
-                    <select class="my-form" multiple style="border: 1px solid black;" name="use_of_products">
+                    <select class="my-form" multiple style="border: 1px solid black; !important;" name="use_of_products">
                         {%  for product in products %}
                             <option value="{{ product.id }}">{{ product.name }}</option>
                         {% endfor %}
@@ -78,16 +78,16 @@
                 <label>Youtube Video Url</label>
                 <input class="my-form" name="video_url" type="text" />
 
-{#                <div>#}
-{#                    <label>Name</label>#}
-{#                    <input name="picture_1" type="file" style="display: block;margin-bottom: 20px;"/>#}
-{#                </div>#}
-{##}
-{#                <label>Name</label>#}
-{#                <input name="picture_2" type="file" style="display: block;margin-bottom: 20px;"/>#}
-{##}
-{#                <label>Name</label>#}
-{#                <input name="picture_3" type="file" style="display: block;margin-bottom: 20px;"/>#}
+
+                <label>Picture 1</label>
+                <input name="picture_1" type="file" style="display: block;margin-bottom: 20px;"/>
+
+
+                <label>Picture 2</label>
+                <input name="picture_2" type="file" style="display: block;margin-bottom: 20px;"/>
+
+                <label>Picture 3</label>
+                <input name="picture_3" type="file" style="display: block;margin-bottom: 20px;"/>
                 <br>
                 <input class="btn my-btn z-depth-0" name="submit" type="submit" value="Submit" />
             </form>

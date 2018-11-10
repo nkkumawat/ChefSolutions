@@ -23,9 +23,9 @@ class Recipes(models.Model):
     is_apporved = models.BooleanField(default=False)
     video_url = models.TextField(default="")
 
-    # picture_1 = models.FileField(upload_to='static/blog/recipe' , default='static/blog/recipe/default.png')
-    # picture_2 = models.FileField(upload_to='static/blog/recipe' , default='static/blog/recipe/default.png')
-    # picture_3 = models.FileField(upload_to='static/blog/recipe' , default='static/blog/recipe/default.png')
+    picture_1 = models.FileField(upload_to='static/blog/recipe' , default='static/blog/recipe/default.png')
+    picture_2 = models.FileField(upload_to='static/blog/recipe' , default='static/blog/recipe/default.png')
+    picture_3 = models.FileField(upload_to='static/blog/recipe' , default='static/blog/recipe/default.png')
 
     class Meta:
         db_table = "recipe"

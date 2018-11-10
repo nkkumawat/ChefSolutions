@@ -3,6 +3,8 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/topImage.css' %}">
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 {% endblock styles %}
 
 {% block content %}
@@ -44,11 +46,11 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class="row">
-        <div class="col s12 center-align" style="margin-top: 50px;">
-            <a class="btn  grey" href="/payment">Place order</a>
-        </div>
-    </div>
+{#    <div class="row">#}
+{#        <div class="col s12 center-align" style="margin-top: 50px;">#}
+{#            <a class="btn  grey" href="/payment">Place order</a>#}
+{#        </div>#}
+{#    </div>#}
     {% else %}
     <div class="row">
         <div class="col s12 center-align">
@@ -56,6 +58,44 @@
         </div>
     </div>
     {% endif %}
+
+</div><br><br><br><br>
+<div class="row">
+    <div class="col s12 m4">
+
+    </div>
+    <div class="col s12 m4">
+        Discount Codes<hr>
+        <form method="post" action=""> {% csrf_token %}
+            <label>Enter your coupon code if you have one.</label>
+            <input name="coupon-code" class="my-form" type="text" >
+            <input type="submit" class="my-form" value="Apply Coupon">
+        </form>
+    </div>
+    <div class="col s12 m4">
+        Shopping Cart Total<hr>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Subtotal</td>
+                    <td><i class="fa fa-inr"></i> {{ subtotal }}</td>
+                </tr>
+                <tr>
+                    <td>Grandtotal</td>
+                    <td><i class="fa fa-inr"></i> {{ total }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col s12 center-align" >
+                                <a class="btn  green" href="/payment">Place order</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock content %}
