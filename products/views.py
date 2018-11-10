@@ -12,12 +12,22 @@ data = {
 
 def allProducts(request):
     if request.GET['category'] != 'none':
-        if  request.GET['category'] == 'vegetarian':
+        if  request.GET['category'] == 'is_vegetarian':
             products = Products.objects.filter(is_vegetarian=True)
-        elif request.GET['category'] == 'low_fat':
-            products = Products.objects.filter(fat__lte = 5)
-        else: # last for low sugar
-            products = Products.objects.filter(sugar__lte=5)
+        elif request.GET['category'] == 'low_salt':
+            products = Products.objects.filter(low_salt = True)
+        elif request.GET['category'] == 'no_added_msg':
+            products = Products.objects.filter(added_msg=True)
+        elif request.GET['category'] == 'built_in_tenderizer':
+            products = Products.objects.filter(built_in_tenderizer=True)
+        elif request.GET['category'] == 'multi_application':
+            products = Products.objects.filter(multi_application=True)
+        elif request.GET['category'] == 'three_in_one':
+            products = Products.objects.filter(three_in_one=True)
+        elif request.GET['category'] == 'easy_to_use':
+            products = Products.objects.filter(easy_to_use=True)
+        elif request.GET['category'] == 'egg_free':
+            products = Products.objects.filter(egg_free=True)
     else:
         products = Products.objects.all()
 

@@ -96,8 +96,14 @@ def addProduct(request):
                 product.fat  = request.POST['fat']
                 product.available_qty = request.POST['available_qty']
 
-                product.is_vegetarian =    True if request.POST['is_vegetarian'] == "on" else  False
-                product.added_msg =  True if request.POST['added_msg'] == "on" else  False
+                product.is_vegetarian =    True if 'is_vegetarian' in request.POST and request.POST['is_vegetarian'] == "on" else  False
+                product.added_msg =  True if 'added_msg' in request.POST and request.POST['added_msg'] == "on" else  False
+                product.low_salt =  True if 'low_salt' in request.POST and request.POST['low_salt'] == "on" else  False
+                product.built_in_tenderizer =  True if 'built_in_tenderizer' in request.POST and request.POST['built_in_tenderizer'] == "on" else  False
+                product.multi_application =  True if 'multi_application' in request.POST and request.POST['multi_application'] == "on" else  False
+                product.three_in_one =  True if 'three_in_one' in request.POST and request.POST['three_in_one'] == "on" else  False
+                product.easy_to_use =  True if 'easy_to_use' in request.POST and request.POST['easy_to_use'] == "on" else  False
+                product.egg_free =  True if 'egg_free' in request.POST and request.POST['egg_free'] == "on" else  False
                 # print(request.POST['is_vegetarian'])
 
                 product.shelf_life = request.POST['shelf_life']

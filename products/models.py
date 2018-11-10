@@ -15,8 +15,15 @@ class Products(models.Model):
     fat = models.FloatField()  # gram
     available_qty = models.IntegerField()  # how many packets are available
     #
-    is_vegetarian = models.BooleanField(default=True)
-    added_msg = models.BooleanField(default=True)
+    is_vegetarian = models.BooleanField(default=False)
+    added_msg = models.BooleanField(default=False)
+    built_in_tenderizer = models.BooleanField(default=False)
+    multi_application = models.BooleanField(default=False)
+    three_in_one = models.BooleanField(default=False)
+    low_salt = models.BooleanField(default=False)
+    easy_to_use = models.BooleanField(default=False)
+    egg_free = models.BooleanField(default=False)
+
     name = models.CharField(max_length=100)
     shelf_life = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
