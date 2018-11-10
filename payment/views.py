@@ -14,6 +14,7 @@ from .models import Payment
 from order.models import Orders
 from django.core.mail import EmailMessage
 import utils
+from coupon.models import CouponCodes
 
 def payment(request):
     if 'customer_id' in request.session:
@@ -24,6 +25,13 @@ def payment(request):
             total_price = 0.0
             for cart in cart_details:
                 total_price += cart.quantity * cart.product_id.price
+            if "coupon_code_id" in request.session:
+                coupon = CouponCodes.objects.filter(id=request.session['coupon_code_id'])
+                if coupon:
+                    if total_price >= coupon[0].price_value:
+                        total_price -= coupon[0].price_value
+                    else:
+                        total_price = 0
             customer = Customers.objects.filter(id=request.session['customer_id'])[0]
             data = {}
             txnid = get_transaction_id()
@@ -41,6 +49,7 @@ def payment(request):
             data["furl"] = request.build_absolute_uri(reverse("payment:payment_success"))
             data["surl"] = request.build_absolute_uri(reverse("payment:payment_success"))
             data["udf1"] = request.session["customer_id"]
+            data["udf2"] = request.session["coupon_code_id"] if 'coupon_code_id' in request.session else -1
             return render(request, "payment/payment.html", data)
     else:
         return redirect('error:error')
@@ -61,7 +70,11 @@ def get_hash_string(request, txnid, total_price, name, email, customer_id):
     hash_string = TEST_MERCHANT_KEY + "|" + txnid + "|" + str(
         float(total_price)) + "|" + "info" + "|"
     hash_string += name + "|" + email + "|" + str(customer_id) + "|"
-    hash_string += "|||||||||" + TEST_MERCHANT_SALT
+    udf2 = "-1"
+    if 'coupon_code_id' in request.session:
+        udf2 = str(request.session['coupon_code_id'])
+    hash_string += udf2 + "|"
+    hash_string += "||||||||" + TEST_MERCHANT_SALT
     return hash_string
 
 
@@ -99,6 +112,14 @@ def payment_success(request):
         payment.card_type = request.POST['card_type']
         payment.customer_id = Customers.objects.filter(id=request.POST['udf1'])[0]
         payment.save()
+        if 'udf2' in request.POST:
+            coupon_code_id = request.POST['udf2']
+            print(coupon_code_id)
+            if coupon_code_id is not -1:
+                coupon_code = CouponCodes.objects.filter(id = coupon_code_id)
+                if coupon_code :
+                    coupon_code.update(price_value= 0)
+                del request.session['coupon_code_id']
 
         orders = Orders()
         cart_details = Cart.objects.filter(customer_id=request.POST['udf1'], is_purchased=False)

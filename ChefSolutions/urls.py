@@ -30,4 +30,5 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('payment/', include('payment.urls'), name="payment"),
     path('managecs/', include('manageCS.urls'), name="manageCS"),
+    path('coupon/', include('coupon.urls'), name="manageCS"),
 ]

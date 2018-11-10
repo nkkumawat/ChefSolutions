@@ -31,7 +31,7 @@
         <tbody>
             {% for c in cart %}
             <tr>
-                <td><img src="/{{  c.product_id.picture_1 }}" alt="product image" width="50px" height="50px"></td>
+                <td><img src="/{{  c.product_id.picture_1 }}" alt="product image" width="70px" height="70px"></td>
                 <td>{{ c.product_id.name }}</td>
                 <td>{{ c.product_id.price }}</td>
                 <td>{{ c.quantity }}</td>
@@ -39,18 +39,26 @@
                 <td>
                     <form method="post" action="/cart/delete">{% csrf_token %}
                         <input name="cart_id" type="number" hidden value="{{ c.id }}">
-                        <input name="submit" type="submit" class="cross" value="X">
+
+                        <input name="submit" type="submit" class="cross" value="X"></i>
+
+
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-{#    <div class="row">#}
-{#        <div class="col s12 center-align" style="margin-top: 50px;">#}
-{#            <a class="btn  grey" href="/payment">Place order</a>#}
-{#        </div>#}
-{#    </div>#}
+    <div class="row">
+        <div class="col s12 m6 left-align " style="margin-top: 50px;">
+            <a  class="my-form " style="padding: 7px; color: #000;" href="/products/?category=none">Continue Shopping</a>&nbsp; &nbsp;   &nbsp;
+
+        </div>
+        <div class="col s12 m6 right-align " style="margin-top: 50px;">
+            <a  class="my-form " style="padding: 7px; color: #000;" href="/cart/clear">Clear Cart</a>&nbsp; &nbsp;   &nbsp;
+            <a  class="my-form" style="padding: 7px; color: #000;" href="/cart">Refresh Cart</a>
+        </div>
+    </div>
     {% else %}
     <div class="row">
         <div class="col s12 center-align">
@@ -59,16 +67,16 @@
     </div>
     {% endif %}
 
-</div><br><br><br><br>
+</div><br><br><hr><br><br>
 <div class="row">
     <div class="col s12 m4">
 
     </div>
     <div class="col s12 m4">
         Discount Codes<hr>
-        <form method="post" action=""> {% csrf_token %}
+        <form method="post" action="/coupon/check"> {% csrf_token %}
             <label>Enter your coupon code if you have one.</label>
-            <input name="coupon-code" class="my-form" type="text" >
+            <input name="coupon_code" class="my-form" type="text" >
             <input type="submit" class="my-form" value="Apply Coupon">
         </form>
     </div>
@@ -80,6 +88,18 @@
                     <td>Subtotal</td>
                     <td><i class="fa fa-inr"></i> {{ subtotal }}</td>
                 </tr>
+                {% if discount %}
+                    <tr>
+                        <td>Discount</td>
+                        <td><i class="fa fa-inr"></i> - {{ discount }}</td>
+                        <td>
+                            <form method="post" action="/coupon/remove"> {% csrf_token %}
+                                <input hidden name="coupon_code_id" value="{{ coupon_code_id }}">
+                                <input type="submit" value="X">
+                            </form>
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td>Grandtotal</td>
                     <td><i class="fa fa-inr"></i> {{ total }}</td>

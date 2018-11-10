@@ -5,6 +5,7 @@ from products.models import Products
 from django.utils.crypto import get_random_string
 from django.db.models import Sum
 import getResponses
+from coupon.models import CouponCodes
 
 def cart(request):
     data = {}
@@ -16,9 +17,20 @@ def cart(request):
         total_price = 0.0
         for ca in cart:
             total_price += ca.quantity * ca.product_id.price
-        data['total'] = total_price
+
         data['subtotal'] = total_price
         data['cart'] = cart
+        if "coupon_code_id" in request.session:
+            # print(request.session['coupon_code_id'])
+            coupon = CouponCodes.objects.filter(id=request.session['coupon_code_id'])
+            if coupon:
+                if total_price >= coupon[0].price_value:
+                    data['discount'] = coupon[0].price_value
+                else:
+                    data['discount']= total_price
+                data['coupon_code_id'] = coupon[0].id
+                total_price -= data['discount']
+        data['total'] = total_price
         return render(request, "cart/cart.html", data)
     elif 'temp_customer_id' in request.session:
         products = []
@@ -129,3 +141,17 @@ def deleteCart(request):
             return redirect("cart:cart")
         else:
             return redirect('error:error')
+
+def clearCart(request):
+    if 'customer_id' in request.session:
+        cart = Cart.objects.filter(customer_id=request.session['customer_id'], is_purchased=False)
+        if cart:
+            cart.delete()
+        return redirect("cart:cart")
+    else:
+        if 'temp_customer_id' not in request.session:
+            return redirect('error:error')
+        cart = Cart.objects.filter(temp_customer_id=request.session['temp_customer_id'],is_purchased=False  )
+        if cart:
+            cart.delete()
+        return redirect("cart:cart")
