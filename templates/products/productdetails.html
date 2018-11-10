@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+    <link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <style>
     #productShow{
         position: relative;
@@ -50,10 +51,24 @@
         <div class="col s0 m1"></div>
 
         <div class="col s12 m6">
-            <h3>{{product.name}}</h3>
-            <p class="flow-text">{{product.price}}</p>
+            <h5>{{product.name  }}&nbsp;  <img src="{% if product.is_vegetarian == True %} /static/images/veg.png {% else %}/static/images/nonveg.png  {% endif %}" style="height: 20px; width: 20px;"></h5>
+            <p class="flow-text"><small><i class="fa fa-inr"> </i>&nbsp; {{product.price}}</small>   </p>
             <hr>
-            <p class="flow-text">{{product.description}}</p>
+             <b>About: </b> {{product.description}}<br>
+             <b>Size: </b>{{product.size}}Kg<br>
+            <b>Shelf Life: </b>{{product.shelf_life}}Hrs<br>
+            <b>Storage: </b>{{product.storage}}<br>
+            <b>Uses: </b>{{product.uses}}<br>
+            <b>Benefits: </b>{{product.benefits}}<br>
+            <b>Ingridients </b>{{product.ingridients}}<br>
+            <b>Directions: </b>{{product.directions}}<br>
+            <b>Category: </b>{{product.category}}<br>
+            <b>Nutritional Facts: </b><br>
+            Fat: {{product.fat  }}<br>
+            Sugar: {{product.sugar  }}<br>
+            Energy: {{product.energy  }}<br>
+            Protein: {{product.protein  }}<br>
+            Carbohydrates: {{product.carbohydrates  }}<br>
             <button id="{{ product.id }}"  class="btn z-depth-0 my-btn addToCart" name="{{ product.name }}">Add To Cart</button>
         </div>
 
