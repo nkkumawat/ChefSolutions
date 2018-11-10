@@ -23,15 +23,17 @@ def addRecipe(request):
                 id=request.session['customer_id'])[0]
             recipe.name = request.POST['name']
             recipe.food_group = request.POST['food_group']
-            recipe.no_of_portions = request.POST['no_of_portions']
-            recipe.use_of_goods = request.POST['use_of_goods']
+            product_ids = request.POST.getlist('use_of_products')
+            recipe.use_of_products = ""
+            for id in product_ids:
+                recipe.use_of_products += id + "$"
             recipe.ingredients = request.POST['ingredients']
             recipe.cooking_process_name = request.POST['cooking_process_name']
             recipe.cooking_process_method = request.POST['cooking_process_method']
             recipe.tags = request.POST['tags']
-            recipe.picture_1 = request.FILES['picture_1']
-            recipe.picture_2 = request.FILES['picture_2']
-            recipe.picture_3 = request.FILES['picture_3']
+            recipe.video_url = request.POST['video_url']
+
+
             recipe.save()
             return render(request, 'blog/sentforapporval.html', data)
         else:
