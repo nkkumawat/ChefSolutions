@@ -1,0 +1,53 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+    {% if requests %}
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Customer Name</th>
+                <th>Food Group</th>
+                <th>Recipe Name</th>
+                <th>Response</th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td><img src="/{{  request.customer_id.profile_pic }}" alt="image" width="50px" height="50px"></td>
+                <td>{{ request.customer_id.name }}</td>
+                <td>{{ request.food_group }}</td>
+                <td>{{ request.name }}</td>
+                <td>{{ request.is_apporved  }}</td>
+
+                <td>
+                    <form method="post" action="/managecs/requests-recipe">{% csrf_token %}
+                        <input name="recipe_id" type="number" hidden value="{{ request.id }}">
+                        <input name="submit" type="submit" class="cross" value="Apporve">
+                    </form>
+                </td>
+            <td>
+                <form method="post" action="/managecs/requests-recipe/single">{% csrf_token %}
+                        <input name="recipe_id" type="number" hidden value="{{ request.id }}">
+{#                        <input name="apporve" hidden value="True">#}
+                        <input name="submit" type="submit" class="cross" value="See">
+                </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+    <br><br>
+
+{% endblock content %}

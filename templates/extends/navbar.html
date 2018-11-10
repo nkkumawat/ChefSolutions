@@ -13,14 +13,15 @@
                 <li><a href="mobile.html">Contact Us</a></li>
             </ul>
             <ul class="right hide-on-med-and-down nav-links">
-                <li><a class="material-icons shopping-cart" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
+                    <li><a class="material-icons shopping-cart" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
                 {% if customer %}
-                <li><a href="{% url 'customer:logout'%}">LogOut</a></li>
+                    <li><a href="{% url 'customer:logout'%}">LogOut</a></li>
+                    <li><a href="{% url 'customer:profile'%}">Profile</a></li>
                 {% else %}
-                <li><a href="{% url 'customer:login'%}">LogIn</a></li>
-                <li><a href="{% url 'customer:signup'%}">SignUp</a></li>
+                    <li><a href="{% url 'customer:login'%}">LogIn</a></li>
+                    <li><a href="{% url 'customer:signup'%}">SignUp</a></li>
                 {% endif %}
-                <li><a href="{% url 'customer:profile'%}">Dashboard</a></li>
+
             </ul>
         </div>
     </nav>

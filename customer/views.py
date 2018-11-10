@@ -10,6 +10,7 @@ from .forms import loginForm, signUpForm
 from .models import Customers, Address
 from cart.models import Cart
 from order.models import Orders
+import getResponses
 
 data = {
     "title": "Chef Solutions",
@@ -17,6 +18,7 @@ data = {
 }
 
 def login(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'customer_id' not in request.session:
         if request.method == 'POST':
@@ -59,6 +61,7 @@ def login(request):
 
 
 def signup(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'customer_id' not in request.session:
         if request.method == 'POST':
@@ -95,6 +98,7 @@ def signup(request):
 
 
 def profile(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id=request.session['customer_id'])
@@ -115,6 +119,7 @@ def profile(request):
 
 
 def logout(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'customer_id' in request.session:
         del request.session['customer_id']
@@ -124,6 +129,7 @@ def logout(request):
 
 
 def forgotPassword(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if request.method == "POST":
         email = request.POST["email"]
@@ -159,6 +165,7 @@ def forgotPassword(request):
 
 
 def changePassword(request):  # for forgot password
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if request.method == "POST":
         temp_id = request.POST['temp_id']
@@ -178,6 +185,7 @@ def changePassword(request):  # for forgot password
 
 
 def accoutVarification(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'id' in request.GET:
         id = request.GET['id']
@@ -195,6 +203,7 @@ def accoutVarification(request):
 
 
 def updatePassword(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'customer_id' in request.session:
         if request.method == "POST":
@@ -216,6 +225,7 @@ def updatePassword(request):
 
 
 def updateProfile(request):
+    data = getResponses.getResponse(request)
     data['message'] = ""
     if 'customer_id' in request.session:
         if request.method == "POST":

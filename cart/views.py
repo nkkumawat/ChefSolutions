@@ -4,11 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from products.models import Products
 from django.utils.crypto import get_random_string
 from django.db.models import Sum
-
+import getResponses
 
 def cart(request):
     data = {}
     data['title'] = "Cart | ChefSolutions"
+    data = getResponses.getResponse(request)
     if 'customer_id' in request.session:
         cart = Cart.objects.filter(
             customer_id=request.session['customer_id'], is_purchased=False)
@@ -30,6 +31,7 @@ def cart(request):
 
 
 def addInCart(request):
+
     if 'customer_id' in request.session:
         if request.method == 'POST':
             product_id = request.POST['product_id']
@@ -89,12 +91,14 @@ def addInCart(request):
             return JsonResponse(data)
 
     data = {}
+    data = getResponses.getResponse(request)
     data['success'] = "false"
     data['added_count'] = 0
     return JsonResponse(data)
 
 
 def deleteCart(request):
+
     if 'customer_id' in request.session:
         if request.method == 'POST':
             cart_id = request.POST['cart_id']

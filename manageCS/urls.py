@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.conf.urls import url
 from .views import manageOrders, manageOrderSingle, manageProducts, manageProductSingle, addProduct
-from  .views import deleteProduct, manageB2BRequest, printRecipt
+from  .views import deleteProduct, manageB2BRequest, printRecipt, manageRecipeRequest, manageRecipeRequestSingle
 
 app_name = 'manageCS'
 
@@ -14,5 +14,7 @@ urlpatterns = [
     path('products/add', addProduct, name="addProduct"),
     path('products/delete', deleteProduct, name="deleteProduct"),
     path('requests-b2b', manageB2BRequest, name="manageB2BRequest"),
+    path('requests-recipe', manageRecipeRequest, name="manageRecipeRequest"),
+    path('requests-recipe/single', manageRecipeRequestSingle, name="manageRecipeRequestSingle"),
     path('orders/recipt/print', printRecipt, name="printRecipt"),
 ]

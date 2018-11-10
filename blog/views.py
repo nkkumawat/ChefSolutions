@@ -15,6 +15,7 @@ data = {}
 
 
 def addRecipe(request):
+
     if 'customer_id' in request.session:
         data = getResponses.getResponse(request)
         if request.method == 'POST':

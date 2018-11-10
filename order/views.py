@@ -5,10 +5,11 @@ from cart.models import Cart
 from products.models import Products
 
 from django.db.models import Sum
-
+import getResponses
 
 def placeOrder(request):
-    data = {}
+
+    data = getResponses.getResponse(request)
     data['title'] = "Order | Chef Solutions"
     if 'customer_id' in request.session:
         products = []

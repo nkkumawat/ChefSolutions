@@ -1,0 +1,54 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+
+    {% if recipe %}
+
+        <iframe width="560" height="315" src="{{ recipe.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>
+        <b>Name:</b> {{ recipe.name }}<br>
+        <b>food_group:</b> {{ recipe.food_group }}<br>
+        <b>ingredients:</b> {{ recipe.ingredients  }}<br>
+        <b>cooking_process_name:</b> {{ recipe.cooking_process_name }}<br>
+{#        Name: {{ recipe.cooking_process_name }}#}
+        <b>cooking_process_method:</b> {{ recipe.cooking_process_method }}<br>
+        <b>tags:</b> {{ recipe.tags }}<br>
+        <b>add_date:</b> {{ recipe.add_date }}<br>
+         <form method="post" action="/managecs/requests-recipe/single">{% csrf_token %}
+                <input name="recipe_id" type="number" hidden value="{{ recipe.id }}">
+                        <input name="apporve" hidden value="True">
+                <input name="submit" type="submit" class="cross" value="Apporve">
+        </form><br>
+    {% if products %}
+        <b>Product Used</b>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Product Id</th>
+                <th>Product Name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td><img src="/{{ product.picture_1 }}" style="height: 50px; width: 50px;"></td>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+
+
+    </table>
+        {% endif %}
+    {% endif %}
+</div>
+    <br><br>
+
+{% endblock content %}

@@ -5,16 +5,20 @@ from order.models import Orders
 from cart.models import Cart
 from products.models import Products
 from blog.views import render_to_pdf
+from blog.models import Recipes
+import getResponses
 
 # Create your views here.
 
 
 
 def manageOrders(request):
+
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id = request.session['customer_id'])[0]
         if customer.is_admin:
            data = {}
+           data = getResponses.getResponse(request)
            data['orders'] = Orders.objects.all().reverse()
 
            return render(request, "manageCS/orders.html", data)
@@ -28,6 +32,7 @@ def manageOrderSingle(request):
         customer = Customers.objects.filter(id = request.session['customer_id'])[0]
         if customer.is_admin:
             data = {}
+            data = getResponses.getResponse(request)
             order = Orders.objects.filter(id = request.POST['order_id'])[0]
             address = Address.objects.filter(customer_id=customer)
             data['order'] = order
@@ -55,6 +60,7 @@ def manageProducts(request):
         customer = Customers.objects.filter(id = request.session['customer_id'])[0]
         if customer.is_admin:
            data = {}
+           data = getResponses.getResponse(request)
            data['products'] = Products.objects.all().reverse()
 
            return render(request, "manageCS/products.html", data)
@@ -68,6 +74,8 @@ def manageProductSingle(request):
         customer = Customers.objects.filter(id = request.session['customer_id'])[0]
         if customer.is_admin:
             data = {}
+            data = getResponses.getResponse(request)
+            data = getResponses.getResponse(request)
             product = Products.objects.filter(id = request.POST['product_id'])[0]
             data['product'] = product
             print(product)
@@ -83,6 +91,7 @@ def addProduct(request):
         if customer.is_admin:
             if request.method == 'POST':
                 data = {}
+                data = getResponses.getResponse(request)
                 product  = Products()
                 product.name = request.POST['name']
 
@@ -142,10 +151,58 @@ def deleteProduct(request):
 
 
 
+def manageRecipeRequest(request):
+    if 'customer_id' in request.session:
+        customer = Customers.objects.filter(id=request.session['customer_id'])[0]
+        data = {}
+        data = getResponses.getResponse(request)
+        if customer.is_admin:
+            if request.method == 'POST':
+                id = request.POST['recipe_id']
+                Recipes.objects.filter(id=id).update(is_apporved = True)
+            data['requests'] = Recipes.objects.filter(is_apporved=False)
+            return render(request , "manageCS/requestrecipe.html" , data)
+        else:
+            return redirect("error:error")
+    else:
+        return redirect("error:error")
+
+def manageRecipeRequestSingle(request):
+    if 'customer_id' in request.session:
+        customer = Customers.objects.filter(id=request.session['customer_id'])[0]
+        data = {}
+        data = getResponses.getResponse(request)
+        if customer.is_admin:
+            if request.method == 'POST':
+                id = request.POST['recipe_id']
+                if 'apporve' in request.POST:
+                    Recipes.objects.filter(id=id).update(is_apporved = True)
+                    return redirect("manageCS:manageRecipeRequest")
+                else:
+                    recipe = Recipes.objects.filter(id=id)
+                    product_ids = recipe[0].use_of_products.split("$")
+                    products = []
+                    for idx in product_ids:
+                        if idx != '':
+                            product = Products.objects.filter(id=idx)[0]
+                            products.insert(0, product)
+                    data['products'] = products
+                    data['recipe'] = recipe[0]
+
+                    return render(request , "manageCS/requestrecipesingle.html" , data)
+            else:
+                return redirect("error:error")
+        else:
+            return redirect("error:error")
+    else:
+        return redirect("error:error")
+
+
 def manageB2BRequest(request):
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id=request.session['customer_id'])[0]
         data = {}
+        data = getResponses.getResponse(request)
         if customer.is_admin:
             if request.method == 'POST':
                 id = request.POST['request_id']
@@ -165,10 +222,11 @@ def manageB2BRequest(request):
 def printRecipt(request):
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id=request.session['customer_id'])[0]
-        data = {}
+
         if customer.is_admin:
             if request.method == 'POST':
                 data = {}
+                data = getResponses.getResponse(request)
                 order = Orders.objects.filter(id=request.POST['order_id'])[0]
                 address = Address.objects.filter(customer_id=customer)
                 data['order'] = order

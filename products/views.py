@@ -46,6 +46,7 @@ def allProducts(request):
 
 def prductDetail(request, pid):
     product = Products.objects.filter(id=pid)
+    data = getResponses.getResponse(request)
     if product:
         print(product)
         data['product'] = product[0]
