@@ -32,7 +32,22 @@
 <div class="blog-container" style="margin: 10px;">
     <div class="row">
         <div class="col s12 m4">
-
+            
+            <div class="card-panel">
+        
+                <h6>Most Rated Recipes</h6>
+                <p>
+                    {% for recipe in top_rated %}
+                    <h6 class="center-align" style="text-transform: uppercase;">{{ recipe.name }}</h6>
+                    <a href="{% url 'blog:recipesDetail' recipe.id %}">
+                        <img src="/{{recipe.picture_1  }}" style="width: 100%; height: 100%;"/>
+                    </a>
+                    <br>
+                    <hr>
+                    {% endfor %}
+                </p>
+            </div>
+        
         </div>
         <div class="col s12 m8">
             <div class="my-card">
