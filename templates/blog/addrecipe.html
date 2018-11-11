@@ -4,6 +4,20 @@
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 <link rel="stylesheet" href="{% static 'css/topImage.css' %}">
 <link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+<style>
+    .my-form{
+        display: block;
+        width: 100%;
+    }
+
+    .my-label{
+        position: static !important;
+    }
+
+    .select-dropdown{
+        border: 1px solid grey !important;
+    }
+</style>
 {% endblock styles %}
 
 {% block content %}
@@ -46,37 +60,37 @@
     
             <form method="post" enctype="multipart/form-data" >{% csrf_token %}
                 <label>Name</label>
-                <input class="my-form" name="name" type="text" />
+                <input class="my-form browser-default" name="name" type="text" />
 
                 <label>Food Group</label>
-                <input class="my-form" name="food_group" type="text" />
+                <input class="my-form browser-default" name="food_group" type="text" />
 
 {#                <label>Name</label>#}
-{#                <input class="my-form" name="no_of_portions" type="number" />#}
+{#                <input class="my-form browser-default" name="no_of_portions" type="number" />#}
 
                     <label>Our Product Used</label>
-                    <select class="my-form" multiple style="border: 1px solid black; !important;" name="use_of_products">
+                    <select multiple name="use_of_products">
                         {%  for product in products %}
                             <option value="{{ product.id }}">{{ product.name }}</option>
                         {% endfor %}
                     </select>
 
-{#                <input class="my-form" name="use_of_products" type="text" />#}
+{#                <input class="my-form browser-default" name="use_of_products" type="text" />#}
 
-                <label>Ingredients</label>
-                <input class="my-form" name="ingredients" type="text" />
+                <label class="my-label">Ingredients</label>
+                <input class="my-form browser-default" name="ingredients" type="text" />
 
                 <label>Cooking Process Name</label>
-                <input class="my-form" name="cooking_process_name" type="text" />
+                <input class="my-form browser-default" name="cooking_process_name" type="text" />
 
                 <label>Cooking Process Method</label>
-                <textarea class="my-form" name="cooking_process_method"  ></textarea>
+                <textarea class="my-form browser-default" name="cooking_process_method"  ></textarea>
 
                 <label>Tags</label>
-                <input class="my-form" name="tags" type="text" />
+                <input class="my-form browser-default" name="tags" type="text" />
 
                 <label>Youtube Video Url</label>
-                <input class="my-form" name="video_url" type="text" />
+                <input class="my-form browser-default" name="video_url" type="text" />
 
 
                 <label>Picture 1</label>

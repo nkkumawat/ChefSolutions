@@ -1,21 +1,106 @@
 {% extends "../extends/main.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-btn.css' %}">
+<link rel="stylesheet" href="{% static 'css/my-card.css' %}">
+<style>
+    .flow-text{
+        margin: 0 !important;
+    }
+</style>
+{% endblock styles %}
 
 {% block content %}
 
-{% for recipe in recipes %}
-<li><b>{{ recipe.name }}</b></li>
-<li>{{ recipe.customer_id.name }}</li>
-<li>{{ recipe.food_group }}</li>
-<li>{{ recipe.ingredients }}</li>
-<li>{{ recipe.use_of_goods }}</li>
-<li>{{ recipe.cooking_process_name }}</li>
-<li>{{ recipe.cooking_process_method }}</li>
-<li>{{ recipe.tags }}</li>
-<li>{{ recipe.no_of_portions }}</li>
-<li>{{ recipe.add_date }}</li>
-<img src="/{{recipe.picture_1  }}" height="100" width="100" />
-<img src="/{{recipe.picture_2  }}" height="100" width="100" />
-<img src="/{{recipe.picture_3  }}" height="100" width="100" />
-{% endfor %}
+<div class="top-image">
+    <div class="first center-align">
+        <span>
+            Write
+        </span>
+    </div>
+    <div class="second center-align">
+        <span>
+            Blog
+        </span>
+    </div>
+</div>
+
+{% if recipes %}
+
+<div class="blog-container" style="margin: 10px;">
+    <div class="my-card">
+        <div class="card-panel contains">
+    
+            <span>Blog</span>
+            <p>
+                {% for recipe in recipes %}
+                <h4 class="center-align" style="text-transform: uppercase;">{{ recipe.name }}</h4>
+                <h5 class="right">{{ recipe.add_date }}</h5>
+                <div class="center-align">
+                    <div class="carousel carousel-slider" style="width: 80%;left: 50%; transform: translateX(-50%);">
+                        <a class="carousel-item" href="#one!">
+                            <img src="/{{recipe.picture_1  }}" />
+                        </a>
+                        <a class="carousel-item" href="#two!">
+                            <img src="/{{recipe.picture_2  }}" />
+                        </a>
+                        <a class="carousel-item" href="#three!">
+                            <img src="/{{recipe.picture_3  }}"  />
+                        </a>                 
+                    </div>
+                </div>
+                
+                <p class="flow-text" style="margin-top: 30px !important;">
+                    Submitted-By: {{ recipe.customer_id.name }}
+                </p>
+                <p class="flow-text">
+                    Tags: {{ recipe.tags }}
+                </p>
+                
+                <p class="flow-text">
+                    Food Group: {{ recipe.food_group }}
+                </p>
+                <p class="flow-text">
+                    Ingredients: {{ recipe.ingredients }}
+                </p>
+
+                <p class="flow-text">
+                    Used Goods: {{ recipe.use_of_products }}
+                </p>
+                
+                <p class="flow-text">
+                    Process Name: {{ recipe.cooking_process_name }}
+                </p>
+                
+                <p class="flow-text">
+                    Process Method: {{ recipe.cooking_process_method }}
+                </p>
+
+                <p class="flow-text">
+                    Video Url: {{ recipe.video_url }}
+                </p>
+
+                <hr>
+                
+                {% endfor %}
+        
+            </p>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<h3 class="center-align">Nothing wrote yet. Be the first one to write</h3>
+{% endif %}
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true
+    });
+</script>
+{% endblock scripts %}
