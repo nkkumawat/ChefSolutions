@@ -30,63 +30,56 @@
 {% if recipes %}
 
 <div class="blog-container" style="margin: 10px;">
-    <div class="my-card">
-        <div class="card-panel contains">
-    
-            <span>Blog</span>
-            <p>
-                {% for recipe in recipes %}
-                <h4 class="center-align" style="text-transform: uppercase;">{{ recipe.name }}</h4>
-                <h5 class="right">{{ recipe.add_date }}</h5>
-                <div class="center-align">
-                    <div class="carousel carousel-slider" style="width: 80%;left: 50%; transform: translateX(-50%);">
-                        <a class="carousel-item" href="#one!">
-                            <img src="/{{recipe.picture_1  }}" />
-                        </a>
-                        <a class="carousel-item" href="#two!">
-                            <img src="/{{recipe.picture_2  }}" />
-                        </a>
-                        <a class="carousel-item" href="#three!">
-                            <img src="/{{recipe.picture_3  }}"  />
-                        </a>                 
-                    </div>
-                </div>
-                
-                <p class="flow-text" style="margin-top: 30px !important;">
-                    Submitted-By: {{ recipe.customer_id.name }}
-                </p>
-                <p class="flow-text">
-                    Tags: {{ recipe.tags }}
-                </p>
-                
-                <p class="flow-text">
-                    Food Group: {{ recipe.food_group }}
-                </p>
-                <p class="flow-text">
-                    Ingredients: {{ recipe.ingredients }}
-                </p>
+    <div class="row">
+        <div class="col s12 m4">
 
-                <p class="flow-text">
-                    Used Goods: {{ recipe.use_of_products }}
-                </p>
-                
-                <p class="flow-text">
-                    Process Name: {{ recipe.cooking_process_name }}
-                </p>
-                
-                <p class="flow-text">
-                    Process Method: {{ recipe.cooking_process_method }}
-                </p>
-
-                <p class="flow-text">
-                    Video Url: {{ recipe.video_url }}
-                </p>
-
-                <hr>
-                
-                {% endfor %}
+        </div>
+        <div class="col s12 m8">
+            <div class="my-card">
+                <div class="card-panel contains">
+            
+                    <span>Blog</span>
+                    <p>
+                        {% for recipe in recipes %}
+                        <h4 class="left" style="text-transform: uppercase;">{{ recipe.name }}</h4>
+                        <h5 class="right" style="border: 1px solid grey; padding: 5px;">{{ recipe.add_date }}</h5>
+                        <div class="center-align">
+                            <div class="carousel carousel-slider">
+                                <a class="carousel-item" href="#one!">
+                                    <img src="/{{recipe.picture_1  }}" />
+                                </a>
+                                <a class="carousel-item" href="#two!">
+                                    <img src="/{{recipe.picture_2  }}" />
+                                </a>
+                                <a class="carousel-item" href="#three!">
+                                    <img src="/{{recipe.picture_3  }}"  />
+                                </a>                 
+                            </div>
+                        </div>
+                        
+                        <p class="center-align" style="margin-top: 30px !important;">
+                            Submitted-By: {{ recipe.customer_id.name }}
+                        </p>
         
-            </p>
+                        <p class="flow-text">
+                            Our Products Used:
+                        </p>
+
+                        {% for pro in products_used %}
+                        <div class="chip">
+                            {{ pro }}
+                        </div>
+                        {% endfor %}
+
+                        <button class="btn z-depth-0 my-btn" style="display: block; margin-top: 30px;margin-bottom: 50px;" type="button">Read More</button>
+        
+                        <hr>
+                        
+                        {% endfor %}
+                
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

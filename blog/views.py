@@ -27,7 +27,8 @@ def addRecipe(request):
             product_ids = request.POST.getlist('use_of_products')
             recipe.use_of_products = ""
             for id in product_ids:
-                recipe.use_of_products += id + "$"
+                product = Products.objects.get(id=id)
+                recipe.use_of_products += product.name + "$"
             recipe.ingredients = request.POST['ingredients']
             recipe.cooking_process_name = request.POST['cooking_process_name']
             recipe.cooking_process_method = request.POST['cooking_process_method']
@@ -58,6 +59,9 @@ def recipes(request):
     if 'customer_id' in request.session:
         data = getResponses.getResponse(request)
     data['recipes'] = Recipes.objects.filter(is_apporved=True)
+    
+    data['products_used'] = data['recipes'].values_list('use_of_products')[0][0].split('$')[:-1]
+
     return render(request, 'blog/recipes.html', data)
 
 
@@ -70,6 +74,7 @@ def render_to_pdf(path, params={}):
         return HttpResponse(response.getvalue(), content_type='application/pdf')
     else:
         return HttpResponse("Error Rendering PDF", status=400)
+
 
 def printRecipe(request, rid):
     recipe = Recipes.objects.filter(id= rid,is_apporved=True)
