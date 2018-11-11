@@ -60,9 +60,23 @@ def recipes(request):
         data = getResponses.getResponse(request)
     data['recipes'] = Recipes.objects.filter(is_apporved=True)
     
-    data['products_used'] = data['recipes'].values_list('use_of_products')[0][0].split('$')[:-1]
+    for i in range(0, len(data['recipes'])):
+        data['recipes'][i].use_of_products = data['recipes'][i].use_of_products.split('$')[:-1]
 
     return render(request, 'blog/recipes.html', data)
+
+
+def recipesDetail(request, id):
+    data = {}    
+    if 'customer_id' in request.session:
+        data = getResponses.getResponse(request)
+    data['recipes'] = Recipes.objects.get(id=id)
+    
+    data['recipes'].use_of_products = data['recipes'].use_of_products.split('$')[:-1]
+
+    print(data['recipes'].use_of_products)
+
+    return render(request, 'blog/recipesDetail.html', data)
 
 
 def render_to_pdf(path, params={}):

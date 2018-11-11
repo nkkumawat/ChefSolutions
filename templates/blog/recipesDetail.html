@@ -40,45 +40,37 @@
             
                     <span>Blog</span>
                     <p>
-                        {% for recipe in recipes %}
-                        <h4 class="left" style="text-transform: uppercase;">{{ recipe.name }}</h4>
-                        <h5 class="right" style="border: 1px solid grey; padding: 5px;">{{ recipe.add_date }}</h5>
+                        
+                        <h4 class="left" style="text-transform: uppercase;">{{ recipes.name }}</h4>
+                        <h5 class="right" style="border: 1px solid grey; padding: 5px;">{{ recipes.add_date }}</h5>
                         <div class="center-align">
                             <div class="carousel carousel-slider">
                                 <a class="carousel-item" href="#one!">
-                                    <img src="/{{recipe.picture_1  }}" />
+                                    <img src="/{{recipes.picture_1  }}" />
                                 </a>
                                 <a class="carousel-item" href="#two!">
-                                    <img src="/{{recipe.picture_2  }}" />
+                                    <img src="/{{recipes.picture_2  }}" />
                                 </a>
                                 <a class="carousel-item" href="#three!">
-                                    <img src="/{{recipe.picture_3  }}"  />
+                                    <img src="/{{recipes.picture_3  }}"  />
                                 </a>                 
                             </div>
                         </div>
                         
                         <p class="center-align" style="margin-top: 30px !important;">
-                            Submitted-By: {{ recipe.customer_id.name }}
+                            Submitted-By: {{ recipes.customer_id.name }}
                         </p>
         
                         <p class="flow-text">
                             Our Products Used:
                         </p>
 
-                        {% for pro in recipe.use_of_products %}
+                        {% for pro in recipes.use_of_products %}
                         <div class="chip">
                             {{ pro }}
                         </div>
                         {% endfor %}
 
-                        <br>
-
-                        <a href="{% url 'blog:recipesDetail' recipe.id %}" class="btn z-depth-0 my-btn" style="margin-top: 30px;margin-bottom: 50px;" type="button">Read More</a>
-        
-                        <hr>
-                        
-                        {% endfor %}
-                
                     </p>
                 </div>
             </div>
@@ -87,7 +79,7 @@
 </div>
 
 {% else %}
-<h3 class="center-align">Nothing wrote yet. Be the first one to write</h3>
+<h3 class="center-align">No Such Recipe</h3>
 {% endif %}
 
 {% endblock content %}
