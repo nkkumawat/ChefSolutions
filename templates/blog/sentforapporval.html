@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "../extends/main.html" %}
+{% load static %}
 
-sent for apporval
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+{% endblock styles %}   
 
-</body>
-</html>
+{% block content %}
+<div class="top-image">
+    <div class="second center-align">
+        <span>
+            Sent
+        </span>
+    </div>
+</div>
+
+<h4 class="center-align">Sent For Approval</h4>
+{% endblock content %} 
+
