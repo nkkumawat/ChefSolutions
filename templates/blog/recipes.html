@@ -43,16 +43,16 @@
                         {% for recipe in recipes %}
                         <h4 class="left" style="text-transform: uppercase;">{{ recipe.name }}</h4>
                         <h5 class="right" style="border: 1px solid grey; padding: 5px;">{{ recipe.add_date }}</h5>
-                        <div class="center-align">
+                        <div class="center-align" style="max-height: 300px;">
                             <div class="carousel carousel-slider">
                                 <a class="carousel-item" href="#one!">
-                                    <img src="/{{recipe.picture_1  }}" />
+                                    <img src="/{{recipe.picture_1  }}" style="max-height: 300px;" />
                                 </a>
                                 <a class="carousel-item" href="#two!">
-                                    <img src="/{{recipe.picture_2  }}" />
+                                    <img src="/{{recipe.picture_2  }}" style="max-height: 300px;"/>
                                 </a>
                                 <a class="carousel-item" href="#three!">
-                                    <img src="/{{recipe.picture_3  }}"  />
+                                    <img src="/{{recipe.picture_3  }}" style="max-height: 300px;" />
                                 </a>                 
                             </div>
                         </div>
@@ -94,8 +94,15 @@
 
 {% block scripts %}
 <script>
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-    });
+	 $(document).ready(function(){
+	     $('.carousel.carousel-slider').carousel({
+		    fullWidth: true,
+		    indicators: true
+		  });
+      
+	  });
+    // $('.carousel.carousel-slider').carousel({
+    //     fullWidth: true
+    // });
 </script>
 {% endblock scripts %}
