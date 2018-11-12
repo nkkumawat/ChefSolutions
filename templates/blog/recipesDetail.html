@@ -87,9 +87,46 @@
                         {% endfor %}
 
                     </p>
+
+                    <h4 class="center-align" style="margin-bottom: 40px;">Comments</h4>
+                    
+                    {% if comments %}
+                    <ul class="collection">
+                        {% for comment in comments %}
+                        <li class="collection-item avatar">
+                            <img src="/{{ comment.user.profile_pic }}" alt="" class="circle">
+                            <h4 class="title teal-text" style="margin-top: 0px;">{{ comment.user.name }}</h4>
+                            <p>{{ comment.text }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <h6 class="center-align">No Comments Yet. Be The First One To Add</h6>
+                    {% endif %}
+
+                    <h5 class="center-align" style="margin-top: 40px; margin-bottom: 40px;">Add Comment</h5>
+
+                    <form id="commentForm">
+                        {% csrf_token %}
+                        <p id="customerId" class="hide">{{ customer.id }}</p>
+                        <p id="recipeId" class="hide">{{ recipes.id }}</p>
+                        <p id="customerName" class="hide">{{ customer.name }}</p>
+                        <p id="customerImage" class="hide">{{ customer.profile_pic }}</p>
+                        <textarea class="materialize-textarea" name="comment" style="border: 1px solid grey; padding: 20px;" placeholder="Write Your Comment" required></textarea>
+                        <input class="my-btn btn z-depth-0" type="submit" value="Add Comment">
+                    </form>
+                    
                 </div>
+                
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Error While Commenting</h4>
+        <p>Some Error Occured While Commenting Try Again After Reloading The Page</p>
     </div>
 </div>
 
@@ -101,8 +138,12 @@
 
 {% block scripts %}
 <script>
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-    });
+    $('document').ready(function(){
+        $('.carousel.carousel-slider').carousel({
+            fullWidth: true
+        });
+        $('.modal').modal();
+    })
 </script>
-{% endblock scripts %}
+<script src="{% static 'js/comment.js' %}"></script>
+{% endblock scripts %}                

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
-from .models import Recipes
+from django.http import HttpResponseRedirect, JsonResponse
+from .models import Recipes, Comments
 from customer.models import Customers
 import getResponses
 from products.models import Products
@@ -34,13 +34,13 @@ def addRecipe(request):
             recipe.cooking_process_method = request.POST['cooking_process_method']
             recipe.tags = request.POST['tags']
             recipe.video_url = request.POST['video_url']
-            
+
             if 'picture_1' in request.FILES:
                 recipe.picture_1 = request.FILES['picture_1']
-            
+
             if 'picture_2' in request.FILES:
-                recipe.picture_2 = request.FILES['picture_2']                
-            
+                recipe.picture_2 = request.FILES['picture_2']
+
             if 'picture_3' in request.FILES:
                 recipe.picture_3 = request.FILES['picture_3']
 
@@ -59,7 +59,7 @@ def recipes(request):
     if 'customer_id' in request.session:
         data = getResponses.getResponse(request)
     data['recipes'] = Recipes.objects.filter(is_apporved=True)
-    
+
     def ratingSystem(elem):
         return elem.total_rating
 
@@ -67,17 +67,18 @@ def recipes(request):
 
     if len(topRecipes) > 5:
         data['top_rated'] = topRecipes[0:5]
-    else: 
+    else:
         data['top_rated'] = topRecipes
 
     for i in range(0, len(data['recipes'])):
-        data['recipes'][i].use_of_products = data['recipes'][i].use_of_products.split('$')[:-1]
+        data['recipes'][i].use_of_products = data['recipes'][i].use_of_products.split('$')[
+            :-1]
 
     return render(request, 'blog/recipes.html', data)
 
 
 def recipesDetail(request, id):
-    data = {}    
+    data = {}
     if 'customer_id' in request.session:
         data = getResponses.getResponse(request)
     data['recipes'] = Recipes.objects.get(id=id)
@@ -85,16 +86,18 @@ def recipesDetail(request, id):
     def ratingSystem(elem):
         return elem.total_rating
 
-    topRecipes = sorted(Recipes.objects.filter(is_apporved=True), key=ratingSystem, reverse=True)
+    topRecipes = sorted(Recipes.objects.filter(
+        is_apporved=True), key=ratingSystem, reverse=True)
 
     if len(topRecipes) > 5:
-        data['top_rated'] = topRecipes[0:5]    
-    else: 
+        data['top_rated'] = topRecipes[0:5]
+    else:
         data['top_rated'] = topRecipes
-    
-    data['recipes'].use_of_products = data['recipes'].use_of_products.split('$')[:-1]
 
-    print(data['recipes'].use_of_products)
+    data['recipes'].use_of_products = data['recipes'].use_of_products.split('$')[
+        :-1]
+
+    data['comments'] = Comments.objects.filter(recipe=data['recipes'])
 
     return render(request, 'blog/recipesDetail.html', data)
 
@@ -111,9 +114,22 @@ def render_to_pdf(path, params={}):
 
 
 def printRecipe(request, rid):
-    recipe = Recipes.objects.filter(id= rid,is_apporved=True)
+    recipe = Recipes.objects.filter(id=rid, is_apporved=True)
     if recipe.__len__():
-        pdf = render_to_pdf('blog/printtemplate.html', {'data' : recipe})
+        pdf = render_to_pdf('blog/printtemplate.html', {'data': recipe})
         return HttpResponse(pdf, content_type='application/pdf')
     else:
         return redirect('error:error')
+
+
+def addComment(request):
+    if request.method == 'GET':
+        return redirect('error:error')
+
+    elif request.method == 'POST':
+        customer = Customers.objects.get(id=request.POST['customerId'])
+        recipe = Recipes.objects.get(id=request.POST['recipeId'])
+        comment = Comments(
+            text=request.POST['text'], user=customer, recipe=recipe)
+        comment.save()
+        return JsonResponse(data={'success': True, 'comment': comment.text})
