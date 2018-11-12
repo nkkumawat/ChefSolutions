@@ -60,6 +60,16 @@ def recipes(request):
         data = getResponses.getResponse(request)
     data['recipes'] = Recipes.objects.filter(is_apporved=True)
     
+    def ratingSystem(elem):
+        return elem.total_rating
+
+    topRecipes = sorted(data['recipes'], key=ratingSystem, reverse=True)
+
+    if len(topRecipes) > 5:
+        data['top_rated'] = topRecipes[0:5]
+    else: 
+        data['top_rated'] = topRecipes
+
     for i in range(0, len(data['recipes'])):
         data['recipes'][i].use_of_products = data['recipes'][i].use_of_products.split('$')[:-1]
 
@@ -71,6 +81,16 @@ def recipesDetail(request, id):
     if 'customer_id' in request.session:
         data = getResponses.getResponse(request)
     data['recipes'] = Recipes.objects.get(id=id)
+
+    def ratingSystem(elem):
+        return elem.total_rating
+
+    topRecipes = sorted(Recipes.objects.filter(is_apporved=True), key=ratingSystem, reverse=True)
+
+    if len(topRecipes) > 5:
+        data['top_rated'] = topRecipes[0:5]    
+    else: 
+        data['top_rated'] = topRecipes
     
     data['recipes'].use_of_products = data['recipes'].use_of_products.split('$')[:-1]
 
