@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import addRecipe, recipes, printRecipe, recipesDetail
+from .views import addRecipe, recipes, printRecipe, recipesDetail, addComment
 
 app_name = 'blog'
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:id>/', recipesDetail, name="recipesDetail"),
     path('add', addRecipe, name="addrecipe"),
     path('print_recipe/<int:rid>', printRecipe, name="printrecipe"),
+    path('addComment', addComment, name="addComment"),
 ]
