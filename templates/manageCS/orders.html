@@ -30,7 +30,7 @@
                 <td>{{ order.is_payment_done }}</td>
                 <td>
                     <form method="post" action="/managecs/orders/single">{% csrf_token %}
-                        <input name="order_id" type="number" hidden value="{{ order.id }}">
+                        <input required name="order_id" type="number" hidden value="{{ order.id }}">
                         <input name="submit" type="submit" class="cross" value=">">
                     </form>
                 </td>

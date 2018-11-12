@@ -34,13 +34,13 @@
                 <td>{{ product.is_vegetarian }}</td>
                 <td>
                     <form method="post" action="/managecs/products/single">{% csrf_token %}
-                        <input name="product_id" type="number" hidden value="{{ product.id }}">
+                        <input required name="product_id" type="number" hidden value="{{ product.id }}">
                         <input name="submit" type="submit" class="cross" value=">">
                     </form>
                 </td>
                 <td>
                     <form method="post" action="/managecs/products/delete">{% csrf_token %}
-                        <input name="product_id" type="number" hidden value="{{ product.id }}">
+                        <input required name="product_id" type="number" hidden value="{{ product.id }}">
                         <input name="submit" type="submit" class="cross" value="Delete">
                     </form>
                 </td>

@@ -44,17 +44,17 @@
     
         <form method="post"> {% csrf_token %}
             <label for="name">Enter Your Name</label>
-            <input class="my-form" name="name" type="text" id="name" />
+            <input required class="my-form" name="name" type="text" id="name" />
                 
             <label for="email">Enter Your Email</label>
-            <input class="my-form" name="email" id="email" type="email" />
+            <input required class="my-form" name="email" id="email" type="email" />
     
             <label for="number">Enter Your Number</label>
-            <input class="my-form" name="mobile" type="number" id="number" />
+            <input required class="my-form" name="mobile" type="number" id="number" />
     
             
             <label for="password">Enter Your Password</label>
-            <input class="my-form" name="password" type="password" id="password" />
+            <input required class="my-form" name="password" type="password" id="password" />
             
             <input class="btn z-depth-0 my-btn" type="submit" value="Submit" />
         </form>

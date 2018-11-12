@@ -41,13 +41,13 @@
     
             <form method="post">
                 <label for="email">Enter Your Email</label>
-                <input class="my-form" name="email" type="email" id="email" />
+                <input required class="my-form" name="email" type="email" id="email" />
 
 
                 <label for="password">Enter Your Password</label>
-                <input class="my-form" name="password" type="password" id="password" />
+                <input required class="my-form" name="password" type="password" id="password" />
                 {% csrf_token %}
-                <input class="btn z-depth-0 my-btn" type="submit" value="Submit" />
+                <input required class="btn z-depth-0 my-btn" type="submit" value="Submit" />
                 <a class="btn z-depth-0 my-btn" href="{% url 'customer:forgot' %}">Forgot Password</a>
             </form>
     </div>
