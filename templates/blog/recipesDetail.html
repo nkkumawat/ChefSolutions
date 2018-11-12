@@ -33,14 +33,14 @@
     <div class="row">
         <div class="col s12 m4">
             <div class="card-panel">
-                <div class="card-panel">
+                <div class="card-panel center-align">
     
-                    <h6>Most Rated Recipes</h6>
-                    <p>
+                    <h5>Most Rated Recipes</h5>
+                    <p >
                         {% for recipe in top_rated %}
                         <h6 class="center-align" style="text-transform: uppercase;">{{ recipe.name }}</h6>
-                        <a href="{% url 'blog:recipesDetail' recipe.id %}">
-                            <img src="/{{recipe.picture_1  }}" style="width: 100%; height: 100%;"/>
+                        <a href="{% url 'blog:recipesDetail' recipe.id %}" >
+                            <img src="/{{recipe.picture_1  }}" class="center-align" style="max-width: 200px;"/>
                         </a>
                         <br>
                         <hr>
@@ -59,36 +59,87 @@
                         <h4 class="left" style="text-transform: uppercase;">{{ recipes.name }}</h4>
                         <h5 class="right" style="border: 1px solid grey; padding: 5px;">{{ recipes.add_date }}</h5>
                         <div class="center-align">
-                            <div class="carousel carousel-slider">
-                                <a class="carousel-item" href="#one!">
-                                    <img src="/{{recipes.picture_1  }}" />
-                                </a>
-                                <a class="carousel-item" href="#two!">
-                                    <img src="/{{recipes.picture_2  }}" />
-                                </a>
-                                <a class="carousel-item" href="#three!">
-                                    <img src="/{{recipes.picture_3  }}"  />
-                                </a>                 
+                            <iframe style="width: 100%;" height="400" src="{{ recipes.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe st>
+                        </div><br>
+                        <p class="flow-text">
+                            Images:
+                        </p>
+                        <div class="center-align">
+                            <div class="row">
+                                <div class="col"><img class="materialboxed" src="/{{recipes.picture_1  }}" style="width: 200px;"/></div>
+                                <div class="col"><img class="materialboxed" src="/{{recipes.picture_2  }}" style="width: 200px;"/></div>
+                                <div class="col"><img class="materialboxed" src="/{{recipes.picture_3  }}" style="width: 200px;"/></div>
                             </div>
+
+
+
+{#                            <div class="carousel carousel-slider">#}
+{#                                <a class="carousel-item" href="#one!">#}
+{#                                    <img src="/{{recipes.picture_1  }}" style="width: 100%; height: 100%;"/>#}
+{#                                </a>#}
+{#                                <a class="carousel-item" href="#two!">#}
+{#                                    <img src="/{{recipes.picture_2  }}" style="width: 100%; height: 100%;"/>#}
+{#                                </a>#}
+{#                                <a class="carousel-item" href="#three!">#}
+{#                                    <img src="/{{recipes.picture_3  }}" style="width: 100%; height: 100%;" />#}
+{#                                </a>                 #}
+{#                            </div>#}
                         </div>
                         
-                        <p class="center-align" style="margin-top: 30px !important;">
-                            Submitted-By: {{ recipes.customer_id.name }}
+                        <p class="left-align" style="margin-top: 30px !important;">
+                            Added-By: <b>{{ recipes.customer_id.name }}</b>
                         </p>
-        
+                        <p class="flow-text">
+                            <small>Food Group: {{ recipes.food_group }}</small>
+                        </p>
+                        {% for tag in recipes.tags_as_list %}
+                            <div class="chip">
+                            {{ tag }}
+                            </div>
+                        {% endfor %}
                         <p class="flow-text">
                             Our Products Used:
                         </p>
 
-                        {% for pro in recipes.use_of_products %}
-                        <div class="chip">
-                            {{ pro }}
-                        </div>
-                        {% endfor %}
+                        {% if products %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+{#                                    <th>Product Id</th>#}
+{#                                    <th>Product Name</th>#}
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                    <tr>
+                                        <td><img src="/{{ product.picture_1 }}" style="height: 50px; width: 50px;"></td>
+{#                                        <td>{{ product.id }}</td>#}
+                                        <td>{{ product.name }}</td>
+                                        <td class="right-align"><a class="my-btn btn z-depth-0" href="/products/details/{{ product.id }}">Open</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table><br>
+                        {% endif %}
+                        <p class="flow-text">
+                            Ingredients:
+                            <small>{{ recipes.ingredients }}</small>
+                        </p>
+                        <p class="flow-text">
+                            Cooking Process Name:<br>
+                            <small>{{ recipes.cooking_process_name }}</small>
+                        </p>
+                        <p class="flow-text">
+                            Cooking Process:<br>
+                            <small>{{ recipes.cooking_process_method }}</small>
+                        </p>
 
                     </p>
 
-                    <h4 class="center-align" style="margin-bottom: 40px;">Comments</h4>
+                    <h4 class="left-align" style="margin-bottom: 40px;">Comments</h4>
                     
                     {% if comments %}
                     <ul class="collection">
@@ -101,11 +152,11 @@
                         {% endfor %}
                     </ul>
                     {% else %}
-                    <h6 class="center-align">No Comments Yet. Be The First One To Add</h6>
+                    <h6 class="left-align">No Comments Yet. Be The First One To Add</h6>
                     {% endif %}
 
                     {% if customer %}
-                    <h5 class="center-align" style="margin-top: 40px; margin-bottom: 40px;">Add Comment</h5>
+                    <h5 class="left-align" style="margin-top: 40px; margin-bottom: 40px;">Add Comment</h5>
 
                     <form id="commentForm">
                         {% csrf_token %}
@@ -147,6 +198,9 @@
             fullWidth: true
         });
         $('.modal').modal();
+
+        $('.materialboxed').materialbox();
+
     })
 </script>
 <script src="{% static 'js/comment.js' %}"></script>

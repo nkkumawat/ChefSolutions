@@ -45,14 +45,16 @@ Chef's Solution
         {% for recipe in recipes %}
         <div class="col s12 m4">
             
-            <div class="card">
-                <div class="card-image">
-                    <img src="/{{ recipe.picture_1 }}">
+            <a href="/blog/{{ recipe.id }}">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="/{{ recipe.picture_1 }}">
+                    </div>
+                    <div class="card-content center-align">
+                        <p>{{ recipe.name }}</p>
+                    </div>
                 </div>
-                <div class="card-content center-align">
-                    <p>{{ recipe.name }}</p>
-                </div>
-            </div>
+            </a>
 
         </div>
         {% endfor %}
@@ -84,7 +86,7 @@ Chef's Solution
         {% for product in products %}
         <div class="col s12 m4">
             
-            <a href="">
+            <a href="/products/details/{{ product.id }}">
                 <div class="card">
                     <div class="card-image">
                         <img src="/{{ product.picture_1 }}">

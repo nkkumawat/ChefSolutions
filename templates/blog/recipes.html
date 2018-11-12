@@ -33,14 +33,14 @@
     <div class="row">
         <div class="col s12 m4">
             
-            <div class="card-panel">
+            <div class="card-panel center-align">
         
-                <h6>Most Rated Recipes</h6>
+                <h5>Most Rated Recipes</h5>
                 <p>
                     {% for recipe in top_rated %}
                     <h6 class="center-align" style="text-transform: uppercase;">{{ recipe.name }}</h6>
                     <a href="{% url 'blog:recipesDetail' recipe.id %}">
-                        <img src="/{{recipe.picture_1  }}" style="width: 100%; height: 100%;"/>
+                        <img src="/{{recipe.picture_1  }}" style="max-width: 200px;"/>
                     </a>
                     <br>
                     <hr>
@@ -59,32 +59,39 @@
                         <h4 class="left" style="text-transform: uppercase;">{{ recipe.name }}</h4>
                         <h5 class="right" style="border: 1px solid grey; padding: 5px;">{{ recipe.add_date }}</h5>
                         <div class="center-align">
-                            <div class="carousel carousel-slider">
-                                <a class="carousel-item" href="#one!">
-                                    <img src="/{{recipe.picture_1  }}" />
-                                </a>
-                                <a class="carousel-item" href="#two!">
-                                    <img src="/{{recipe.picture_2  }}" />
-                                </a>
-                                <a class="carousel-item" href="#three!">
-                                    <img src="/{{recipe.picture_3  }}"  />
-                                </a>                 
-                            </div>
+
+                            <iframe style="width: 100%;" height="400" src="{{ recipe.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe st>
+
+{#                            <div class="carousel carousel-slider">#}
+{#                                <a class="carousel-item" href="#one!">#}
+{#                                    <img src="/{{recipe.picture_1  }}" style="max-height: 300px;" />#}
+{#                                </a>#}
+{#                                <a class="carousel-item" href="#two!">#}
+{#                                    <img src="/{{recipe.picture_2  }}" style="max-height: 300px;"/>#}
+{#                                </a>#}
+{#                                <a class="carousel-item" href="#three!">#}
+{#                                    <img src="/{{recipe.picture_3  }}" style="max-height: 300px;" />#}
+{#                                </a>                 #}
+{#                            </div>#}
                         </div>
                         
-                        <p class="center-align" style="margin-top: 30px !important;">
+                        <p class="left-align" style="margin-top: 30px !important;">
                             Submitted-By: {{ recipe.customer_id.name }}
                         </p>
         
-                        <p class="flow-text">
-                            Our Products Used:
-                        </p>
+                        <div class="row center-align">
 
-                        {% for pro in recipe.use_of_products %}
-                        <div class="chip">
-                            {{ pro }}
+                                <div class="col m3"></div>
+                                <div class="col m2"><img class="materialboxed" src="/{{recipe.picture_1  }}" style="width: 100px;"/></div>
+                                <div class="col m2"><img class="materialboxed" src="/{{recipe.picture_2  }}" style="width: 100px;"/></div>
+                                <div class="col m2"><img class="materialboxed" src="/{{recipe.picture_3  }}" style="width: 100px;"/></div>
                         </div>
-                        {% endfor %}
+
+{#                        {% for pro in recipe.use_of_products %}#}
+{#                        <div class="chip">#}
+{#                            {{ pro }}#}
+{#                        </div>#}
+{#                        {% endfor %}#}
 
                         <br>
 
@@ -109,8 +116,15 @@
 
 {% block scripts %}
 <script>
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-    });
+	 $(document).ready(function(){
+	     $('.carousel.carousel-slider').carousel({
+		    fullWidth: true,
+		    indicators: true
+		  });
+      
+	  });
+    // $('.carousel.carousel-slider').carousel({
+    //     fullWidth: true
+    // });
 </script>
 {% endblock scripts %}
