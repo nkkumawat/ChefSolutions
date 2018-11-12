@@ -97,6 +97,13 @@ def recipesDetail(request, id):
     data['recipes'].use_of_products = data['recipes'].use_of_products.split('$')[
         :-1]
 
+    products = []
+    for idx in data['recipes'].use_of_products:
+        if idx != '':
+            product = Products.objects.filter(id=idx)[0]
+            products.insert(0, product)
+    data['products'] = products
+
     data['comments'] = Comments.objects.filter(recipe=data['recipes'])
 
     return render(request, 'blog/recipesDetail.html', data)

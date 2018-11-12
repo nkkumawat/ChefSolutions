@@ -30,6 +30,9 @@ class Recipes(models.Model):
     class Meta:
         db_table = "recipe"
 
+    def tags_as_list(self):
+        return self.tags.split(',')
+
 
 class Comments(models.Model):
     id = models.IntegerField(primary_key=True)

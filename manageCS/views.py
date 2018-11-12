@@ -73,12 +73,9 @@ def manageProductSingle(request):
     if 'customer_id' in request.session:
         customer = Customers.objects.filter(id = request.session['customer_id'])[0]
         if customer.is_admin:
-            data = {}
-            data = getResponses.getResponse(request)
             data = getResponses.getResponse(request)
             product = Products.objects.filter(id = request.POST['product_id'])[0]
             data['product'] = product
-            print(product)
             return render(request, "manageCS/singleproduct.html", data)
         else:
             return redirect("error:error")
