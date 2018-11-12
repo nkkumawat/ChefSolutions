@@ -29,3 +29,13 @@ class Recipes(models.Model):
 
     class Meta:
         db_table = "recipe"
+
+
+class Comments(models.Model):
+    id = models.IntegerField(primary_key=True)
+    text = models.TextField()
+    recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customers, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "comment"
