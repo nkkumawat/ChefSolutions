@@ -115,7 +115,7 @@ def payment_success(request):
         if 'udf2' in request.POST:
             coupon_code_id = request.POST['udf2']
             print(coupon_code_id)
-            if coupon_code_id is not -1:
+            if int(coupon_code_id) > -1:
                 coupon_code = CouponCodes.objects.filter(id = coupon_code_id)
                 if coupon_code :
                     coupon_code.update(price_value= 0)
