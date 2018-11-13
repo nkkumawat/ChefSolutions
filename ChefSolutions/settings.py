@@ -28,7 +28,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qzu2RfP6ZWednIKKbM2m7hCd'  # Paste Secret Ke
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ec2-54-69-187-23.us-west-2.compute.amazonaws.com"]
 
 
 # Application definition
