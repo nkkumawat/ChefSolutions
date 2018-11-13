@@ -155,6 +155,7 @@
                     <h6 class="left-align">No Comments Yet. Be The First One To Add</h6>
                     {% endif %}
 
+                    {% if customer %}
                     <h5 class="left-align" style="margin-top: 40px; margin-bottom: 40px;">Add Comment</h5>
 
                     <form id="commentForm">
@@ -164,8 +165,11 @@
                         <p id="customerName" class="hide">{{ customer.name }}</p>
                         <p id="customerImage" class="hide">{{ customer.profile_pic }}</p>
                         <textarea class="materialize-textarea" name="comment" style="border: 1px solid grey; padding: 20px;" placeholder="Write Your Comment" required></textarea>
-                        <input class="my-btn btn z-depth-0" type="submit" value="Add Comment">
+                        <input required class="my-btn btn z-depth-0" type="submit" value="Add Comment">
                     </form>
+                    {% else %}
+                    <h6 class="center-align">Login to add comments</h6>
+                    {% endif %}
                     
                 </div>
                 

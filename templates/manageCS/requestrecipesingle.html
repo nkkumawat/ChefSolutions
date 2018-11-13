@@ -18,8 +18,8 @@
         <b>tags:</b> {{ recipe.tags }}<br>
         <b>add_date:</b> {{ recipe.add_date }}<br>
          <form method="post" action="/managecs/requests-recipe/single">{% csrf_token %}
-                <input name="recipe_id" type="number" hidden value="{{ recipe.id }}">
-                        <input name="apporve" hidden value="True">
+                <input required name="recipe_id" type="number" hidden value="{{ recipe.id }}">
+                        <input required name="apporve" hidden value="True">
                 <input name="submit" type="submit" class="cross" value="Apporve">
         </form><br>
     {% if products %}

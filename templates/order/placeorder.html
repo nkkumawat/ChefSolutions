@@ -21,7 +21,7 @@
         <img src="/{{  pro.product.picture_2 }}" height="200" width="200" />
         <img src="/{{  pro.product.picture_3 }}" height="200" width="200" />
         <form method="post" action="/cart/delete">{% csrf_token %}
-            <input name="cart_id" type="number" hidden value="{{ pro.cart_id }}" >
+            <input required name="cart_id" type="number" hidden value="{{ pro.cart_id }}" >
             <input name="submit" type="submit" value="Delete form cart">
         </form>
     {% endfor %}<br>

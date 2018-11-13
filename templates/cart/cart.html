@@ -38,9 +38,9 @@
                 <td>{{ c.quantity }} * {{ c.product_id.price }}</td>
                 <td>
                     <form method="post" action="/cart/delete">{% csrf_token %}
-                        <input name="cart_id" type="number" hidden value="{{ c.id }}">
+                        <input required name="cart_id" type="number" hidden value="{{ c.id }}">
 
-                        <input name="submit" type="submit" class="cross" value="X"></i>
+                        <input required name="submit" type="submit" class="cross" value="X"></i>
 
 
                     </form>
@@ -76,8 +76,8 @@
         Discount Codes<hr>
         <form method="post" action="/coupon/check"> {% csrf_token %}
             <label>Enter your coupon code if you have one.</label>
-            <input name="coupon_code" class="my-form" type="text" >
-            <input type="submit" class="my-form" value="Apply Coupon">
+            <input required name="coupon_code" class="my-form" type="text" >
+            <input required type="submit" class="my-form" value="Apply Coupon">
         </form>
     </div>
     <div class="col s12 m4">

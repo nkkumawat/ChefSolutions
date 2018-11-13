@@ -10,18 +10,18 @@
         <form method="post" enctype="multipart/form-data" > {% csrf_token %}
 
 {#            <input type="text" hidden value="{{ product.id }}">#}
-            Name :  <input type="text" name="name"  >
-            Size : <input type="number" name="size" >
-            Price : <input type="number" name="price" >
-            B2B Price : <input type="number" name="b2b_price" >
-            Energy :  <input type="number" name="energy"  >
-            Protein : <input type="number" name="protein" >
-            Carbohydrates : <input type="number" name="carbohydrates">
-            Sugar : <input type="number" name="sugar" value="{{ product.sugar }}">
-            Fat : <input type="number" name="fat" value="{{ product.fat }}">
+            Name :  <input required type="text" name="name"  >
+            Size : <input required type="number" name="size" >
+            Price : <input required type="number" name="price" >
+            B2B Price : <input required type="number" name="b2b_price" >
+            Energy :  <input required type="number" name="energy"  >
+            Protein : <input required type="number" name="protein" >
+            Carbohydrates : <input required type="number" name="carbohydrates">
+            Sugar : <input required type="number" name="sugar" value="{{ product.sugar }}">
+            Fat : <input required type="number" name="fat" value="{{ product.fat }}">
 
-            Available Qty : <input type="number" name="available_qty" >
-            Shelf Life : <input type="number" name="shelf_life"  >
+            Available Qty : <input required type="number" name="available_qty" >
+            Shelf Life : <input required type="number" name="shelf_life"  >
             Description : <textarea name="description" ></textarea>
             Storage : <textarea name="storage" ></textarea>
             Uses : <textarea name="uses"></textarea>
@@ -29,7 +29,7 @@
             Ingridients :  <textarea name="ingridients" ></textarea>
             Directions : <textarea name="directions"></textarea>
             Category :
-{#            <input type="text"  name="category">#}
+{#            <input required type="text"  name="category">#}
                 <select name="category">
                     <option value="Bakery" selected>Bakery</option>
                     <option value="Coating and Breading">Coating & Breading</option>
@@ -38,9 +38,9 @@
                     <option value="Seasonings and Marinades">Seasonings & Marinades</option>
                 </select>
 
-            Picture1 : <input type="file"  name="picture_1"><br>
-            Picture2 : <input type="file"  name="picture_2"><br>
-            Picture3 : <input type="file"  name="picture_3"><br>
+            Picture1 : <input required type="file"  name="picture_1"><br>
+            Picture2 : <input required type="file"  name="picture_2"><br>
+            Picture3 : <input required type="file"  name="picture_3"><br>
             Vegetrain :
                    <div class="switch">
                         <label>

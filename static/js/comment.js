@@ -15,7 +15,6 @@ $("document").ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    console.log(response);
                     var comment = $('<li class="collection-item avatar"></li>');
                     var customerImage = $(
                         "<img src=/" +

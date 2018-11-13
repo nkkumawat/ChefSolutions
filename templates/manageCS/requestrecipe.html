@@ -31,13 +31,13 @@
 
                 <td>
                     <form method="post" action="/managecs/requests-recipe">{% csrf_token %}
-                        <input name="recipe_id" type="number" hidden value="{{ request.id }}">
+                        <input required name="recipe_id" type="number" hidden value="{{ request.id }}">
                         <input name="submit" type="submit" class="cross" value="Apporve">
                     </form>
                 </td>
             <td>
                 <form method="post" action="/managecs/requests-recipe/single">{% csrf_token %}
-                        <input name="recipe_id" type="number" hidden value="{{ request.id }}">
+                        <input required name="recipe_id" type="number" hidden value="{{ request.id }}">
 {#                        <input name="apporve" hidden value="True">#}
                         <input name="submit" type="submit" class="cross" value="See">
                 </form>

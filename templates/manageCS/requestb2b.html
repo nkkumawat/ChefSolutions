@@ -28,7 +28,7 @@
 
                 <td>
                     <form method="post" action="/managecs/requests-b2b">{% csrf_token %}
-                        <input name="request_id" type="number" hidden value="{{ request.id }}">
+                        <input required name="request_id" type="number" hidden value="{{ request.id }}">
                         <input name="submit" type="submit" class="cross" value="Make B2B">
                     </form>
                 </td>
