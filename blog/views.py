@@ -27,8 +27,7 @@ def addRecipe(request):
             product_ids = request.POST.getlist('use_of_products')
             recipe.use_of_products = ""
             for id in product_ids:
-                product = Products.objects.get(id=id)
-                recipe.use_of_products += product.name + "$"
+                recipe.use_of_products += id + "$"
             recipe.ingredients = request.POST['ingredients']
             recipe.cooking_process_name = request.POST['cooking_process_name']
             recipe.cooking_process_method = request.POST['cooking_process_method']
