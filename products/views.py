@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import Products
 import getResponses
@@ -12,7 +13,7 @@ data = {
 
 def allProducts(request):
     if request.GET['category'] != 'none':
-        if  request.GET['category'] == 'is_vegetarian':
+        if request.GET['category'] == 'is_vegetarian':
             products = Products.objects.filter(is_vegetarian=True)
         elif request.GET['category'] == 'low_salt':
             products = Products.objects.filter(low_salt = True)
@@ -57,5 +58,3 @@ def prductDetail(request, pid):
         return render(request, "products/productdetails.html", data)
     else:
         return redirect('error:error')
-
-

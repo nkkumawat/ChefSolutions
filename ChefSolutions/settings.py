@@ -28,7 +28,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qzu2RfP6ZWednIKKbM2m7hCd'  # Paste Secret Ke
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["ec2-54-69-187-23.us-west-2.compute.amazonaws.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -153,5 +153,3 @@ EMAIL_PORT = 587
 LOGIN_URL = 'customer/login'
 LOGOUT_URL = 'customer/logout'
 LOGIN_REDIRECT_URL = 'customer/profile'
-
-

@@ -10,6 +10,7 @@ CATEGORY_CHOICES = (
     ('Seasonings and Marinades','Seasonings and Marinades'),
 )
 
+
 class Products(models.Model):
     id = models.IntegerField(primary_key=True)
     price = models.FloatField()

@@ -11,14 +11,24 @@
                 <li><a href="mobile.html">Community</a></li>
                 <li><a href="mobile.html">Contact Us</a></li>
             </ul>
+
+            <form style="display: inline-block; width: 200px;" action="/search" method="GET">
+                <div class="input-field">
+                    <input id="search" type="search" name="item" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+            
             <ul class="right hide-on-med-and-down nav-links">
-                    <li><a class="material-icons shopping-cart" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
+                
+                <li><a class="material-icons shopping-cart" href="{% url 'cart:cart' %}"><i>add_shopping_cart</i></a></li>
                 {% if customer %}
-                    <li><a href="{% url 'customer:logout'%}">LogOut</a></li>
-                    <li><a href="{% url 'customer:profile'%}">Profile</a></li>
+                <li><a href="{% url 'customer:logout'%}">LogOut</a></li>
+                <li><a href="{% url 'customer:profile'%}">Profile</a></li>
                 {% else %}
-                    <li><a href="{% url 'customer:login'%}">LogIn</a></li>
-                    <li><a href="{% url 'customer:signup'%}">SignUp</a></li>
+                <li><a href="{% url 'customer:login'%}">LogIn</a></li>
+                <li><a href="{% url 'customer:signup'%}">SignUp</a></li>
                 {% endif %}
 
             </ul>

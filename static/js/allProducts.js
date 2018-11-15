@@ -1,5 +1,6 @@
 $("document").ready(function() {
     $(".modal").modal();
+
     $(".addtoCart-modal").click(function (e) {
         const id = e.target.id;
         const quantity = $("#quantity").val();

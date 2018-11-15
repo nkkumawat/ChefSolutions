@@ -1,0 +1,110 @@
+{% extends "../extends/main.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/topImage.css' %}">
+{% endblock styles %}
+
+{% block content %}
+
+<div class="container">
+    <h3>Products</h3>
+    {% if product %}
+
+        {% if product.productName %}
+        <h5>Products With Name Matches</h5>
+        {% for pro in product.productName %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'products:product_details' pid=pro.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ pro.name }}</span>
+                    <p>Name = {{ pro.name }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if product.productDescription %}
+        <h5>Products With Description Matches</h5>
+        {% for pro in product.productDescription %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'products:product_details' pid=pro.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ pro.name }}</span>
+                    <p>Description = {{ pro.description }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if product.productUses %}
+        <h5>Products With Use of Product Matches</h5>
+        {% for pro in product.productUses %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'products:product_details' pid=pro.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ pro.name }}</span>
+                    <p>Product Uses = {{ pro.uses }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if product.productBenefits %}
+        <h5>Products With Benefits of Product Matches</h5>
+        {% for pro in product.productBenefits %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'products:product_details' pid=pro.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ pro.name }}</span>
+                    <p>Product Benefits = {{ pro.benefits }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if product.productIngridients %}
+        <h5>Products With Ingridients Matches</h5>
+        {% for pro in product.productIngridients %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'products:product_details' pid=pro.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ pro.name }}</span>
+                    <p>Product Ingridients = {{ pro.ingridients }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if product.productDirection %}
+        <h5>Products With Directions of Use Matches</h5>
+        {% for pro in product.productDirection %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'products:product_details' pid=pro.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ pro.name }}</span>
+                    <p>Direction of Use = {{ pro.directions }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+    {% else %}
+        <p class="flow-text">No Product Found</p>
+    {% endif %}
+
+</div>
+
+{% endblock content %}
