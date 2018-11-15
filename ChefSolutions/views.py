@@ -21,7 +21,6 @@ def search(request):
         item = request.GET['item']
 
         data['product'] = {}
-
         productName = Products.objects.filter(name__icontains=item)
         productDescription = Products.objects.filter(description__icontains=item)
         productUses = Products.objects.filter(uses__icontains=item)
@@ -29,9 +28,20 @@ def search(request):
         productIngridients = Products.objects.filter(ingridients__icontains=item)
         productDirection = Products.objects.filter(directions__icontains=item)
 
+        data['recipe'] = {}
+        recipeName = Recipes.objects.filter(name__icontains=item)
+        recipeIngredients = Recipes.objects.filter(ingredients__icontains=item)
+        recipeFoodGroup = Recipes.objects.filter(food_group__icontains=item)
+        recipeCookingProcessName = Recipes.objects.filter(cooking_process_name__icontains=item)
+        recipeCookingProcessMethod = Recipes.objects.filter(cooking_process_method__icontains=item)
+
         def productJson(obj, name):
             if len(obj) != 0:
                 data['product'][name] = obj
+
+        def recipeJson(obj, name):
+            if len(obj) != 0:
+                data['recipe'][name] = obj
 
         productJson(productName, 'productName')
         productJson(productDescription, 'productDescription')
@@ -39,6 +49,12 @@ def search(request):
         productJson(productBenefits, 'productBenefits')
         productJson(productIngridients, 'productIngridients')
         productJson(productDirection, 'productDirection')
+
+        recipeJson(recipeName, 'recipeName')
+        recipeJson(recipeIngredients, 'recipeIngredients')
+        recipeJson(recipeFoodGroup, 'recipeFoodGroup')
+        recipeJson(recipeCookingProcessName, 'recipeCookingProcessName')
+        recipeJson(recipeCookingProcessMethod, 'recipeCookingProcessMethod')
 
         print(data)
 

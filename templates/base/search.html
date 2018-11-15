@@ -105,6 +105,88 @@
         <p class="flow-text">No Product Found</p>
     {% endif %}
 
+    <h3>Recipes</h3>
+    {% if recipe %}
+
+        {% if recipe.recipeName %}
+        <h5>Recipes With Name Matches</h5>
+        {% for rec in recipe.recipeName %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'blog:recipesDetail' id=rec.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ rec.name }}</span>
+                    <p>Name = {{ rec.name }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if recipe.recipeIngredients %}
+        <h5>Recipes With Ingredients Matches</h5>
+        {% for rec in recipe.recipeIngredients %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'blog:recipesDetail' id=rec.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ rec.name }}</span>
+                    <p>Ingredients = {{ rec.ingredients }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if recipe.recipeFoodGroup %}
+        <h5>Recipes With Food Groupt Matches</h5>
+        {% for rec in recipe.recipeFoodGroup %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'blog:recipesDetail' id=rec.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ rec.name }}</span>
+                    <p>Food Group = {{ rec.food_group }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if recipe.recipeCookingProcessName %}
+        <h5>Recipes With Cooking Process Name Matches</h5>
+        {% for rec in recipe.recipeCookingProcessName %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'blog:recipesDetail' id=rec.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ rec.name }}</span>
+                    <p>Cooking Process Name = {{ rec.cooking_process_name }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+        {% if recipe.recipeCookingProcessMethod %}
+        <h5>Recipes With Cooking Process Method Matches</h5>
+        {% for rec in recipe.recipeCookingProcessMethod %}
+        <div class="card blue-grey darken-1">
+            <a href="{% url 'blog:recipesDetail' id=rec.id %}">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ rec.name }}</span>
+                    <p>Cooking Process Method = {{ rec.cooking_process_method }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+
+    {% else %}
+        <p class="flow-text">No Recipes Found</p>
+    {% endif %}
+
 </div>
 
 {% endblock content %}
